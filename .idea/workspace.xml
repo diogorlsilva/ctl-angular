@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="aacae7b2-7139-47d9-88b7-fcfd9b7ad3cc" name="Changes" comment="first commit">
+      <change afterPath="$PROJECT_DIR$/ctl-angular/.editorconfig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ctl-angular/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ctl-angular/.vscode/extensions.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ctl-angular/.vscode/launch.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ctl-angular/.vscode/tasks.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ctl-angular/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ctl-angular/angular.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ctl-angular/package-lock.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ctl-angular/package.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ctl-angular/src/app/app.component.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ctl-angular/src/app/app.component.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ctl-angular/src/app/app.component.spec.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ctl-angular/src/app/app.component.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ctl-angular/src/app/app.module.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ctl-angular/src/assets/.gitkeep" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ctl-angular/src/favicon.ico" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ctl-angular/src/index.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ctl-angular/src/main.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ctl-angular/src/styles.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ctl-angular/tsconfig.app.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ctl-angular/tsconfig.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ctl-angular/tsconfig.spec.json" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;diogorlsilva&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/diogorlsilva/ctl-angular.git&quot;,
+    &quot;accountId&quot;: &quot;586fdaae-799b-4aa4-a536-ccc228894e9f&quot;
+  }
+}</component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 6
+}</component>
+  <component name="ProjectId" id="2rXSq9hl905eMuP0wp9Q19u5KPs" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/code&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_interpreter_path&quot;: &quot;node&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;project.propVCSSupport.DirectoryMappings&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RunManager" selected="npm.Angular CLI Server">
+    <configuration name="Angular Application" type="JavascriptDebugType" uri="http://localhost:4200">
+      <method v="2" />
+    </configuration>
+    <configuration name="Angular CLI Server" type="js.build_tools.npm">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="start" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <EXTENSION ID="com.intellij.lang.javascript.buildTools.npm.rc.StartBrowserRunConfigurationExtension">
+        <browser name="37cae5b9-e8b2-4949-9172-aafa37fbc09c" />
+      </EXTENSION>
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-d6986cc7102b-deb605915726-JavaScript-WS-243.22562.222" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="aacae7b2-7139-47d9-88b7-fcfd9b7ad3cc" name="Changes" comment="" />
+      <created>1736704116330</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1736704116330</updated>
+      <workItem from="1736704116831" duration="1974000" />
+    </task>
+    <task id="LOCAL-00001" summary="first commit">
+      <option name="closed" value="true" />
+      <created>1736705276598</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1736705276598</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="first commit" />
+    <option name="LAST_COMMIT_MESSAGE" value="first commit" />
+  </component>
+</project>
