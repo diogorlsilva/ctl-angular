@@ -1,5 +1,6 @@
-import {Component} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {NavbarComponent} from "./navbar/navbar.component";
+import {TranslationsService} from "./services/translations.service";
 
 @Component({
   selector: 'app-root',
@@ -9,5 +10,9 @@ import {NavbarComponent} from "./navbar/navbar.component";
   standalone: true
 })
 export class AppComponent {
-  title = 'ctl-angular';
+  translationService = inject(TranslationsService);
+
+  constructor() {
+    this.translationService.initTranslations()
+  }
 }

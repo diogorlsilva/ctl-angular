@@ -20,33 +20,49 @@
         <li class="nav-item">
           <a id="nav-organisation"
              class="nav-link"
-             href="#pessoas">Pessoas</a>
+             href="#pessoas"
+             [innerText]="'navbar.people' | translatePipe">
+          </a>
         </li>
         <li class="nav-item">
           <a id="nav-projects"
              class="nav-link"
-             href="#projetos">Projetos</a>
+             href="#projetos"
+             [innerText]="'navbar.projects' | translatePipe">
+          </a>
         </li>
         <li class="nav-item">
           <a id="nav-services"
              class="nav-link"
-             href="#servicos">Serviços</a>
+             href="#servicos"
+             [innerText]="'navbar.services' | translatePipe">
+          </a>
         </li>
         <li class="nav-item">
           <a id="nav-contacts"
              class="nav-link"
-             href="#contatos">Contatos</a>
+             href="#contatos"
+             [innerText]="'navbar.contacts' | translatePipe">
+          </a>
         </li>
         <li class="nav-item dropdown">
           <div class="dropdown">
-            <a class="nav-link dropdown-toggle" id="language_dropdown" role="button" data-bs-toggle="dropdown"
-               aria-expanded="false">PT</a>
-            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink">
+            <a class="nav-link dropdown-toggle"
+               id="language_dropdown"
+               role="button"
+               data-bs-toggle="dropdown"
+               aria-expanded="false"
+               [innerText]="currentLanguage | uppercase">
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end"
+                aria-labelledby="navbarDropdownMenuLink">
               <li>
-                <a class="dropdown-item" onclick="changeLanguage('pt')">PT</a>
+                <a class="dropdown-item"
+                   (click)="changeLanguage('pt')">PT</a>
               </li>
               <li>
-                <a class="dropdown-item" onclick="changeLanguage('en')">EN</a>
+                <a class="dropdown-item"
+                   (click)="changeLanguage('en')">EN</a>
               </li>
             </ul>
           </div>
