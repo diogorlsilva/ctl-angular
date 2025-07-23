@@ -1,73 +1,100 @@
-<nav id="mainNav"
-     class="navbar navbar-expand-lg navbar-dark fixed-top">
-  <div class="container">
-    <a class="navbar-brand">
-      <img src="assets/img/ctl_logo.png"
-           alt="CTL"/>
-    </a>
-    <button class="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarResponsive"
-            aria-controls="navbarResponsive"
-            aria-expanded="false"
-            aria-label="Toggle navigation">
-      <i class="fas fa-bars"
-         aria-hidden="true"></i>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarResponsive">
-      <ul class="navbar-nav ms-auto py-4 py-lg-0">
-        <li class="nav-item">
-          <a id="nav-organisation"
-             class="nav-link"
-             href="#pessoas"
-             [innerText]="'navbar.people' | translatePipe">
+<div class="navbar-container">
+  <button [routerLink]="''">Inicio</button>
+  <button (click)="isToggled = !isToggled"
+          class="toggle">
+    <i class="fa-solid fa-bars"></i>
+  </button>
+  <nav [class.show-nav]="isToggled"
+       class="nav">
+    <!-- RESPOSTAS SOCIAIS -->
+    <li class="nav-item dropdown">
+      <a aria-expanded="false"
+         class="nav-link dropdown-toggle"
+         data-bs-toggle="dropdown"
+         role="button">
+        <span [innerText]="'Respostas Sociais'"></span>
+      </a>
+      <ul class="dropdown-menu">
+        <li>
+          <a (click)="isToggled = false"
+             [routerLinkActive]="'nav-item-selected'"
+             [routerLink]="'creche'"
+             class="dropdown-item">
+            <span [innerText]="'Creche'"></span>
           </a>
         </li>
-        <li class="nav-item">
-          <a id="nav-projects"
-             class="nav-link"
-             href="#projetos"
-             [innerText]="'navbar.projects' | translatePipe">
+        <li>
+          <a (click)="isToggled = false"
+             [routerLinkActive]="'nav-item-selected'"
+             [routerLink]="'catl'"
+             class="dropdown-item">
+            <span [innerText]="'CATL'"></span>
           </a>
-        </li>
-        <li class="nav-item">
-          <a id="nav-services"
-             class="nav-link"
-             href="#servicos"
-             [innerText]="'navbar.services' | translatePipe">
-          </a>
-        </li>
-        <li class="nav-item">
-          <a id="nav-contacts"
-             class="nav-link"
-             href="#contatos"
-             [innerText]="'navbar.contacts' | translatePipe">
-          </a>
-        </li>
-        <li class="nav-item dropdown">
-          <div class="dropdown">
-            <a class="nav-link dropdown-toggle"
-               id="language_dropdown"
-               role="button"
-               data-bs-toggle="dropdown"
-               aria-expanded="false"
-               [innerText]="currentLanguage | uppercase">
-            </a>
-            <ul class="dropdown-menu dropdown-menu-end"
-                aria-labelledby="navbarDropdownMenuLink">
-              <li>
-                <a class="dropdown-item"
-                   (click)="changeLanguage('pt')">PT</a>
-              </li>
-              <li>
-                <a class="dropdown-item"
-                   (click)="changeLanguage('en')">EN</a>
-              </li>
-            </ul>
-          </div>
         </li>
       </ul>
-    </div>
-  </div>
-</nav>
+    </li>
+
+    <!-- SERVIÇOS -->
+    <li class="nav-item dropdown">
+      <a aria-expanded="false"
+         class="nav-link dropdown-toggle"
+         data-bs-toggle="dropdown"
+         role="button">
+        <span [innerText]="'Serviços'"></span>
+      </a>
+      <ul class="dropdown-menu">
+        <li>
+          <a (click)="isToggled = false"
+             [routerLinkActive]="'nav-item-selected'"
+             [routerLink]="'aec'"
+             class="dropdown-item">
+            <span [innerText]="'AEC'"></span>
+          </a>
+        </li>
+        <li>
+          <a (click)="isToggled = false"
+             [routerLinkActive]="'nav-item-selected'"
+             [routerLink]="'refeicoes'"
+             class="dropdown-item">
+            <span [innerText]="'Refeições'"></span>
+          </a>
+        </li>
+        <li>
+          <hr class="dropdown-divider">
+        </li>
+        <li>
+          <a (click)="isToggled = false"
+             [routerLinkActive]="'nav-item-selected'"
+             [routerLink]="'musica'"
+             class="dropdown-item">
+            <span [innerText]="'Música'"></span>
+          </a>
+        </li>
+        <li>
+          <a (click)="isToggled = false"
+             [routerLinkActive]="'nav-item-selected'"
+             [routerLink]="'natacao'"
+             class="dropdown-item">
+            <span [innerText]="'Natação'"></span>
+          </a>
+        </li>
+        <li>
+          <a (click)="isToggled = false"
+             [routerLinkActive]="'nav-item-selected'"
+             [routerLink]="'explicacoes'"
+             class="dropdown-item">
+            <span [innerText]="'Explicações'"></span>
+          </a>
+        </li>
+      </ul>
+    </li>
+
+    <!-- PROJETOS -->
+    <a (click)="isToggled = false"
+       [routerLinkActive]="'nav-item-selected'"
+       [routerLink]="'projetos'"
+       class="nav-link">
+      <span [innerText]="'Projetos'"></span>
+    </a>
+  </nav>
+</div>

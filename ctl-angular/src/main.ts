@@ -1,11 +1,13 @@
 import {bootstrapApplication} from '@angular/platform-browser';
 import {AppComponent} from './app/app.component';
 import {provideHttpClient} from "@angular/common/http";
-import {async} from "rxjs";
+import {provideRouter} from "@angular/router";
+import {routes} from "./app/utils/routes.model";
 
 bootstrapApplication(AppComponent, {
   providers: [
     provideHttpClient(),
+    provideRouter(routes)
   ],
 })
   .catch((err) => console.error(err));

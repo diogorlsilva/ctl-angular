@@ -1,0 +1,14 @@
+<div class="reception-container">
+  @if (currentItem) {
+    <div class="news-container">
+      <div class="news-description">
+      <span [innerText]="currentItem.description"
+            class="multi-line-truncate-4"></span>
+      </div>
+      <div class="news-image">
+        <img [alt]="currentItem.description"
+             [src]="currentItem.photoSrc">
+      </div>
+    </div>
+  }
+</div>
