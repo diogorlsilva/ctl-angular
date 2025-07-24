@@ -1,3 +1,43 @@
 :root {
   --nav-height: 70px;
+  --ctl-blue: #6567CC;
+  --ctl-orange: #FD620D;
+}
+
+body {
+  scrollbar-gutter: stable;
+}
+
+abbr {
+  cursor: auto !important;
+  text-decoration: none !important;
+}
+
+.truncate {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  width: 100%;
+  white-space: nowrap;
+}
+
+.multi-line-truncate {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+
+.m-l-5 {
+  margin-left: 5px;
+}
+
+.clickable-label {
+  color: black;
+  text-decoration-color: black;
+  text-decoration: underline;
+
+  &:hover {
+    color: lightblue;
+    text-decoration-color: lightblue;
+  }
 }

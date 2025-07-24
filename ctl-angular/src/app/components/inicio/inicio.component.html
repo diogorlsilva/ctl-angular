@@ -1,14 +1,156 @@
+<!-- RECEPTION SECTION-->
+
 <div class="reception-container">
+  <div class="reception-title">
+    <span [innerText]="'Criamos oportunidades, promovemos experiências'"></span>
+  </div>
   @if (currentItem) {
     <div class="news-container">
       <div class="news-description">
-      <span [innerText]="currentItem.description"
-            class="multi-line-truncate-4"></span>
+        <div class="news-title truncate"
+             [innerText]="currentItem.title">
+        </div>
+        <span [innerText]="currentItem.description"
+              class="multi-line-truncate"></span>
       </div>
-      <div class="news-image">
-        <img [alt]="currentItem.description"
-             [src]="currentItem.photoSrc">
+
+      @if (currentItem.photoSrc) {
+        <div class="news-image">
+          <img [alt]="currentItem.description"
+               [src]="currentItem.photoSrc">
+        </div>
+      }
+    </div>
+  }
+</div>
+
+<!-- PEOPLE SECTION-->
+
+<div class="people-container flex-container aos">
+  @for (person of peopleItems; track $index) {
+    <div class="person-card aos"
+         style="--person-index: {{$index}}">
+      <div class="person-image">
+        <img [alt]="person.name"
+             [src]="person.photoSrc">
+      </div>
+      <div class="person-info">
+        <h2 [innerText]="person.name"></h2>
+        <p [innerText]="person.description"></p>
       </div>
     </div>
   }
 </div>
+
+<!-- INSTITUTION MESSAGE SECTION-->
+
+<div class="institution-message-container aos">
+  <span [innerText]="institutionMessage"
+        class="institution-message">
+  </span>
+</div>
+
+<!-- NUMBERS SECTION-->
+
+<div class="flex-container aos">
+  @for (number of numbersItems; track $index) {
+    <div class="number-card">
+      <h1 class="number-value"
+          [innerText]="number.value">
+      </h1>
+      <p [innerText]="number.description"></p>
+    </div>
+  }
+</div>
+
+<!-- PARTNERS SECTION-->
+
+<div class="aos">
+  <div class="partners-title">
+    <h2>Parcerias</h2>
+  </div>
+
+  <div class="flex-container">
+    @for (partner of partnersSrcUrs; track $index) {
+      <div class="partner-image">
+        <abbr [title]="partner.alt">
+          <img [alt]="partner.alt"
+               [src]="partner.photoSrc"></abbr>
+      </div>
+    }
+  </div>
+</div>
+
+<!--FOOTER SECTION-->
+
+<div class="flex-container footer-container">
+
+  <div class="footer-section">
+    <h4 class="footer-title"
+         [innerText]="'Sobre Nós'">
+    </h4>
+
+    <div class="clickable-label"
+         data-bs-toggle="modal"
+         data-bs-target="#mission"
+         [innerText]="mission.title">
+    </div>
+
+    <div class="clickable-label"
+         [innerText]="'Orgãos Sociais'">
+    </div>
+    <div class="clickable-label"
+         [innerText]="'Relatórios de Contas'">
+    </div>
+  </div>
+
+  <div class="footer-section">
+    <h4 class="footer-title"
+         [innerText]="'Contatos'">
+    </h4>
+      <div>
+        <i class="fa-solid fa-phone"></i>
+        <a class="clickable-label"
+           [href]="'tel:' + telephoneNumber">
+        <span  class="m-l-5"
+               [innerText]="telephoneNumber">
+        </span>
+        </a>
+      </div>
+      <div>
+        <i class="fa-solid fa-mobile-screen"></i>
+        <a class="clickable-label"
+           [href]="'tel:' + mobileNumber">
+        <span  class="m-l-5"
+               [innerText]="mobileNumber">
+        </span>
+        </a>
+      </div>
+
+      <div>
+        <i class="fa-solid fa-envelope"></i>
+        <a class="clickable-label"
+           [href]="'mailto:' + ctlEmail">
+        <span  class="m-l-5"
+               [innerText]="ctlEmail">
+        </span>
+        </a>
+      </div>
+
+
+  </div>
+  <div class="footer-section">
+    <h4 class="footer-title"
+         [innerText]="'Links'">
+    </h4>
+  </div>
+
+</div>
+
+<!-- MODALS SECTION -->
+
+<app-modal [modalId]="'mission'"
+           [title]="mission.title"
+           [content]="mission.message">
+</app-modal>
+

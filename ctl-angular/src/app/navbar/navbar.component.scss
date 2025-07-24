@@ -1,6 +1,6 @@
 .navbar-container {
   display: flex;
-  background-color: aquamarine;
+  background-color: var(--ctl-blue);
   height: var(--nav-height);
   align-items: center;
 }
@@ -8,6 +8,10 @@
 .nav {
   display: flex;
   margin-left: auto;
+}
+
+.nav-link {
+  color: black;
 }
 
 

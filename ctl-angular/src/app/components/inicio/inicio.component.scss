@@ -1,35 +1,65 @@
+// RECEPTION SECTION
+
+.flex-container {
+  padding: 3em 20%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
+
 .reception-container {
   position: relative;
   background-image: url("/assets/images/reception.png");
   height: calc(80vh - var(--nav-height));
-  width: 90vw;
-  margin: 20px auto;
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
 }
 
-.news-container {
-  position: absolute;
-  background-color: orange;
-  height: 120px;
-  width: 86%;
-  bottom: -60px;
-  left: 7%;
-  padding: 0.5em 1em;
+.reception-title {
   display: flex;
-  max-width: 1450px;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  text-align: center;
+  padding: 3em;
+  font-family: "Playfair Display", serif;
+  font-size: 60px;
+  background-image: linear-gradient(to right, #461755, #E89D00, #449FE6, #DD691E, #BD0004, #3A579B, #EA5982, #64A957);
+  color: transparent;
+  background-clip: text;
 }
 
+$new-width: 60%;
+
+.news-container {
+  position: absolute;
+  background-color: var(--ctl-orange);
+  height: 160px;
+  width: $new-width;
+  bottom: -60px;
+  left: calc(calc(100% - #{$new-width}) / 2);
+  padding: 1em 1.5em;
+  display: flex;
+}
+
+.news-title {
+  font-size: 1.5em;
+  font-weight: bold;
+  margin-bottom: 0.5em;
+  white-space: nowrap;
+}
+
+$news-image-width: 300px;
+
 .news-description {
-  width: 60%;
+  width: calc(100% - $news-image-width);
+  padding-right: 1.5em;
 }
 
 .news-image {
-  width: 40%;
-
   img {
-    width: 100%;
+    width: $news-image-width;
     aspect-ratio: 1 / 1;
     object-fit: cover;
     position: relative;
@@ -38,9 +68,149 @@
   }
 }
 
-.multi-line-truncate-4 {
-  display: -webkit-box;
-  overflow: hidden;
-  -webkit-line-clamp: 4;
-  -webkit-box-orient: vertical;
+
+// PEOPLE SECTION
+
+.people-container {
+  margin-top: 160px;
+}
+
+.person-card {
+  height: 320px;
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+  transition-delay: calc(500ms * var(--person-index));
+}
+
+.person-image {
+  img {
+    height: 190px;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    clip-path: circle();
+  }
+}
+
+.person-info {
+  text-align: center;
+  margin-top: 1.5em;
+}
+
+// INSTITUTION SECTION
+
+.institution-message-container {
+  padding: 5em 20%;
+  font-style: italic;
+  font-size: 1.4em;
+  text-align: justify;
+}
+
+// NUMBERS SECTION
+
+.number-card {
+  width: 240px;
+  height: 120px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 1em;
+  text-align: center;
+}
+
+.number-value {
+  font-size: 5rem;
+  color: var(--ctl-orange);
+}
+
+// PARTNERS SECTION
+
+.partners-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 5em 0 0.6em 0;
+}
+
+.partner-image {
+  margin: 1em;
+
+  img {
+    height: 90px;
+    aspect-ratio: 1 / 1;
+    object-fit: contain;
+  }
+}
+
+
+// FOOTER SECTION
+
+.footer-container {
+  background-color: var(--ctl-blue);
+}
+
+.footer-section {
+  display: grid;
+  gap: 1em;
+}
+
+
+// ANIMATIONS
+
+@keyframes appear {
+  from {
+    opacity: 0;
+    transform: translateY(200px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.aos {
+  animation: appear linear;
+  animation-timeline: view();
+  animation-range: entry 0 cover 40%;
+}
+
+
+@media screen and (max-width: 768px) {
+  .reception-container {
+    height: calc(60vh - var(--nav-height));
+  }
+
+  .news-container {
+    flex-direction: column;
+  }
+
+  .news-title {
+    font-size: 0.9em;
+    margin-bottom: 0.3em;
+    text-align: center;
+  }
+
+  .news-description {
+    width: 100%;
+    height: 120px;
+    flex-shrink: 0;
+    text-align: center;
+    padding: 0;
+  }
+
+  .news-image {
+    margin: auto;
+  }
+
+  .multi-line-truncate {
+    -webkit-line-clamp: 2;
+  }
+
+  .people-container {
+    margin-top: 400px;
+  }
 }

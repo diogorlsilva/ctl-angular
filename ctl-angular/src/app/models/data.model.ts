@@ -5,7 +5,44 @@ export type WorkbookModel = ExcelJS.WorkbookModel;
 export type WorksheetModel = ExcelJS.WorksheetModel;
 
 export type NewsItem = {
-  id: string;
+  title: string;
+  description: string;
+  photoSrc: string | null;
+}
+
+export type PersonItem = {
+  name: string;
   description: string;
   photoSrc: string;
+};
+
+export type NumberItem = {
+  description: string;
+  value: string;
 }
+
+export type PartnerItem = {
+  photoSrc: string;
+  alt: string;
+}
+
+export const telephoneNumber = '239 445 810';
+export const mobileNumber = '+351 999 999 999';
+export const ctlEmail = 'ctlsc@outlook.com';
+
+export const mission = {
+  title: 'Missão, Visão, Valores',
+  message: 'MISSÃO\n' +
+    'O Clube de Tempos Livres de Santa Clara tem como missão uma resposta social qualificada que se espelha no desenvolvimento de atividades culturais, recreativas e desportivas.\n' +
+    '\n' +
+    'VISÃO\n' +
+    'O CTL pretende ser identificado como uma IPSS pró ativa de referência no apoio à família, à infância, à juventude, à pessoa idosa, bem como na implementação de políticas e práticas de apoio à integração social e comunitária.\n' +
+    '\n' +
+    'VALORES\n' +
+    'Afetividade, Realização pessoal, Capacitação, Oportunidades, Igualdade, Respeito, Inovação social, Solidariedade'
+
+}
+
+export const institutionMessage = 'O CTL – Clube de Tempos Livres de Santa Clara é uma Instituição Particular de Solidariedade Social dedicada ao bem-estar, à inclusão e à dignidade de todos. Aqui, cada pessoa é acolhida com respeito, carinho e profissionalismo.\n' +
+  '\n' +
+  'Com uma equipa dedicada e programas que fazem a diferença, o CTL é um espaço de esperança, crescimento e partilha. Porque cuidar é mais do que ajudar — é transformar vidas com amor.'
