@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 
 @Component({
-  selector: 'app-refeicoes',
+  selector: 'ctl-refeicoes',
   standalone: true,
   imports: [],
   templateUrl: './refeicoes.component.html',

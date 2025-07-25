@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 
 @Component({
-  selector: 'app-musica',
+  selector: 'ctl-musica',
   standalone: true,
   imports: [],
   templateUrl: './musica.component.html',

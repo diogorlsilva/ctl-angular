@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 
 @Component({
-  selector: 'app-catl',
+  selector: 'ctl-catl',
   standalone: true,
   imports: [],
   templateUrl: './catl.component.html',

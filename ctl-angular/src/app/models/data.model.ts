@@ -32,15 +32,16 @@ export const ctlEmail = 'ctlsc@outlook.com';
 
 export const mission = {
   title: 'Missão, Visão, Valores',
-  message: 'MISSÃO\n' +
-    'O Clube de Tempos Livres de Santa Clara tem como missão uma resposta social qualificada que se espelha no desenvolvimento de atividades culturais, recreativas e desportivas.\n' +
-    '\n' +
-    'VISÃO\n' +
-    'O CTL pretende ser identificado como uma IPSS pró ativa de referência no apoio à família, à infância, à juventude, à pessoa idosa, bem como na implementação de políticas e práticas de apoio à integração social e comunitária.\n' +
-    '\n' +
-    'VALORES\n' +
-    'Afetividade, Realização pessoal, Capacitação, Oportunidades, Igualdade, Respeito, Inovação social, Solidariedade'
-
+  sections: [{
+    title: 'MISSÃO',
+    message: 'O Clube de Tempos Livres de Santa Clara tem como missão uma resposta social qualificada que se espelha no desenvolvimento de atividades culturais, recreativas e desportivas.'
+  }, {
+    title: 'VISÃO',
+    message: 'O CTL pretende ser identificado como uma IPSS pró ativa de referência no apoio à família, à infância, à juventude, à pessoa idosa, bem como na implementação de políticas e práticas de apoio à integração social e comunitária.'
+  }, {
+    title: 'VALORES',
+    message: 'Afetividade, Realização pessoal, Capacitação, Oportunidades, Igualdade, Respeito, Inovação social, Solidariedade'
+  }]
 }
 
 export const institutionMessage = 'O CTL – Clube de Tempos Livres de Santa Clara é uma Instituição Particular de Solidariedade Social dedicada ao bem-estar, à inclusão e à dignidade de todos. Aqui, cada pessoa é acolhida com respeito, carinho e profissionalismo.\n' +

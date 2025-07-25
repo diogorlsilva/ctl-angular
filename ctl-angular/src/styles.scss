@@ -2,6 +2,7 @@
   --nav-height: 70px;
   --ctl-blue: #6567CC;
   --ctl-orange: #FD620D;
+  --border-radius: 0.5rem;
 }
 
 body {
@@ -27,8 +28,59 @@ abbr {
   -webkit-box-orient: vertical;
 }
 
-.m-l-5 {
-  margin-left: 5px;
+$spacings: 5, 10, 20;
+@each $spacing in $spacings {
+  .p-#{$spacing} {
+    padding: #{$spacing}px !important;
+  }
+
+  .p-t-#{$spacing} {
+    padding-top: #{$spacing}px !important;
+  }
+
+  .p-b-#{$spacing} {
+    padding-bottom: #{$spacing}px !important;
+  }
+
+  .p-l-#{$spacing} {
+    padding-left: #{$spacing}px !important;
+  }
+
+  .p-r-#{$spacing} {
+    padding-right: #{$spacing}px !important;
+  }
+
+  .p-v-#{$spacing} {
+    padding: #{$spacing}px 0 !important;
+  }
+
+  .p-h-#{$spacing} {
+    padding: 0 #{$spacing}px !important;
+  }
+
+  .m-#{$spacing} {
+    margin: #{$spacing}px !important;
+  }
+
+  .m-t-#{$spacing} {
+    margin-top: #{$spacing}px !important;
+  }
+
+  .m-b-#{$spacing} {
+    margin-bottom: #{$spacing}px !important;
+  }
+
+  .m-l-#{$spacing} {
+    margin-left: #{$spacing}px !important;
+  }
+
+  .m-r-#{$spacing} {
+    margin-right: #{$spacing}px !important;
+  }
+}
+
+.orange-text {
+  color: var(--ctl-orange);
 }
 
 .clickable-label {

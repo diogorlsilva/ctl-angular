@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 
 @Component({
-  selector: 'app-aec',
+  selector: 'ctl-aec',
   standalone: true,
   imports: [],
   templateUrl: './aec.component.html',

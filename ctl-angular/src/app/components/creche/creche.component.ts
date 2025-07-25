@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 
 @Component({
-  selector: 'app-creche',
+  selector: 'ctl-creche',
   standalone: true,
   imports: [],
   templateUrl: './creche.component.html',

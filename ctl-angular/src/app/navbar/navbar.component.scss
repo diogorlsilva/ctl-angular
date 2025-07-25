@@ -3,6 +3,8 @@
   background-color: var(--ctl-blue);
   height: var(--nav-height);
   align-items: center;
+  z-index: 1;
+  position: relative;
 }
 
 .nav {

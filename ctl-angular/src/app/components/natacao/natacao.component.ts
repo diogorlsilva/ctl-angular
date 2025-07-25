@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 
 @Component({
-  selector: 'app-natacao',
+  selector: 'ctl-natacao',
   standalone: true,
   imports: [],
   templateUrl: './natacao.component.html',

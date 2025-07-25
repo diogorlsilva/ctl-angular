@@ -15,7 +15,7 @@ import {
 import {ModalComponent} from "../modal/modal.component";
 
 @Component({
-  selector: 'inicio',
+  selector: 'ctl-inicio',
   standalone: true,
   imports: [
     ModalComponent
@@ -41,8 +41,9 @@ export class InicioComponent implements OnInit {
 
   mission = mission;
 
-  ngOnInit(): void {
+  private interval: any;
 
+  ngOnInit(): void {
     if (this.fetchDataService.isDataLoaded) {
       this.newsItems = this.fetchDataService.newsItems;
       this.peopleItems = this.fetchDataService.peopleItems;
@@ -50,6 +51,7 @@ export class InicioComponent implements OnInit {
       this.partnersSrcUrs = this.fetchDataService.partnersSrcUrs;
 
       this.setNewsCarousel();
+      setTimeout(() => this.setNewsModalListeners());
 
       return
     }
@@ -64,17 +66,28 @@ export class InicioComponent implements OnInit {
         this.partnersSrcUrs = partnersSrcUrs;
 
         this.setNewsCarousel();
+        setTimeout(() => this.setNewsModalListeners());
       });
 
   }
 
   private setNewsCarousel(): void {
-    this.currentItem = this.newsItems[0];
+    if (!this.currentItem) {
+      this.currentItem = this.newsItems[0];
+    }
 
-    setInterval(() => {
+
+    this.interval = setInterval(() => {
       const currentIndex = this.newsItems.indexOf(this.currentItem);
 
       this.currentItem = currentIndex + 1 === this.newsItems.length ? this.newsItems[0] : this.newsItems[currentIndex + 1];
     }, 5000)
+  }
+
+  private setNewsModalListeners(): void {
+    const modalElement = document.getElementById('news') as HTMLElement;
+
+    modalElement.addEventListener('shown.bs.modal', () => clearInterval(this.interval));
+    modalElement.addEventListener('hidden.bs.modal', () => this.setNewsCarousel());
   }
 }
