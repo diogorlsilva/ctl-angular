@@ -1,0 +1,34 @@
+$photo-max-height: 200px;
+$photo-gap: 5px;
+
+.gallery-container {
+  overflow: hidden;
+  width: 100%;
+  height: calc($photo-max-height * 2) + $photo-gap;
+  transition: all 0.3s ease;
+}
+
+.gallery-flex-container {
+  display: flex;
+  width: 140vw;
+  flex-wrap: wrap;
+  gap: 5px;
+  overflow: hidden;
+
+  .remove-transition {
+    opacity: 0;
+    width: 0 !important;
+    margin-right: -5px;
+  }
+
+  img {
+    max-height: $photo-max-height;
+    opacity: 1;
+    transition: opacity 1s ease, width 1s ease, margin-right 1s ease;
+
+
+    &:first-child {
+      width: var(--first-element-width);
+    }
+  }
+}

@@ -1,4 +1,5 @@
-<div class="navbar-container">
+<div [class.navbar-hide-on-scroll-down]="isGoingDown"
+     class="navbar-container">
   <button [routerLink]="''">Inicio</button>
   <button (click)="isToggled = !isToggled"
           class="toggle">

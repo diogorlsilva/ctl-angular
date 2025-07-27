@@ -1,0 +1,28 @@
+.creche-container {
+  position: relative;
+  background-image: linear-gradient(
+      rgba(0, 0, 0, 0.4),
+      rgba(0, 0, 0, 0.4)
+  ), url("/assets/images/creche/creche_background.jpg");
+  height: 60vh;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+
+  img {
+    height: 150px;
+  }
+
+  .creche-label {
+    font-size: 5rem;
+    color: white;
+    margin-left: 20px;
+    font-family: Century Gothic, CenturyGothic, AppleGothic, sans-serif;
+    font-weight: bold;
+
+  }
+}

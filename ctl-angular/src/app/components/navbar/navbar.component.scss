@@ -1,10 +1,17 @@
 .navbar-container {
   display: flex;
-  background-color: var(--ctl-blue);
+  background-color: var(--ctl-orange);
   height: var(--nav-height);
   align-items: center;
   z-index: 1;
-  position: relative;
+  position: fixed;
+  width: 100%;
+  transition: top 0.3s ease-in-out;
+  top: 0;
+}
+
+.navbar-hide-on-scroll-down {
+  top: calc(0px - var(--nav-height));
 }
 
 .nav {

@@ -10,5 +10,19 @@ import {RouterLink, RouterLinkActive} from "@angular/router";
 })
 export class NavbarComponent {
   isToggled = false;
+  isGoingDown = false;
 
+  private scrollY = window.scrollY;
+
+  constructor() {
+
+    this.scrollY = window.scrollY;
+
+    window.addEventListener('scroll', (e) => {
+      e.stopPropagation()
+
+      this.isGoingDown = window.scrollY > this.scrollY;
+      this.scrollY = window.scrollY;
+    })
+  }
 }

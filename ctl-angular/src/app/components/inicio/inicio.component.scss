@@ -9,8 +9,8 @@
 
 .reception-container {
   position: relative;
-  background-image: url("/assets/images/reception.png");
-  height: calc(80vh - var(--nav-height));
+  background-image: url("/assets/images/inicio_background.png");
+  height: 80vh;
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
@@ -34,7 +34,7 @@ $news-width: 60%;
 
 .news-container {
   position: absolute;
-  background-color: var(--ctl-orange);
+  background-color: var(--ctl-blue);
   height: 160px;
   width: $news-width;
   bottom: -60px;
@@ -89,7 +89,7 @@ $news-image-width: 300px;
 
 .person-image {
   img {
-    height: 190px;
+    height: 150px;
     aspect-ratio: 1 / 1;
     object-fit: cover;
     clip-path: circle();
@@ -189,7 +189,7 @@ $news-image-width: 300px;
 
 @media screen and (max-width: 768px) {
   .reception-container {
-    height: calc(60vh - var(--nav-height));
+    height: 60vh;
   }
 
   .news-container {

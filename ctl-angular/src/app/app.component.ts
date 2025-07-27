@@ -1,5 +1,5 @@
 import {Component, DestroyRef, inject, OnInit} from '@angular/core';
-import {NavbarComponent} from "./navbar/navbar.component";
+import {NavbarComponent} from "./components/navbar/navbar.component";
 
 import * as ExcelJS from 'exceljs';
 import {Workbook} from "./models/data.model";

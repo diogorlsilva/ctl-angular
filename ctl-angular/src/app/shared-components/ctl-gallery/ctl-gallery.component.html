@@ -1,0 +1,8 @@
+<div class="gallery-container">
+  <div class="gallery-flex-container"
+       id="gallery-flex-container">
+    @for (src of photosSRCs; track $index) {
+      <img [src]="src">
+    }
+  </div>
+</div>
