@@ -10,15 +10,15 @@ import {NatacaoComponent} from "../components/natacao/natacao.component";
 import {CrecheComponent} from "../components/creche/creche.component";
 
 export const routes: Routes = [
-  {path: '', component: InicioComponent},
-  {path: 'aec', component: AecComponent},
-  {path: 'creche', component: CrecheComponent},
-  {path: 'catl', component: CatlComponent},
-  {path: 'aec', component: AecComponent},
-  {path: 'refeicoes', component: RefeicoesComponent},
-  {path: 'musica', component: MusicaComponent},
-  {path: 'natacao', component: NatacaoComponent},
-  {path: 'explicacoes', component: ExplicacoesComponent},
-  {path: 'projetos', component: ProjetosComponent},
-
+    { path: '', component: InicioComponent },
+    { path: 'aec', component: AecComponent },
+    { path: 'creche', component: CrecheComponent },
+    { path: 'catl', component: CatlComponent },
+    { path: 'aec', component: AecComponent },
+    { path: 'refeicoes', component: RefeicoesComponent },
+    { path: 'musica', component: MusicaComponent },
+    { path: 'natacao', component: NatacaoComponent },
+    { path: 'explicacoes', component: ExplicacoesComponent },
+    { path: 'projetos', component: ProjetosComponent },
+    { path: '**', component: InicioComponent },
 ]

@@ -1,29 +1,30 @@
 <div [id]="modalId"
      class="modal" tabindex="-1">
-  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 [innerText]="title"
-            class="modal-title">
-        </h5>
-        <button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"></button>
-      </div>
-      <div class="modal-body">
-        @if (contentText) {
-          <p [innerText]="contentText"></p>
-        }
+    <div [class.modal-xl]="modalSize === 'xl'"
+         class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 [innerText]="title"
+                    class="modal-title">
+                </h5>
+                <button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"></button>
+            </div>
+            <div class="modal-body">
+                @if (contentText) {
+                    <p [innerText]="contentText"></p>
+                }
 
-        @if (contentHtml) {
-          <ng-template [ngTemplateOutlet]="contentHtml"></ng-template>
-        }
+                @if (contentHtml) {
+                    <ng-template [ngTemplateOutlet]="contentHtml"></ng-template>
+                }
 
-      </div>
-      @if (hasFooter) {
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+            @if (hasFooter) {
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            }
         </div>
-      }
     </div>
-  </div>
 </div>

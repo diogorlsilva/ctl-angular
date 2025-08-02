@@ -6,7 +6,8 @@
 }
 
 body {
-  scrollbar-gutter: stable;
+  scrollbar-gutter: stable both-edges;
+  padding-right: 0 !important;
 }
 
 abbr {

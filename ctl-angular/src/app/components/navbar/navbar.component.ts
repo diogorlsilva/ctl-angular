@@ -2,27 +2,31 @@ import {Component} from '@angular/core';
 import {RouterLink, RouterLinkActive} from "@angular/router";
 
 @Component({
-  selector: 'ctl-navbar',
-  standalone: true,
-  imports: [RouterLink, RouterLinkActive],
-  templateUrl: './navbar.component.html',
-  styleUrl: './navbar.component.scss'
+    selector: 'ctl-navbar',
+    standalone: true,
+    imports: [RouterLink, RouterLinkActive],
+    templateUrl: './navbar.component.html',
+    styleUrl: './navbar.component.scss'
 })
 export class NavbarComponent {
-  isToggled = false;
-  isGoingDown = false;
+    isToggled = false;
+    isGoingDown = false;
 
-  private scrollY = window.scrollY;
+    private scrollY = window.scrollY;
 
-  constructor() {
+    constructor() {
 
-    this.scrollY = window.scrollY;
+        this.scrollY = window.scrollY;
 
-    window.addEventListener('scroll', (e) => {
-      e.stopPropagation()
+        window.addEventListener('scroll', (e) => {
+            e.stopPropagation()
 
-      this.isGoingDown = window.scrollY > this.scrollY;
-      this.scrollY = window.scrollY;
-    })
-  }
+            if (document.body.style.overflow === 'hidden') {
+                return;
+            }
+
+            this.isGoingDown = window.scrollY >= this.scrollY;
+            this.scrollY = window.scrollY;
+        })
+    }
 }

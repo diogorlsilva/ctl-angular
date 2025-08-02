@@ -1,46 +1,46 @@
 <!-- RECEPTION SECTION-->
 
 <div class="reception-container">
-  <div class="reception-title">
-    <span [innerText]="'Criamos oportunidades, promovemos experiências'"></span>
-  </div>
-  @if (currentItem) {
-    <div class="news-container"
-         data-bs-toggle="modal"
-         data-bs-target="#news">
-      <div class="news-description">
-        <div class="news-title truncate"
-             [innerText]="currentItem.title">
-        </div>
-        <span [innerText]="currentItem.description"
-              class="multi-line-truncate"></span>
-      </div>
-
-      @if (currentItem.photoSrc) {
-        <div class="news-image">
-          <img [alt]="currentItem.description"
-               [src]="currentItem.photoSrc">
-        </div>
-      }
+    <div class="reception-title">
+        <span [innerText]="'Criamos oportunidades, promovemos experiências'"></span>
     </div>
-  }
+    @if (currentItem) {
+        <div class="news-container"
+             data-bs-toggle="modal"
+             data-bs-target="#news">
+            <div class="news-description">
+                <div class="news-title truncate"
+                     [innerText]="currentItem.title">
+                </div>
+                <span [innerText]="currentItem.description"
+                      class="multi-line-truncate"></span>
+            </div>
+
+            @if (currentItem.photoSrc) {
+                <div class="news-image">
+                    <img [alt]="currentItem.description"
+                         [src]="currentItem.photoSrc">
+                </div>
+            }
+        </div>
+    }
 </div>
 
 <!-- PEOPLE SECTION-->
 
 <div class="people-container flex-container aos">
-  @for (person of peopleItems; track $index) {
-    <div class="person-card">
-      <div class="person-image">
-        <img [alt]="person.name"
-             [src]="person.photoSrc">
-      </div>
-      <div class="person-info">
-        <h2 [innerText]="person.name"></h2>
-        <p [innerText]="person.description"></p>
-      </div>
-    </div>
-  }
+    @for (person of peopleItems; track $index) {
+        <div class="person-card">
+            <div class="person-image">
+                <img [alt]="person.name"
+                     [src]="person.photoSrc">
+            </div>
+            <div class="person-info">
+                <h2 [innerText]="person.name"></h2>
+                <p [innerText]="person.description"></p>
+            </div>
+        </div>
+    }
 </div>
 
 <!-- INSTITUTION MESSAGE SECTION-->
@@ -54,132 +54,145 @@
 <!-- NUMBERS SECTION-->
 
 <div class="flex-container aos">
-  @for (number of numbersItems; track $index) {
-    <div class="number-card">
-      <h1 class="number-value"
-          [innerText]="number.value">
-      </h1>
-      <p [innerText]="number.description"></p>
-    </div>
-  }
+    @for (number of numbersItems; track $index) {
+        <div class="number-card">
+            <h1 class="number-value"
+                [innerText]="number.value">
+            </h1>
+            <p [innerText]="number.description"></p>
+        </div>
+    }
 </div>
 
 <!-- PARTNERS SECTION-->
 
 <div class="aos">
-  <div class="partners-title">
-    <h2>Parcerias</h2>
-  </div>
+    <div class="partners-title">
+        <h2>Parcerias</h2>
+    </div>
 
-  <div class="flex-container">
-    @for (partner of partnersSrcUrs; track $index) {
-      <div class="partner-image">
-        <abbr [title]="partner.alt">
-          <img [alt]="partner.alt"
-               [src]="partner.photoSrc"></abbr>
-      </div>
-    }
-  </div>
+    <div class="flex-container">
+        @for (partner of partnersSrcUrs; track $index) {
+            <div class="partner-image">
+                <abbr [title]="partner.alt">
+                    <img [alt]="partner.alt"
+                         [src]="partner.photoSrc"></abbr>
+            </div>
+        }
+    </div>
 </div>
 
 <!--FOOTER SECTION-->
 
 <div class="flex-container footer-container">
 
-  <div class="footer-section">
-    <h4 [innerText]="'Sobre Nós'"
-        class="footer-title">
-    </h4>
+    <div class="footer-section">
+        <h4 [innerText]="'Sobre Nós'"
+            class="footer-title">
+        </h4>
 
-    <div [innerText]="mission.title"
-         class="clickable-label"
-         data-bs-target="#mission"
-         data-bs-toggle="modal">
+        <div [innerText]="mission.title"
+             class="clickable-label"
+             data-bs-target="#mission"
+             data-bs-toggle="modal">
+        </div>
+
+        <div [innerText]="'Orgãos Sociais'"
+             class="clickable-label">
+        </div>
+        <div [innerText]="'Relatórios de Contas'"
+             class="clickable-label"
+             data-bs-target="#reports"
+             data-bs-toggle="modal">
+        </div>
     </div>
 
-    <div [innerText]="'Orgãos Sociais'"
-         class="clickable-label">
-    </div>
-    <div [innerText]="'Relatórios de Contas'"
-         class="clickable-label">
-    </div>
-  </div>
-
-  <div class="footer-section">
-    <h4 [innerText]="'Contatos'"
-        class="footer-title">
-    </h4>
-    <div>
-      <i class="fa-solid fa-phone"></i>
-      <a [href]="'tel:' + telephoneNumber"
-         class="clickable-label">
+    <div class="footer-section">
+        <h4 [innerText]="'Contatos'"
+            class="footer-title">
+        </h4>
+        <div>
+            <i class="fa-solid fa-phone"></i>
+            <a [href]="'tel:' + telephoneNumber"
+               class="clickable-label">
         <span [innerText]="telephoneNumber"
               class="m-l-5">
         </span>
-      </a>
-    </div>
-    <div>
-      <i class="fa-solid fa-mobile-screen"></i>
-      <a [href]="'tel:' + mobileNumber"
-         class="clickable-label">
+            </a>
+        </div>
+        <div>
+            <i class="fa-solid fa-mobile-screen"></i>
+            <a [href]="'tel:' + mobileNumber"
+               class="clickable-label">
         <span [innerText]="mobileNumber"
               class="m-l-5">
         </span>
-      </a>
-    </div>
+            </a>
+        </div>
 
-    <div>
-      <i class="fa-solid fa-envelope"></i>
-      <a [href]="'mailto:' + ctlEmail"
-         class="clickable-label">
+        <div>
+            <i class="fa-solid fa-envelope"></i>
+            <a [href]="'mailto:' + ctlEmail"
+               class="clickable-label">
         <span [innerText]="ctlEmail"
               class="m-l-5">
         </span>
-      </a>
+            </a>
+        </div>
+
+
     </div>
-
-
-  </div>
-  <div class="footer-section">
-    <h4 [innerText]="'Links'"
-        class="footer-title">
-    </h4>
-  </div>
+    <div class="footer-section">
+        <h4 [innerText]="'Links'"
+            class="footer-title">
+        </h4>
+    </div>
 
 </div>
 
 <!-- MODALS SECTION -->
 
 @if (currentItem) {
-  <ctl-modal [contentHtml]="newsContent"
-             [modalId]="'news'"
-             [title]="currentItem.title">
-    <ng-template #newsContent>
-      <div class="p-20">
-        @if (currentItem.photoSrc) {
-          <img class="modal-news-image"
-               [alt]="currentItem.description"
-               [src]="currentItem.photoSrc">
-        }
-        <p class="m-t-10"
-           [innerText]="currentItem.description">
-        </p>
-      </div>
-    </ng-template>
-  </ctl-modal>
+    <ctl-modal [contentHtml]="newsContent"
+               [modalId]="'news'"
+               [title]="currentItem.title">
+        <ng-template #newsContent>
+            <div class="p-20">
+                @if (currentItem.photoSrc) {
+                    <img class="modal-news-image"
+                         [alt]="currentItem.description"
+                         [src]="currentItem.photoSrc">
+                }
+                <p class="m-t-10"
+                   [innerText]="currentItem.description">
+                </p>
+            </div>
+        </ng-template>
+    </ctl-modal>
 }
 
 <ctl-modal [contentHtml]="missionContent"
            [modalId]="'mission'"
            [title]="mission.title">
-  <ng-template #missionContent>
-    <div class="p-20">
-      @for (section of mission.sections; track $index) {
-        <h6 class="orange-text"
-            [innerText]="section.title"></h6>
-        <p [innerText]="section.message"></p>
-      }
-    </div>
-  </ng-template>
+    <ng-template #missionContent>
+        <div class="p-20">
+            @for (section of mission.sections; track $index) {
+                <h6 class="orange-text"
+                    [innerText]="section.title"></h6>
+                <p [innerText]="section.message"></p>
+            }
+        </div>
+    </ng-template>
+</ctl-modal>
+
+<ctl-modal [contentHtml]="reportsContent"
+           [modalId]="'reports'"
+           [modalSize]="'xl'"
+           [title]="'Relatórios de Contas'">
+    <ng-template #reportsContent>
+        <div class="p-20">
+            <iframe height="800" src="assets/PDFs/balanco2015.pdf" width="600"></iframe>
+        </div>
+    </ng-template>
 </ctl-modal>
 
