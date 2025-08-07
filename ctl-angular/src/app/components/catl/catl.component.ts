@@ -1,12 +1,25 @@
-import {Component} from '@angular/core';
+import { Component } from '@angular/core';
+import { CtlGalleryV2Component } from "../../shared-components/ctl-gallery-v2/ctl-gallery-v2.component";
 
 @Component({
-  selector: 'ctl-catl',
-  standalone: true,
-  imports: [],
-  templateUrl: './catl.component.html',
-  styleUrl: './catl.component.scss'
+    selector: 'ctl-catl',
+    standalone: true,
+    imports: [CtlGalleryV2Component],
+    templateUrl: './catl.component.html',
+    styleUrl: './catl.component.scss'
 })
 export class CatlComponent {
-
+    imagesSRCs = [
+        'assets/images/berlengas/1.jpg',
+        'assets/images/berlengas/2.jpg',
+        'assets/images/berlengas/3.jpg',
+        'assets/images/berlengas/4.jpg',
+        'assets/images/berlengas/5.jpg',
+        'assets/images/berlengas/6.jpg',
+        'assets/images/berlengas/7.jpg',
+        'assets/images/berlengas/8.jpg',
+        'assets/images/berlengas/9.jpg',
+        'assets/images/berlengas/10.jpg',
+        'assets/images/berlengas/11.jpg',
+    ]
 }
