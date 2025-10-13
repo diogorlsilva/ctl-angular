@@ -1,7 +1,23 @@
 <div class="gallery-container">
-  <div class="gallery-flex-container"
-       id="gallery-flex-container">
-    @for (src of photosSRCs; track $index) {
+    <div class="photo-group">
+        @for (src of imagesSRCs; track $index) {
+            <img [src]="src">
+        }
+    </div>
+    <div aria-hidden="true" class="photo-group">
+        @for (src of imagesSRCs; track $index) {
+            <img [src]="src">
+        }
+    </div>
+</div>
+<div class="gallery-container gap-margin-top">
+    <div class="photo-group to-right">
+        @for (src of imagesSRCs; track $index) {
+            <img [src]="src">
+        }
+    </div>
+    <div aria-hidden="true" class="photo-group to-right">
+        @for (src of imagesSRCs; track $index) {
       <img [src]="src">
     }
   </div>

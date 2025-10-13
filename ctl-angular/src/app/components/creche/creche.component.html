@@ -1,7 +1,6 @@
-<div class="creche-container">
-  <img [src]="'assets/images/creche/creche_logo.png'" alt="Logo Creche" class="creche-logo">
-  <span [innerText]="'Creche Arco-Íris'"
-        class="creche-label">
-  </span>
-</div>
+<ctl-section-background [backgroundUrl]="'/assets/images/creche/creche_background.jpg'"></ctl-section-background>
+<ctl-message-box [iconSrc]="'assets/images/creche/creche_logo.png'"
+                 [messageBoxText]="messageBoxText"
+                 [title]="'Creche Arco-Íris'">
+</ctl-message-box>
 <ctl-gallery [imagesSRCs]="imagesSRCs"></ctl-gallery>

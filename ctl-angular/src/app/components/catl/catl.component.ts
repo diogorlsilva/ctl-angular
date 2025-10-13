@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { CtlGalleryV2Component } from "../../shared-components/ctl-gallery-v2/ctl-gallery-v2.component";
+import { CtlGalleryComponent } from "../../shared-components/ctl-gallery/ctl-gallery.component";
 
 @Component({
     selector: 'ctl-catl',
     standalone: true,
-    imports: [CtlGalleryV2Component],
+    imports: [CtlGalleryComponent],
     templateUrl: './catl.component.html',
     styleUrl: './catl.component.scss'
 })

@@ -1,0 +1,8 @@
+.background-container {
+  background-image: var(--background-url);
+  filter: brightness(70%) saturate(150%);
+  height: 55vh;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}

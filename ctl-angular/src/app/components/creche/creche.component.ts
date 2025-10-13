@@ -1,11 +1,17 @@
-import {Component} from '@angular/core';
-import {CtlGalleryComponent} from "../../shared-components/ctl-gallery/ctl-gallery.component";
+import { Component } from '@angular/core';
+import { CtlGalleryComponent } from "../../shared-components/ctl-gallery/ctl-gallery.component";
+import { CtlMessageBoxComponent } from "../../shared-components/ctl-message-box/ctl-message-box.component";
+import {
+  CtlSectionBackgroundComponent
+} from "../../shared-components/ctl-section-background/ctl-section-background.component";
 
 @Component({
   selector: 'ctl-creche',
   standalone: true,
   imports: [
-    CtlGalleryComponent
+    CtlGalleryComponent,
+    CtlMessageBoxComponent,
+    CtlSectionBackgroundComponent,
   ],
   templateUrl: './creche.component.html',
   styleUrl: './creche.component.scss'
@@ -24,4 +30,6 @@ export class CrecheComponent {
     'assets/images/berlengas/10.jpg',
     'assets/images/berlengas/11.jpg',
   ]
+
+  messageBoxText = 'A Creche de Aves Marinhas das Berlengas (CAB) é uma estrutura de apoio à conservação da biodiversidade marinha, localizada na ilha da Berlenga, em Portugal.';
 }
