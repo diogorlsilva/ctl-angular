@@ -30,16 +30,7 @@ ctl-gallery {
 
   img {
     height: 200px;
-    border-radius: 10px;
-  }
-
-  @keyframes spin {
-    from {
-      translate: 0;
-    }
-    to {
-      translate: -100%;
-    }
+    border-radius: var(--border-radius);
   }
 }
 

@@ -4,15 +4,13 @@ import { NgTemplateOutlet } from "@angular/common";
 @Component({
     selector: 'ctl-modal',
     standalone: true,
-    imports: [
-        NgTemplateOutlet
-    ],
+    imports: [NgTemplateOutlet],
     templateUrl: './modal.component.html',
     styleUrl: './modal.component.scss'
 })
 export class ModalComponent {
     @Input({ required: true }) modalId: string;
-    @Input() modalSize: 'xl';
+    @Input() modalSize: 'xl' | 'lg';
     @Input() title: string;
     @Input() contentText: string;
     @Input() contentHtml: TemplateRef<HTMLElement>;

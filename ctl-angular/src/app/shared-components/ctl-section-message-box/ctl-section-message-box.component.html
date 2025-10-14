@@ -1,7 +1,11 @@
 <div class="message-box-grid">
-    <img [alt]="title"
-         [src]="iconSrc"
-         class="img-logo">
+    <div class="img-logo-container">
+        @if (iconSrc) {
+            <img [alt]="title"
+                 [src]="iconSrc"
+                 class="img-logo">
+        }
+    </div>
     <span [innerText]="title"
           class="title-label">
   </span>

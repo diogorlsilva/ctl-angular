@@ -1,6 +1,11 @@
 <ctl-section-background [backgroundUrl]="'/assets/images/creche/creche_background.jpg'"></ctl-section-background>
-<ctl-message-box [iconSrc]="'assets/images/creche/creche_logo.png'"
-                 [messageBoxText]="messageBoxText"
-                 [title]="'Creche Arco-Íris'">
-</ctl-message-box>
-<ctl-gallery [imagesSRCs]="imagesSRCs"></ctl-gallery>
+@if (section) {
+    <ctl-section-message-box [iconSrc]="'assets/images/creche/creche_logo.png'"
+                             [messageBoxText]="section.smallDescription"
+                             [title]="'Creche Arco-Íris'">
+    </ctl-section-message-box>
+    <ctl-gallery [imagesSRCs]="section.photoSRCs"></ctl-gallery>
+    <ctl-section-content [section]="section"></ctl-section-content>
+}
+
+

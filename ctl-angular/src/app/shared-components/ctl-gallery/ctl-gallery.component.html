@@ -1,23 +1,23 @@
 <div class="gallery-container">
     <div class="photo-group">
-        @for (src of imagesSRCs; track $index) {
+        @for (src of arrayToRight; track $index) {
             <img [src]="src">
         }
     </div>
     <div aria-hidden="true" class="photo-group">
-        @for (src of imagesSRCs; track $index) {
+        @for (src of arrayToRight; track $index) {
             <img [src]="src">
         }
     </div>
 </div>
 <div class="gallery-container gap-margin-top">
     <div class="photo-group to-right">
-        @for (src of imagesSRCs; track $index) {
+        @for (src of arrayToLeft; track $index) {
             <img [src]="src">
         }
     </div>
     <div aria-hidden="true" class="photo-group to-right">
-        @for (src of imagesSRCs; track $index) {
+        @for (src of arrayToLeft; track $index) {
             <img [src]="src">
         }
     </div>

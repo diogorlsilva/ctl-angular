@@ -1,0 +1,26 @@
+.section-content-container {
+  padding: 3em 20%;
+}
+
+.info-columns-container {
+  margin-top: 50px;
+  display: flex;
+  gap: 40px;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+
+  .column {
+    min-width: 60px;
+    max-width: 350px
+  }
+
+  .column-title {
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+
+  .column-item {
+    padding: 5px 0;
+  }
+}

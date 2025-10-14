@@ -24,23 +24,18 @@ import { ModalComponent } from "../modal/modal.component";
     styleUrl: './inicio.component.scss'
 })
 export class InicioComponent implements OnInit {
-    fetchDataService = inject(FetchDataService);
-    readonly destroyRef = inject(DestroyRef);
-
     newsItems: NewsItem[] = [];
     peopleItems: PersonItem[] = []
     numbersItems: NumberItem[] = [];
     partnersSrcUrs: PartnerItem[];
-
     currentItem: NewsItem;
-
     institutionMessage = institutionMessage;
     telephoneNumber = telephoneNumber;
     mobileNumber = mobileNumber;
     ctlEmail = ctlEmail;
-
     mission = mission;
-
+    private readonly fetchDataService = inject(FetchDataService);
+    private readonly destroyRef = inject(DestroyRef);
     private interval: any;
 
     ngOnInit(): void {
@@ -49,7 +44,7 @@ export class InicioComponent implements OnInit {
         }
 
 
-        if (this.fetchDataService.isDataLoaded) {
+        if (this.fetchDataService.isReceptionDataLoaded) {
             this.newsItems = this.fetchDataService.newsItems;
             this.peopleItems = this.fetchDataService.peopleItems;
             this.numbersItems = this.fetchDataService.numbersItems;

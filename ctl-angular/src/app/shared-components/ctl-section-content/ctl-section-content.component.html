@@ -1,0 +1,24 @@
+<div class="section-content-container">
+    <div [innerText]="section.description"></div>
+    <div class="info-columns-container">
+
+
+        <div class="column column-left">
+            <div [innerText]="section.leftTitle"
+                 class="column-title"></div>
+            @for (item of section.leftBullets; track $index) {
+                <div [innerText]="item" class="column-item"></div>
+            }
+
+        </div>
+
+
+        <div class="column column-right">
+            <div [innerText]="section.rightTitle"
+                 class="column-title"></div>
+            @for (item of section.rightBullets; track $index) {
+                <div [innerText]="item" class="column-item"></div>
+            }
+        </div>
+    </div>
+</div>

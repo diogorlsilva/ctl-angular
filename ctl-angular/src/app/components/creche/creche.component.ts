@@ -1,35 +1,44 @@
-import { Component } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { CtlGalleryComponent } from "../../shared-components/ctl-gallery/ctl-gallery.component";
-import { CtlMessageBoxComponent } from "../../shared-components/ctl-message-box/ctl-message-box.component";
 import {
     CtlSectionBackgroundComponent
 } from "../../shared-components/ctl-section-background/ctl-section-background.component";
+import { SectionItem } from "../../models/data.model";
+import { FetchDataService } from "../../services/fetch-data.service";
+import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
+import {
+    CtlSectionMessageBoxComponent
+} from "../../shared-components/ctl-section-message-box/ctl-section-message-box.component";
+import { CtlSectionContentComponent } from "../../shared-components/ctl-section-content/ctl-section-content.component";
 
 @Component({
     selector: 'ctl-creche',
     standalone: true,
     imports: [
         CtlGalleryComponent,
-        CtlMessageBoxComponent,
         CtlSectionBackgroundComponent,
+        CtlSectionMessageBoxComponent,
+        CtlSectionContentComponent,
     ],
     templateUrl: './creche.component.html',
     styleUrl: './creche.component.scss'
 })
-export class CrecheComponent {
-    imagesSRCs = [
-        'assets/images/berlengas/1.jpg',
-        'assets/images/berlengas/2.jpg',
-        'assets/images/berlengas/3.jpg',
-        'assets/images/berlengas/4.jpg',
-        'assets/images/berlengas/5.jpg',
-        'assets/images/berlengas/6.jpg',
-        'assets/images/berlengas/7.jpg',
-        'assets/images/berlengas/8.jpg',
-        'assets/images/berlengas/9.jpg',
-        'assets/images/berlengas/10.jpg',
-        'assets/images/berlengas/11.jpg',
-    ]
+export class CrecheComponent implements OnInit {
+    section: SectionItem;
 
-    messageBoxText = 'A Creche de Aves Marinhas das Berlengas (CAB) é uma estrutura de apoio à conservação da biodiversidade marinha, localizada na ilha da Berlenga, em Portugal.';
+    private readonly fetchDataService = inject(FetchDataService);
+    private readonly destroyRef = inject(DestroyRef);
+
+    ngOnInit(): void {
+
+        if (this.fetchDataService.isSectionsDataLoaded) {
+            this.section = this.fetchDataService.crecheSection;
+            console.log(this.section);
+            return;
+        }
+
+        this.fetchDataService.setSectionsData()
+            .pipe(takeUntilDestroyed(this.destroyRef))
+            .subscribe(() => this.section = this.fetchDataService.crecheSection);
+    }
 }

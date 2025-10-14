@@ -2,7 +2,8 @@
   --nav-height: 70px;
   --ctl-blue: #6567CC;
   --ctl-orange: #FD620D;
-  --border-radius: 0.5rem;
+  --border-radius: 15px;
+  --box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
 body {
@@ -28,6 +29,15 @@ abbr {
   overflow: hidden;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
+}
+
+@keyframes spin {
+  from {
+    translate: 0;
+  }
+  to {
+    translate: -100%;
+  }
 }
 
 $spacings: 5, 10, 20;

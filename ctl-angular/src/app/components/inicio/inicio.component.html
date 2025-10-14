@@ -6,11 +6,11 @@
     </div>
     @if (currentItem) {
         <div class="news-container"
-             data-bs-toggle="modal"
-             data-bs-target="#news">
+             data-bs-target="#news"
+             data-bs-toggle="modal">
             <div class="news-description">
-                <div class="news-title truncate"
-                     [innerText]="currentItem.title">
+                <div [innerText]="currentItem.title"
+                     class="news-title truncate">
                 </div>
                 <span [innerText]="currentItem.description"
                       class="multi-line-truncate"></span>
@@ -56,8 +56,8 @@
 <div class="flex-container aos">
     @for (number of numbersItems; track $index) {
         <div class="number-card">
-            <h1 class="number-value"
-                [innerText]="number.value">
+            <h1 [innerText]="number.value"
+                class="number-value">
             </h1>
             <p [innerText]="number.description"></p>
         </div>
@@ -71,14 +71,27 @@
         <h2>Parcerias</h2>
     </div>
 
-    <div class="flex-container">
-        @for (partner of partnersSrcUrs; track $index) {
-            <div class="partner-image">
-                <abbr [title]="partner.alt">
-                    <img [alt]="partner.alt"
-                         [src]="partner.photoSrc"></abbr>
-            </div>
-        }
+    <div class="partners-gallery-container">
+        <div class="partners-photo-group">
+            @for (partner of partnersSrcUrs; track $index) {
+                <div class="partner-image">
+                    <abbr [title]="partner.alt">
+                        <img [alt]="partner.alt"
+                             [src]="partner.photoSrc"></abbr>
+                </div>
+            }
+        </div>
+
+        <div aria-hidden="true"
+             class="partners-photo-group">
+            @for (partner of partnersSrcUrs; track $index) {
+                <div class="partner-image">
+                    <abbr [title]="partner.alt">
+                        <img [alt]="partner.alt"
+                             [src]="partner.photoSrc"></abbr>
+                </div>
+            }
+        </div>
     </div>
 </div>
 
@@ -159,12 +172,12 @@
         <ng-template #newsContent>
             <div class="p-20">
                 @if (currentItem.photoSrc) {
-                    <img class="modal-news-image"
-                         [alt]="currentItem.description"
-                         [src]="currentItem.photoSrc">
+                    <img [alt]="currentItem.description"
+                         [src]="currentItem.photoSrc"
+                         class="modal-news-image">
                 }
-                <p class="m-t-10"
-                   [innerText]="currentItem.description">
+                <p [innerText]="currentItem.description"
+                   class="m-t-10">
                 </p>
             </div>
         </ng-template>
@@ -177,8 +190,8 @@
     <ng-template #missionContent>
         <div class="p-20">
             @for (section of mission.sections; track $index) {
-                <h6 class="orange-text"
-                    [innerText]="section.title"></h6>
+                <h6 [innerText]="section.title"
+                    class="orange-text"></h6>
                 <p [innerText]="section.message"></p>
             }
         </div>

@@ -1,10 +1,14 @@
-ctl-message-box {
+ctl-section-message-box {
   position: relative;
   display: block;
 }
 
-.img-logo {
+.img-logo-container {
   height: 150px;
+}
+
+.img-logo {
+  height: 100%;
 }
 
 .message-box-grid {
@@ -18,12 +22,13 @@ ctl-message-box {
   bottom: 0;
   transform: translate(-50%, 50px);
   max-width: 90%;
+  padding: 0 10px;
 }
 
 .box-container {
   background-color: white;
-  border-radius: 10px;
-  box-shadow: rgba(black, 0.35) 0px 5px 15px;
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
   padding: 20px 30px;
   width: 800px;
   max-width: 90%;
@@ -46,6 +51,11 @@ ctl-message-box {
     grid-template-columns: 150px 600px;
   }
 
+  .img-logo-container {
+    height: 125px;
+  }
+
+
   .title-label {
     font-size: 4rem;
   }
@@ -58,7 +68,7 @@ ctl-message-box {
     justify-items: center;
   }
 
-  .img-logo {
+  .img-logo-container {
     height: 100px;
   }
 

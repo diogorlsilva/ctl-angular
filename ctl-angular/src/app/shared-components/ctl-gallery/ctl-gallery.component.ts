@@ -1,4 +1,5 @@
 import { Component, Input, ViewEncapsulation } from '@angular/core';
+import { arrayShuffle } from "../../utils/utils.model";
 
 @Component({
     selector: 'ctl-gallery',
@@ -9,5 +10,11 @@ import { Component, Input, ViewEncapsulation } from '@angular/core';
     encapsulation: ViewEncapsulation.None
 })
 export class CtlGalleryComponent {
-    @Input() imagesSRCs: string[] = []
+    arrayToLeft: string[];
+    arrayToRight: string[];
+
+    @Input() set imagesSRCs(array: string[]) {
+        this.arrayToLeft = arrayShuffle(array);
+        this.arrayToRight = arrayShuffle(array);
+    }
 }

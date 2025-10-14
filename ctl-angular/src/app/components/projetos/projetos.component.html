@@ -1,1 +1,61 @@
-<p>projects works!</p>
+<ctl-section-background [backgroundUrl]="'/assets/images/projetos/projetos_background.jpg'"></ctl-section-background>
+<ctl-section-message-box [messageBoxText]="messageBoxText"
+                         [title]="'Projetos'">
+</ctl-section-message-box>
+
+<div class="cards-container">
+    @for (project of projectItems; track $index) {
+        <div class="project-card-container">
+            <div class="card-img-container">
+                <img [alt]="project.title"
+                     [src]="project.iconSRC">
+            </div>
+            <div class="info-container">
+                <div [innerText]="project.title" class="title"></div>
+                <div [innerText]="project.description" class="description"></div>
+            </div>
+            <div class="button-container">
+                <button [attr.data-bs-target]="'#' + project.modalId"
+                        class="btn btn-outline-dark btn-sm"
+                        data-bs-toggle="modal">Ver mais
+                </button>
+            </div>
+        </div>
+        <ctl-modal [contentHtml]="photos"
+                   [modalId]="project.modalId"
+                   [modalSize]="'lg'"
+                   [title]="project.title">
+            <ng-template #photos>
+                <p [innerText]="project.description"
+                   class="p-20">
+                </p>
+                <div [id]="'carousel' + project.modalId"
+                     class="carousel slide p-20" data-bs-ride="true">
+                    <div class="carousel-inner">
+                        @for (photoSRC of project.photoSRCs; track $index) {
+                            <div [class.active]="$index === 0"
+                                 class="carousel-item">
+                                <img [alt]="'Imagem ' + ($index + 1) + ' do projeto ' + project.title"
+                                     [src]="photoSRC"
+                                     class="d-block w-100">
+                            </div>
+                        }
+                    </div>
+                    <button [attr.data-bs-target]="'#carousel' + project.modalId" class="carousel-control-prev"
+                            data-bs-slide="prev"
+                            type="button">
+                        <span aria-hidden="true" class="carousel-control-prev-icon"></span>
+                        <span class="visually-hidden">Anterior</span>
+                    </button>
+                    <button [attr.data-bs-target]="'#carousel' + project.modalId" class="carousel-control-next"
+                            data-bs-slide="next"
+                            type="button">
+                        <span aria-hidden="true" class="carousel-control-next-icon"></span>
+                        <span class="visually-hidden">Próximo</span>
+                    </button>
+                </div>
+            </ng-template>
+
+        </ctl-modal>
+    }
+</div>
