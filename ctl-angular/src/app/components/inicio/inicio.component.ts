@@ -2,12 +2,14 @@ import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { FetchDataService } from "@services/fetch-data.service";
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 import {
+    AccountReport,
     ctlEmail,
     institutionMessage,
     mission,
     mobileNumber,
     NewsItem,
     NumberItem,
+    OrganisationItem,
     PartnerItem,
     PersonItem,
     telephoneNumber
@@ -29,6 +31,9 @@ export class InicioComponent implements OnInit {
     numbersItems: NumberItem[] = [];
     partnersSrcUrs: PartnerItem[];
     currentItem: NewsItem;
+    reports: AccountReport[];
+    organisation: OrganisationItem;
+
     institutionMessage = institutionMessage;
     telephoneNumber = telephoneNumber;
     mobileNumber = mobileNumber;
@@ -43,12 +48,13 @@ export class InicioComponent implements OnInit {
             location.pathname = "";
         }
 
-
         if (this.fetchDataService.isReceptionDataLoaded) {
             this.newsItems = this.fetchDataService.newsItems;
             this.peopleItems = this.fetchDataService.peopleItems;
             this.numbersItems = this.fetchDataService.numbersItems;
             this.partnersSrcUrs = this.fetchDataService.partnersSrcUrs;
+            this.reports = this.fetchDataService.reportsItems;
+            this.organisation = this.fetchDataService.organisationItem;
 
             this.setNewsCarousel();
             setTimeout(() => this.setNewsModalListeners());
@@ -57,13 +63,15 @@ export class InicioComponent implements OnInit {
         }
 
 
-        this.fetchDataService.setReceptionData()
+        this.fetchDataService.setHomepageData()
             .pipe(takeUntilDestroyed(this.destroyRef))
-            .subscribe(([newsItems, peopleItems, numbersItems, partnersSrcUrs]) => {
+            .subscribe(([newsItems, peopleItems, numbersItems, partnersSrcUrs, reportsItems, organisationItem]) => {
                 this.newsItems = newsItems;
                 this.peopleItems = peopleItems;
                 this.numbersItems = numbersItems;
                 this.partnersSrcUrs = partnersSrcUrs;
+                this.reports = reportsItems;
+                this.organisation = organisationItem;
 
                 this.setNewsCarousel();
                 setTimeout(() => this.setNewsModalListeners());

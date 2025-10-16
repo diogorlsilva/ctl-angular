@@ -218,6 +218,18 @@ $news-image-width: 300px;
   width: 100%;
 }
 
+.report-item-container {
+  padding: 15px 2%;
+
+  h6 {
+    font-size: 1.2em;
+  }
+
+  span {
+    white-space: nowrap;
+  }
+}
+
 
 @media screen and (max-width: 768px) {
   .reception-container {

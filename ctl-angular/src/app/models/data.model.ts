@@ -44,6 +44,20 @@ export type SectionItem = {
     photoSRCs: string[];
 }
 
+export type AccountReport = {
+    year: string;
+    balanceSheetName: string;
+    balanceSheetFile: string;
+    profitAndLossName: string;
+    profitAndLossFile: string;
+}
+
+export type OrganisationItem = {
+    generalAssembly: { title: string; name: string; }[],
+    direction: { title: string; name: string; }[],
+    fiscalCouncil: { title: string; name: string; }[],
+}
+
 export const telephoneNumber = '239 445 810';
 export const mobileNumber = '+351 999 999 999';
 export const ctlEmail = 'ctlsc@outlook.com';

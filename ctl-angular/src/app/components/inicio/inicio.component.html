@@ -111,8 +111,11 @@
         </div>
 
         <div [innerText]="'Orgãos Sociais'"
-             class="clickable-label">
+             class="clickable-label"
+             data-bs-target="#organisation"
+             data-bs-toggle="modal">
         </div>
+
         <div [innerText]="'Relatórios de Contas'"
              class="clickable-label"
              data-bs-target="#reports"
@@ -198,14 +201,64 @@
     </ng-template>
 </ctl-modal>
 
+<ctl-modal [contentHtml]="organisationTemplate"
+           [modalId]="'organisation'"
+           [title]="'Orgãos Sociais'">
+    <ng-template #organisationTemplate>
+        @if (organisation) {
+            <h6 [innerText]="'Assembleia Geral'"
+                class="orange-text">
+            </h6>
+            @for (member of organisation.generalAssembly; track $index) {
+                <div>
+                    <span [innerText]="member.title"></span> - <span [innerText]="member.name"></span>
+                </div>
+            }
+
+            <h6 [innerText]="'Direção'"
+                class="orange-text m-t-20">
+            </h6>
+            @for (member of organisation.direction; track $index) {
+                <div>
+                    <span [innerText]="member.title"></span> - <span [innerText]="member.name"></span>
+                </div>
+            }
+
+            <h6 [innerText]="'Conseho Fiscal'"
+                class="orange-text m-t-20">
+            </h6>
+            @for (member of organisation.fiscalCouncil; track $index) {
+                <div>
+                    <span [innerText]="member.title"></span> - <span [innerText]="member.name"></span>
+                </div>
+            }
+        }
+    </ng-template>
+</ctl-modal>
+
 <ctl-modal [contentHtml]="reportsContent"
            [modalId]="'reports'"
-           [modalSize]="'xl'"
            [title]="'Relatórios de Contas'">
     <ng-template #reportsContent>
-        <div class="p-20">
-            <iframe height="800" src="assets/PDFs/balanco2015.pdf" width="600"></iframe>
-        </div>
+        @for (report of reports; track $index) {
+            <div class="report-item-container">
+                <h6 [innerText]="report.year"
+                    class="orange-text">
+                </h6>
+                <div class="m-l-15">
+                    <a [href]="'assets/RELATORIOS_CONTAS/' + report.balanceSheetFile"
+                       rel="noopener noreferrer"
+                       target="_blank">
+                        <span [innerText]="report.balanceSheetName"></span>
+                    </a> e
+                    <a [href]="'assets/RELATORIOS_CONTAS/' + report.profitAndLossFile"
+                       rel="noopener noreferrer"
+                       target="_blank">
+                        <span [innerText]="report.profitAndLossName"></span>
+                    </a>
+                </div>
+            </div>
+        }
     </ng-template>
 </ctl-modal>
 

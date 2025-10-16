@@ -4,7 +4,17 @@ import { HttpClient } from "@angular/common/http";
 import * as ExcelJS from 'exceljs';
 
 import { catchError, EMPTY, firstValueFrom, forkJoin, from, map, Observable, switchMap, tap } from "rxjs";
-import { NewsItem, NumberItem, PartnerItem, PersonItem, ProjectItem, SectionItem, Workbook } from "@models/data.model";
+import {
+    AccountReport,
+    NewsItem,
+    NumberItem,
+    OrganisationItem,
+    PartnerItem,
+    PersonItem,
+    ProjectItem,
+    SectionItem,
+    Workbook
+} from "@models/data.model";
 import { arrayShuffle } from "../utils/utils.model";
 
 @Injectable({ providedIn: 'root' })
@@ -14,6 +24,8 @@ export class FetchDataService {
     numbersItems: NumberItem[];
     partnersSrcUrs: PartnerItem[];
     projectsItems: ProjectItem[];
+    reportsItems: AccountReport[];
+    organisationItem: OrganisationItem;
 
     crecheSection: SectionItem;
     catlSection: SectionItem;
@@ -29,17 +41,21 @@ export class FetchDataService {
     private readonly httpClient = inject(HttpClient);
 
 
-    setReceptionData() {
+    setHomepageData() {
         return forkJoin([
-            this.getReceptionData(),
+            this.getNewsData(),
             this.getPeopleData(),
             this.getNumbersData(),
             this.getPartnersPhotosURLs(),
-        ]).pipe(tap(([newsItems, peopleItems, numbersItems, partnersSrcUrs]) => {
+            this.getReportsData(),
+            this.getOrganisationData()
+        ]).pipe(tap(([newsItems, peopleItems, numbersItems, partnersSrcUrs, reportsItems, organisationItem]) => {
             this.newsItems = newsItems;
             this.peopleItems = peopleItems;
             this.numbersItems = numbersItems;
             this.partnersSrcUrs = partnersSrcUrs;
+            this.reportsItems = reportsItems;
+            this.organisationItem = organisationItem;
 
             this.isReceptionDataLoaded = true;
         }))
@@ -80,9 +96,11 @@ export class FetchDataService {
     }
 
 
-    getReceptionData(): Observable<NewsItem[]> {
-        return this.fetchData('NOTICIAS').pipe(map((workbook) => {
-            const rows = ((workbook.model.worksheets[0] as any).rows as any[]);
+    getNewsData(): Observable<NewsItem[]> {
+        return this.fetchData('PAGINA_INICIAL/NOTICIAS').pipe(map((workbook) => {
+            const rows = [...((workbook.model.worksheets[0] as any).rows as any[])];
+
+            rows.shift();
 
             return rows.map((row, index) => {
                 const buffer = workbook.getImage(index)?.buffer as BlobPart;
@@ -97,8 +115,10 @@ export class FetchDataService {
     }
 
     getPeopleData(): Observable<PersonItem[]> {
-        return this.fetchData('PESSOAS').pipe(map((workbook) => {
-            const rows = ((workbook.model.worksheets[0] as any).rows as any[]);
+        return this.fetchData('PAGINA_INICIAL/PESSOAS').pipe(map((workbook) => {
+            const rows = [...((workbook.model.worksheets[0] as any).rows as any[])];
+
+            rows.shift();
 
             return rows.map((row, index) => {
                 const buffer = workbook.getImage(index)?.buffer as BlobPart;
@@ -113,8 +133,10 @@ export class FetchDataService {
     }
 
     getNumbersData(): Observable<NumberItem[]> {
-        return this.fetchData('NUMEROS').pipe(map((workbook) => {
-            const rows = ((workbook.model.worksheets[0] as any).rows as any[]);
+        return this.fetchData('PAGINA_INICIAL/NUMEROS').pipe(map((workbook) => {
+            const rows = [...((workbook.model.worksheets[0] as any).rows as any[])];
+
+            rows.shift();
 
             return rows.map((row, index) => {
                 return {
@@ -126,8 +148,10 @@ export class FetchDataService {
     }
 
     getPartnersPhotosURLs(): Observable<PartnerItem[]> {
-        return this.fetchData('PARCERIAS').pipe(map((workbook) => {
-            const rows = ((workbook.model.worksheets[0] as any).rows as any[]);
+        return this.fetchData('PAGINA_INICIAL/PARCERIAS').pipe(map((workbook) => {
+            const rows = [...((workbook.model.worksheets[0] as any).rows as any[])];
+
+            rows.shift();
 
             return rows.map((row, index) => {
                 const buffer = workbook.getImage(index)?.buffer as BlobPart;
@@ -161,6 +185,53 @@ export class FetchDataService {
             })
         }))
     }
+
+    getReportsData(): Observable<AccountReport[]> {
+        return this.fetchData('RELATORIOS_CONTAS/INFO_RELATORIOS_CONTAS').pipe(map((workbook) => {
+            const rows = [...((workbook.model.worksheets[0] as any).rows as any[])];
+
+            rows.shift();
+
+            return rows.map((row) => {
+                return {
+                    year: this.parse(row?.cells[0]?.value),
+                    balanceSheetName: this.parse(row?.cells[1]?.value),
+                    balanceSheetFile: this.parse(row?.cells[2]?.value),
+                    profitAndLossName: this.parse(row?.cells[3]?.value),
+                    profitAndLossFile: this.parse(row?.cells[4]?.value),
+                };
+            }).filter(item =>
+                Object.values(item).every(value => !!value)
+            );
+        }))
+    }
+
+    getOrganisationData(): Observable<OrganisationItem> {
+        return this.fetchData('PAGINA_INICIAL/ORGAOS_SOCIAIS').pipe(map((workbook) => {
+            const rows = [...((workbook.model.worksheets[0] as any).rows as any[])];
+
+            return {
+                generalAssembly: [
+                    { title: this.parse(rows[1]?.cells[0]?.value), name: this.parse(rows[1]?.cells[1]?.value) },
+                    { title: this.parse(rows[2]?.cells[0]?.value), name: this.parse(rows[2]?.cells[1]?.value) },
+                    { title: this.parse(rows[3]?.cells[0]?.value), name: this.parse(rows[3]?.cells[1]?.value) },
+                ],
+                direction: [
+                    { title: this.parse(rows[5]?.cells[0]?.value), name: this.parse(rows[5]?.cells[1]?.value) },
+                    { title: this.parse(rows[6]?.cells[0]?.value), name: this.parse(rows[6]?.cells[1]?.value) },
+                    { title: this.parse(rows[7]?.cells[0]?.value), name: this.parse(rows[7]?.cells[1]?.value) },
+                    { title: this.parse(rows[8]?.cells[0]?.value), name: this.parse(rows[8]?.cells[1]?.value) },
+                    { title: this.parse(rows[9]?.cells[0]?.value), name: this.parse(rows[9]?.cells[1]?.value) },
+                ],
+                fiscalCouncil: [
+                    { title: this.parse(rows[11]?.cells[0]?.value), name: this.parse(rows[11]?.cells[1]?.value) },
+                    { title: this.parse(rows[12]?.cells[0]?.value), name: this.parse(rows[12]?.cells[1]?.value) },
+                    { title: this.parse(rows[13]?.cells[0]?.value), name: this.parse(rows[13]?.cells[1]?.value) },
+                ]
+            }
+        }))
+    }
+
 
     getSectionData(sectionFileName: string): Observable<SectionItem> {
         return this.fetchData(sectionFileName).pipe(map((workbook) => {
@@ -221,7 +292,7 @@ export class FetchDataService {
         const workbooks: Workbook[] = []
 
         while (!isDone) {
-            const workbook = await firstValueFrom(this.fetchData(`PROJETO_${projectNumber}`), { defaultValue: null });
+            const workbook = await firstValueFrom(this.fetchData(`PROJETOS/PROJETO_${projectNumber}`), { defaultValue: null });
 
             isDone = !workbook;
             projectNumber++;
