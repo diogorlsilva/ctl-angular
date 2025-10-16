@@ -138,7 +138,7 @@ export class FetchDataService {
 
             rows.shift();
 
-            return rows.map((row, index) => {
+            return rows.map((row) => {
                 return {
                     description: this.parse(row.cells[0]?.value),
                     value: this.parse(row.cells[1]?.value),
