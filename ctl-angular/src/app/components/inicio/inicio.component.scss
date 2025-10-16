@@ -1,5 +1,7 @@
 // RECEPTION SECTION
 
+$content-max-width: 1200px;
+
 .flex-container {
   padding: 3em 20%;
   display: flex;
@@ -36,8 +38,9 @@ $news-width: 60%;
   position: absolute;
   background-color: var(--ctl-blue);
   height: 160px;
+  max-width: $content-max-width;
   width: $news-width;
-  bottom: -60px;
+  bottom: -30px;
   left: calc(calc(100% - #{$news-width}) / 2);
   padding: 1em 1.5em;
   display: flex;
@@ -60,16 +63,16 @@ $news-image-width: 300px;
 }
 
 .news-image {
-  box-shadow: var(--box-shadow);
-
   img {
     width: $news-image-width;
+    max-width: 400px;
     aspect-ratio: 1 / 1;
     object-fit: cover;
     position: relative;
     top: 50%;
     transform: translateY(-50%);
     border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
   }
 }
 
@@ -231,13 +234,21 @@ $news-image-width: 300px;
 }
 
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 1024px) {
   .reception-container {
     height: 60vh;
+
+    .reception-title {
+      font-size: 40px;
+      padding: 1em;
+    }
   }
 
   .news-container {
     flex-direction: column;
+    width: 80%;
+    left: calc((100% - 80%) / 2);
+
   }
 
   .news-title {
