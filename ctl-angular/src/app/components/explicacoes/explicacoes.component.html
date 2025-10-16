@@ -1,1 +1,9 @@
-<p>explicacoes works!</p>
+<ctl-section-background [backgroundUrl]="'/assets/images/explicacoes/natacao_background.jpg'"></ctl-section-background>
+@if (section) {
+    <ctl-section-message-box [iconSrc]="'assets/images/explicacoes/explicacoes_logo.png'"
+                             [messageBoxText]="section.smallDescription"
+                             [title]="'Explicações'">
+    </ctl-section-message-box>
+    <ctl-gallery [imagesSRCs]="section.photoSRCs"></ctl-gallery>
+    <ctl-section-content [section]="section"></ctl-section-content>
+}

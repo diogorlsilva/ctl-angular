@@ -1,1 +1,9 @@
-<ctl-gallery [imagesSRCs]="imagesSRCs"></ctl-gallery>
+<ctl-section-background [backgroundUrl]="'/assets/images/catl/catl_background.jpg'"></ctl-section-background>
+@if (section) {
+    <ctl-section-message-box [iconSrc]="'assets/images/creche/catl_logo.png'"
+                             [messageBoxText]="section.smallDescription"
+                             [title]="'CATL'">
+    </ctl-section-message-box>
+    <ctl-gallery [imagesSRCs]="section.photoSRCs"></ctl-gallery>
+    <ctl-section-content [section]="section"></ctl-section-content>
+}

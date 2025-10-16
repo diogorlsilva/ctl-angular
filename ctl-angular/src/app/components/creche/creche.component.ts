@@ -1,15 +1,11 @@
 import { Component, DestroyRef, inject, OnInit } from '@angular/core';
-import { CtlGalleryComponent } from "../../shared-components/ctl-gallery/ctl-gallery.component";
-import {
-    CtlSectionBackgroundComponent
-} from "../../shared-components/ctl-section-background/ctl-section-background.component";
-import { SectionItem } from "../../models/data.model";
-import { FetchDataService } from "../../services/fetch-data.service";
+import { CtlGalleryComponent } from "@shared/ctl-gallery/ctl-gallery.component";
+import { CtlSectionBackgroundComponent } from "@shared/ctl-section-background/ctl-section-background.component";
+import { SectionItem } from "@models/data.model";
+import { FetchDataService } from "@services/fetch-data.service";
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
-import {
-    CtlSectionMessageBoxComponent
-} from "../../shared-components/ctl-section-message-box/ctl-section-message-box.component";
-import { CtlSectionContentComponent } from "../../shared-components/ctl-section-content/ctl-section-content.component";
+import { CtlSectionMessageBoxComponent } from "@shared/ctl-section-message-box/ctl-section-message-box.component";
+import { CtlSectionContentComponent } from "@shared/ctl-section-content/ctl-section-content.component";
 
 @Component({
     selector: 'ctl-creche',
@@ -30,10 +26,9 @@ export class CrecheComponent implements OnInit {
     private readonly destroyRef = inject(DestroyRef);
 
     ngOnInit(): void {
-
         if (this.fetchDataService.isSectionsDataLoaded) {
             this.section = this.fetchDataService.crecheSection;
-            console.log(this.section);
+
             return;
         }
 

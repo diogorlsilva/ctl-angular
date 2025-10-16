@@ -1,1 +1,9 @@
-<p>refeicoes works!</p>
+<ctl-section-background [backgroundUrl]="'/assets/images/refeicoes/refeicoes_background.jpg'"></ctl-section-background>
+@if (section) {
+    <ctl-section-message-box [iconSrc]="'assets/images/refeicoes/refeicoes_logo.png'"
+                             [messageBoxText]="section.smallDescription"
+                             [title]="'Refeições'">
+    </ctl-section-message-box>
+    <ctl-gallery [imagesSRCs]="section.photoSRCs"></ctl-gallery>
+    <ctl-section-content [section]="section"></ctl-section-content>
+}

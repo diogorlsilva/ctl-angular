@@ -1,4 +1,3 @@
-/* To learn more about this file see: https://angular.io/config/tsconfig. */
 {
   "compileOnSave": false,
   "compilerOptions": {
@@ -29,7 +28,13 @@
         "assets/*"
       ],
       "@models/*": [
-        "app/models*"
+        "src/app/models/*"
+      ],
+      "@shared/*": [
+        "src/app/shared-components/*"
+      ],
+      "@services/*": [
+        "src/app/services/*"
       ]
     }
   },

@@ -1,1 +1,9 @@
-<p>aec works!</p>
+<ctl-section-background [backgroundUrl]="'/assets/images/aec/aec_background.jpg'"></ctl-section-background>
+@if (section) {
+    <ctl-section-message-box [iconSrc]="'assets/images/aec/aec_logo.png'"
+                             [messageBoxText]="section.smallDescription"
+                             [title]="'AEC'">
+    </ctl-section-message-box>
+    <ctl-gallery [imagesSRCs]="section.photoSRCs"></ctl-gallery>
+    <ctl-section-content [section]="section"></ctl-section-content>
+}

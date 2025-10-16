@@ -1,5 +1,5 @@
 import { Component, DestroyRef, inject, OnInit } from '@angular/core';
-import { FetchDataService } from "../../services/fetch-data.service";
+import { FetchDataService } from "@services/fetch-data.service";
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 import {
     ctlEmail,
@@ -11,7 +11,7 @@ import {
     PartnerItem,
     PersonItem,
     telephoneNumber
-} from "../../models/data.model";
+} from "@models/data.model";
 import { ModalComponent } from "../modal/modal.component";
 
 @Component({

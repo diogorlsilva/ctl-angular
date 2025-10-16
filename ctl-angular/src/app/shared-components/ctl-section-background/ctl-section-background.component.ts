@@ -9,5 +9,5 @@ import { Component, Input, ViewEncapsulation } from '@angular/core';
     encapsulation: ViewEncapsulation.None
 })
 export class CtlSectionBackgroundComponent {
-    @Input() backgroundUrl = ''
+    @Input() backgroundUrl = 'assets/images/inicio-background.png';
 }

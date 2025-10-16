@@ -4,15 +4,7 @@ import { HttpClient } from "@angular/common/http";
 import * as ExcelJS from 'exceljs';
 
 import { catchError, EMPTY, firstValueFrom, forkJoin, from, map, Observable, switchMap, tap } from "rxjs";
-import {
-    NewsItem,
-    NumberItem,
-    PartnerItem,
-    PersonItem,
-    ProjectItem,
-    SectionItem,
-    Workbook
-} from "../models/data.model";
+import { NewsItem, NumberItem, PartnerItem, PersonItem, ProjectItem, SectionItem, Workbook } from "@models/data.model";
 import { arrayShuffle } from "../utils/utils.model";
 
 @Injectable({ providedIn: 'root' })
@@ -22,7 +14,14 @@ export class FetchDataService {
     numbersItems: NumberItem[];
     partnersSrcUrs: PartnerItem[];
     projectsItems: ProjectItem[];
+
     crecheSection: SectionItem;
+    catlSection: SectionItem;
+    aecSection: SectionItem;
+    refeicoesSection: SectionItem;
+    musicaSection: SectionItem;
+    natacaoSection: SectionItem
+    explicacoesSection: SectionItem;
 
     isReceptionDataLoaded = false;
     isSectionsDataLoaded = false;
@@ -36,7 +35,6 @@ export class FetchDataService {
             this.getPeopleData(),
             this.getNumbersData(),
             this.getPartnersPhotosURLs(),
-
         ]).pipe(tap(([newsItems, peopleItems, numbersItems, partnersSrcUrs]) => {
             this.newsItems = newsItems;
             this.peopleItems = peopleItems;
@@ -48,14 +46,37 @@ export class FetchDataService {
     }
 
     setSectionsData() {
-        return forkJoin([this.getProjectsData(),
-            this.getSectionData('CRECHE')
-        ]).pipe(tap(([projectsItems, crecheSection]) => {
-            this.projectsItems = projectsItems;
-            this.crecheSection = crecheSection;
+        return forkJoin([
+            this.getProjectsData(),
+            this.getSectionData('CRECHE'),
+            this.getSectionData('CATL'),
+            this.getSectionData('AEC'),
+            this.getSectionData('REFEICOES'),
+            this.getSectionData('MUSICA'),
+            this.getSectionData('NATACAO'),
+            this.getSectionData('EXPLICACOES'),
+        ]).pipe(
+            tap(([
+                     projectsItems,
+                     crecheSection,
+                     catlSection,
+                     aecSection,
+                     refeicoesSection,
+                     musicaSection,
+                     natacaoSection,
+                     explicacoesSection
+                 ]) => {
+                this.projectsItems = projectsItems;
+                this.crecheSection = crecheSection;
+                this.catlSection = catlSection;
+                this.aecSection = aecSection;
+                this.refeicoesSection = refeicoesSection;
+                this.musicaSection = musicaSection;
+                this.natacaoSection = natacaoSection;
+                this.explicacoesSection = explicacoesSection;
 
-            this.isSectionsDataLoaded = true;
-        }))
+                this.isSectionsDataLoaded = true;
+            }))
     }
 
 

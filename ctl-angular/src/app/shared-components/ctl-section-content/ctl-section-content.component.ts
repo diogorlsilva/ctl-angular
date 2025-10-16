@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { SectionItem } from "../../models/data.model";
+import { SectionItem } from "@models/data.model";
 
 @Component({
     selector: 'ctl-section-content',
