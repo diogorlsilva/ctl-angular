@@ -36,7 +36,8 @@ $news-width: 60%;
 
 .news-container {
   position: absolute;
-  background-color: var(--ctl-blue);
+  background-color: rgba(100, 104, 204, 0.3);
+  backdrop-filter: blur(20px);
   height: 160px;
   max-width: $content-max-width;
   width: $news-width;
@@ -90,7 +91,7 @@ $news-image-width: 300px;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  flex-shrink: 0;
+  flex-shrink: 1;
 }
 
 .person-image {

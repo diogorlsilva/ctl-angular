@@ -1,3 +1,17 @@
 .modal-body .content {
   margin-top: 20px;
 }
+
+.modal-content {
+  backdrop-filter: blur(20px);
+  background-color: rgba(255, 255, 255, 0.75);
+  border: none;
+  box-shadow: 0 2px 15px 0 rgba(0, 0, 0, 0.3);
+  border-radius: var(--border-radius);
+}
+
+.modal-header {
+  background-color: rgba(100, 104, 204, 0.10);
+  border: none;
+  border-radius: var(--border-radius);
+}
