@@ -8,7 +8,7 @@
         <div class="news-container"
              data-bs-target="#news"
              data-bs-toggle="modal">
-            <div class="news-description">
+            <div class="news-description ">
                 <div [innerText]="currentItem.title"
                      class="news-title truncate">
                 </div>
@@ -171,16 +171,15 @@
 @if (currentItem) {
     <ctl-modal [contentHtml]="newsContent"
                [modalId]="'news'"
+               [modalSize]="'lg'"
                [title]="currentItem.title">
         <ng-template #newsContent>
-            <div class="p-20">
+            <div class="news-modal-container">
                 @if (currentItem.photoSrc) {
                     <img [alt]="currentItem.description"
-                         [src]="currentItem.photoSrc"
-                         class="modal-news-image">
+                         [src]="currentItem.photoSrc">
                 }
-                <p [innerText]="currentItem.description"
-                   class="m-t-10">
+                <p [innerText]="currentItem.description">
                 </p>
             </div>
         </ng-template>

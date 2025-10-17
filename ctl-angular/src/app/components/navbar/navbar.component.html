@@ -1,101 +1,105 @@
 <div [class.navbar-hide-on-scroll-down]="isGoingDown"
-     class="navbar-container">
-  <button [routerLink]="''">Inicio</button>
-  <button (click)="isToggled = !isToggled"
-          class="toggle">
-    <i class="fa-solid fa-bars"></i>
-  </button>
-  <nav [class.show-nav]="isToggled"
-       class="nav">
-    <!-- RESPOSTAS SOCIAIS -->
-    <li class="nav-item dropdown">
-      <a aria-expanded="false"
-         class="nav-link dropdown-toggle"
-         data-bs-toggle="dropdown"
-         role="button">
-        <span [innerText]="'Respostas Sociais'"></span>
-      </a>
-      <ul class="dropdown-menu">
-        <li>
-          <a (click)="isToggled = false"
-             [routerLinkActive]="'nav-item-selected'"
-             [routerLink]="'creche'"
-             class="dropdown-item">
-            <span [innerText]="'Creche'"></span>
-          </a>
+     class="navbar-container glass">
+    <div [routerLink]="''"
+         class="logo-container">
+        <span class="full-text">Clube de Tempos Livres</span>
+        <span class="abbrev-text">CTL</span>
+    </div>
+    <button (click)="isToggled = !isToggled"
+            class="toggle">
+        <i class="fa-solid fa-bars"></i>
+    </button>
+    <nav [class.show-nav]="isToggled"
+         class="nav">
+        <!-- RESPOSTAS SOCIAIS -->
+        <li class="nav-item dropdown">
+            <a aria-expanded="false"
+               class="nav-link dropdown-toggle"
+               data-bs-toggle="dropdown"
+               role="button">
+                <span [innerText]="'Respostas Sociais'"></span>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end">
+                <li>
+                    <a (click)="isToggled = false"
+                       [routerLinkActive]="'nav-item-selected'"
+                       [routerLink]="'creche'"
+                       class="dropdown-item">
+                        <span [innerText]="'Creche'"></span>
+                    </a>
+                </li>
+                <li>
+                    <a (click)="isToggled = false"
+                       [routerLinkActive]="'nav-item-selected'"
+                       [routerLink]="'catl'"
+                       class="dropdown-item">
+                        <span [innerText]="'CATL'"></span>
+                    </a>
+                </li>
+            </ul>
         </li>
-        <li>
-          <a (click)="isToggled = false"
-             [routerLinkActive]="'nav-item-selected'"
-             [routerLink]="'catl'"
-             class="dropdown-item">
-            <span [innerText]="'CATL'"></span>
-          </a>
-        </li>
-      </ul>
-    </li>
 
-    <!-- SERVIÇOS -->
-    <li class="nav-item dropdown">
-      <a aria-expanded="false"
-         class="nav-link dropdown-toggle"
-         data-bs-toggle="dropdown"
-         role="button">
-        <span [innerText]="'Serviços'"></span>
-      </a>
-      <ul class="dropdown-menu">
-        <li>
-          <a (click)="isToggled = false"
-             [routerLinkActive]="'nav-item-selected'"
-             [routerLink]="'aec'"
-             class="dropdown-item">
-            <span [innerText]="'AEC'"></span>
-          </a>
+        <!-- SERVIÇOS -->
+        <li class="nav-item dropdown">
+            <a aria-expanded="false"
+               class="nav-link dropdown-toggle"
+               data-bs-toggle="dropdown"
+               role="button">
+                <span [innerText]="'Serviços'"></span>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end">
+                <li>
+                    <a (click)="isToggled = false"
+                       [routerLinkActive]="'nav-item-selected'"
+                       [routerLink]="'aec'"
+                       class="dropdown-item">
+                        <span [innerText]="'AEC'"></span>
+                    </a>
+                </li>
+                <li>
+                    <a (click)="isToggled = false"
+                       [routerLinkActive]="'nav-item-selected'"
+                       [routerLink]="'refeicoes'"
+                       class="dropdown-item">
+                        <span [innerText]="'Refeições'"></span>
+                    </a>
+                </li>
+                <li>
+                    <hr class="dropdown-divider">
+                </li>
+                <li>
+                    <a (click)="isToggled = false"
+                       [routerLinkActive]="'nav-item-selected'"
+                       [routerLink]="'musica'"
+                       class="dropdown-item">
+                        <span [innerText]="'Música'"></span>
+                    </a>
+                </li>
+                <li>
+                    <a (click)="isToggled = false"
+                       [routerLinkActive]="'nav-item-selected'"
+                       [routerLink]="'natacao'"
+                       class="dropdown-item">
+                        <span [innerText]="'Natação'"></span>
+                    </a>
+                </li>
+                <li>
+                    <a (click)="isToggled = false"
+                       [routerLinkActive]="'nav-item-selected'"
+                       [routerLink]="'explicacoes'"
+                       class="dropdown-item">
+                        <span [innerText]="'Explicações'"></span>
+                    </a>
+                </li>
+            </ul>
         </li>
-        <li>
-          <a (click)="isToggled = false"
-             [routerLinkActive]="'nav-item-selected'"
-             [routerLink]="'refeicoes'"
-             class="dropdown-item">
-            <span [innerText]="'Refeições'"></span>
-          </a>
-        </li>
-        <li>
-          <hr class="dropdown-divider">
-        </li>
-        <li>
-          <a (click)="isToggled = false"
-             [routerLinkActive]="'nav-item-selected'"
-             [routerLink]="'musica'"
-             class="dropdown-item">
-            <span [innerText]="'Música'"></span>
-          </a>
-        </li>
-        <li>
-          <a (click)="isToggled = false"
-             [routerLinkActive]="'nav-item-selected'"
-             [routerLink]="'natacao'"
-             class="dropdown-item">
-            <span [innerText]="'Natação'"></span>
-          </a>
-        </li>
-        <li>
-          <a (click)="isToggled = false"
-             [routerLinkActive]="'nav-item-selected'"
-             [routerLink]="'explicacoes'"
-             class="dropdown-item">
-            <span [innerText]="'Explicações'"></span>
-          </a>
-        </li>
-      </ul>
-    </li>
 
-    <!-- PROJETOS -->
-    <a (click)="isToggled = false"
-       [routerLinkActive]="'nav-item-selected'"
-       [routerLink]="'projetos'"
-       class="nav-link">
-      <span [innerText]="'Projetos'"></span>
-    </a>
-  </nav>
+        <!-- PROJETOS -->
+        <a (click)="isToggled = false"
+           [routerLinkActive]="'nav-item-selected'"
+           [routerLink]="'projetos'"
+           class="nav-link">
+            <span [innerText]="'Projetos'"></span>
+        </a>
+    </nav>
 </div>

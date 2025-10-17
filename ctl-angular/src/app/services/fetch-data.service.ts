@@ -110,7 +110,9 @@ export class FetchDataService {
                     description: this.parse(row.cells[1]?.value),
                     photoSrc: buffer ? URL.createObjectURL(new Blob([buffer])) : null
                 };
-            })
+            }).filter(item =>
+                Object.values(item).every(value => !!value)
+            );
         }))
     }
 

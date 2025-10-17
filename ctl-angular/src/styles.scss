@@ -1,6 +1,8 @@
 :root {
   --nav-height: 70px;
-  --ctl-blue: #6567CC;
+  --ctl-blue: #6468CC;
+  --ctl-blue-25: #d8d9f2;
+  --ctl-blue-15: #e8e8f7;
   --ctl-orange: #FD620D;
   --border-radius: 15px;
   --box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
@@ -31,6 +33,12 @@ abbr {
   -webkit-box-orient: vertical;
 }
 
+.glass {
+  backdrop-filter: blur(20px);
+  background: rgba(255, 255, 255, 0.4);
+  box-shadow: 0 2px 15px 0 rgba(0, 0, 0, 0.3);
+}
+
 @keyframes spin {
   from {
     translate: 0;
@@ -40,7 +48,7 @@ abbr {
   }
 }
 
-$spacings: 5, 10, 20;
+$spacings: 5, 10, 15, 20;
 @each $spacing in $spacings {
   .p-#{$spacing} {
     padding: #{$spacing}px !important;
@@ -89,6 +97,11 @@ $spacings: 5, 10, 20;
   .m-r-#{$spacing} {
     margin-right: #{$spacing}px !important;
   }
+}
+
+@font-face {
+  font-family: starlinerbtnregular;
+  src: url('/assets/Starliner BTN Regular.woff');
 }
 
 .orange-text {
