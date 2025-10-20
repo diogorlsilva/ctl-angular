@@ -24,12 +24,11 @@ $content-max-width: 1200px;
   justify-content: center;
   height: 100%;
   text-align: center;
-  padding: 3em;
   font-family: "Playfair Display", serif;
+  color: var(--ctl-blue);
   font-size: 60px;
-  background-image: linear-gradient(to right, #461755, #E89D00, #449FE6, #DD691E, #BD0004, #3A579B, #EA5982, #64A957);
-  color: transparent;
-  background-clip: text;
+  background: radial-gradient(ellipse 100% 20%, white 0%, rgba(255, 255, 255, 0.8) 40%, transparent);
+  font-style: italic;
 }
 
 $news-width: 60%;

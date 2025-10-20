@@ -22,6 +22,7 @@ ctl-gallery {
     display: flex;
     gap: $gap;
     animation: spin 150s linear infinite;
+    animation-delay: 500ms;
 
     &.to-right {
       animation-direction: reverse;
