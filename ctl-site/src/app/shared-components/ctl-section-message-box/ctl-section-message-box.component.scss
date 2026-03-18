@@ -30,10 +30,10 @@ ctl-section-message-box {
   border-radius: var(--border-radius);
   box-shadow: var(--box-shadow);
   padding: 20px 30px;
-  width: 800px;
-  max-width: 90%;
+  max-width: 90vw;
   z-index: 1;
   margin-left: 20px;
+  white-space:nowrap;
 }
 
 .title-label {

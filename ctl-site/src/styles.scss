@@ -104,6 +104,11 @@ $spacings: 5, 10, 15, 20;
   src: url('/assets/Starliner BTN Regular.woff');
 }
 
+@font-face {
+  font-family: favescriptbold;
+  src: url('/assets/fave-script-bold.woff');
+}
+
 .orange-text {
   color: var(--ctl-orange);
 }
