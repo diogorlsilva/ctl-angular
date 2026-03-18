@@ -48,11 +48,6 @@ export class InicioComponent implements OnInit {
             location.pathname = "";
         }
 
-      // TODO delete
-      this.fetchDataService.getDataTest().subscribe(data => {
-        console.log(data);
-      })
-
         if (this.fetchDataService.isReceptionDataLoaded) {
             this.newsItems = this.fetchDataService.newsItems;
             this.peopleItems = this.fetchDataService.peopleItems;

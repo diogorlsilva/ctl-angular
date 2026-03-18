@@ -265,18 +265,6 @@ export class FetchDataService {
         }));
     }
 
-  // TODO delete
-   getDataTest(): Observable<Workbook> {
-    return this.httpClient.get(`../../test.xlsx`, {
-      responseType: 'arraybuffer',
-      observe: 'response'
-    }).pipe(
-      catchError(() => EMPTY),
-      switchMap((response) =>
-        from(new ExcelJS.Workbook().xlsx.load(<any> response.body)).pipe(map((workbook) => <any> workbook))
-      ));
-  }
-
     private fetchData(fileName: string): Observable<Workbook> {
         return this.httpClient.get(`assets/${fileName}.xlsx`, {
             responseType: 'arraybuffer',
