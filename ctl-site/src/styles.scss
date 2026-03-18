@@ -48,7 +48,7 @@ abbr {
   }
 }
 
-$spacings: 5, 10, 15, 20;
+$spacings: 5, 10, 15, 20, 40;
 @each $spacing in $spacings {
   .p-#{$spacing} {
     padding: #{$spacing}px !important;

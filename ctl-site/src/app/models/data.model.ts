@@ -42,6 +42,8 @@ export type SectionItem = {
     rightTitle: string;
     rightBullets: string[];
     photoSRCs: string[];
+    videoTitle?: string;
+    videoURL?: string;
 }
 
 export type AccountReport = {

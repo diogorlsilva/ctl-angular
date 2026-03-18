@@ -5,7 +5,39 @@
                              [title]="'Creche Arco-Íris'">
     </ctl-section-message-box>
     <ctl-gallery [imagesSRCs]="section.photoSRCs"></ctl-gallery>
-    <ctl-section-content [section]="section"></ctl-section-content>
+
+  <div class="creche-section-content-container">
+    <div [innerText]="section.description"></div>
+  </div>
+
+  <div class="creche-info-columns-container">
+    <div>
+      <div [innerText]="section.videoTitle"
+           class="creche-column-title">
+      </div>
+      <iframe
+        class="iframe-video"
+        [src]="safeURL"
+        allow='autoplay; encrypted-media'
+        allowfullscreen
+        [title]='section.videoTitle'
+      >
+      </iframe>
+    </div>
+
+    <div class="creche-column m-b-40">
+      <div [innerText]="section.leftTitle"
+           class="creche-column-title"></div>
+      @for (item of section.leftBullets; track $index) {
+        <div [innerText]="item" class="creche-column-item"></div>
+      }
+      <div [innerText]="section.rightTitle"
+           class="creche-column-title m-t-40"></div>
+      @for (item of section.rightBullets; track $index) {
+        <div [innerText]="item" class="creche-column-item"></div>
+      }
+    </div>
+  </div>
 }
 
 

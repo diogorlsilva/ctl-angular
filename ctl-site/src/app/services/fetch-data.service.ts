@@ -64,7 +64,7 @@ export class FetchDataService {
     setSectionsData() {
         return forkJoin([
             this.getProjectsData(),
-            this.getSectionData('CRECHE'),
+            this.getSectionData('CRECHE', true),
             this.getSectionData('CATL'),
             this.getSectionData('AEC'),
             this.getSectionData('REFEICOES'),
@@ -235,7 +235,7 @@ export class FetchDataService {
     }
 
 
-    getSectionData(sectionFileName: string): Observable<SectionItem> {
+    getSectionData(sectionFileName: string, addVideo = false): Observable<SectionItem> {
         return this.fetchData(sectionFileName).pipe(map((workbook) => {
             const rows = ((workbook.model.worksheets[0] as any).rows as any[]);
 
@@ -250,7 +250,7 @@ export class FetchDataService {
 
                 return cells.map((cell: {
                     value: any;
-                }) => this.parse(cell.value));
+                }) => this.parse(cell.value)).filter(value => !!value);
             }
 
             return {
@@ -261,6 +261,10 @@ export class FetchDataService {
                 leftBullets: bullets(3),
                 rightTitle: this.parse(rows[4]?.cells[1]?.value),
                 rightBullets: bullets(5),
+              ...(addVideo && {
+                videoTitle: this.parse(rows[6]?.cells[1]?.value),
+                videoURL: this.parse(rows[7]?.cells[1]?.value),
+              })
             }
         }));
     }

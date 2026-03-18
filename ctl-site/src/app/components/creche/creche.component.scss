@@ -1,0 +1,38 @@
+.creche-section-content-container {
+  padding: 3em 20%;
+}
+
+.creche-info-columns-container {
+  margin-top: 50px;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 100px;
+
+  .creche-column {
+    min-width: 60px;
+    max-width: 350px
+  }
+
+  .creche-column-title {
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+
+  .creche-column-item {
+    padding: 5px 0;
+  }
+
+  .iframe-video {
+    margin-top: 20px;
+    width: 28rem;
+    aspect-ratio: 16 / 9;
+  }
+
+  @media screen and (max-width: 480px) {
+    .iframe-video {
+      width: 24rem;
+    }
+  }
+}
