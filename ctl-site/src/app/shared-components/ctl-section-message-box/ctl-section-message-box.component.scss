@@ -20,7 +20,7 @@ ctl-section-message-box {
   z-index: 1;
   left: 50%;
   bottom: 0;
-  transform: translate(-50%, 50px);
+  transform: translate(-50%, 35px);
   max-width: 90%;
   padding: 0 10px;
 }
@@ -30,10 +30,23 @@ ctl-section-message-box {
   border-radius: var(--border-radius);
   box-shadow: var(--box-shadow);
   padding: 20px 30px;
-  max-width: 90vw;
+  max-width: 50vw;
   z-index: 1;
   margin-left: 20px;
   white-space:nowrap;
+  width: fit-content;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-family: "favescriptbold", serif;
+  font-size: 30px;
+  letter-spacing: 2px;
+  color: var(--ctl-blue);
+  line-height: 30px;
+
+  &.hide {
+   background-color: transparent;
+    box-shadow: transparent 0 0 0 0;
+  }
 }
 
 .title-label {
@@ -80,5 +93,6 @@ ctl-section-message-box {
 
   .box-container {
     margin-left: 0;
+    max-width: 90vw;
   }
 }

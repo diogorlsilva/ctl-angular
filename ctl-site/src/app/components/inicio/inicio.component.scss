@@ -25,7 +25,8 @@ $content-max-width: 1200px;
   text-align: center;
   font-family: "favescriptbold", serif;
   color: var(--ctl-blue);
-  font-size: 60px;
+  font-size: 70px;
+  letter-spacing: 2px;
   background: radial-gradient(ellipse 100% 20%, white 0%, rgba(255, 255, 255, 0.8) 40%, transparent);
 }
 
@@ -246,7 +247,7 @@ $news-image-width: 300px;
     height: 60vh;
 
     .reception-title {
-      font-size: 40px;
+      font-size: 50px;
       padding: 1em;
     }
   }
@@ -288,4 +289,19 @@ $news-image-width: 300px;
   .people-container {
     margin-top: 400px;
   }
+}
+
+@media screen and (max-width: 480px) {
+  .reception-container {
+    height: 60vh;
+    background-size: contain;
+
+    .reception-title {
+      font-size: 40px;
+      padding: 1em;
+      line-height: 30px;
+    }
+  }
+
+
 }

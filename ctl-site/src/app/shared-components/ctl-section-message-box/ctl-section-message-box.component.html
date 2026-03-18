@@ -10,7 +10,8 @@
           class="title-label">
   </span>
     <div></div>
-    <div class="box-container">
+    <div class="box-container"
+         [class.hide]="!messageBoxText">
         <span [innerText]="messageBoxText"></span>
     </div>
 </div>
