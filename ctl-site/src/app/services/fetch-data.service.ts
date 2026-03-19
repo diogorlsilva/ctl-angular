@@ -181,8 +181,9 @@ export class FetchDataService {
                     iconSRC,
                     photoSRCs: arrayShuffle(photoSRCs),
                     modalId: `projectModal_${index + 1}`,
-                    title: this.parse(row[0]?.cells[0]?.value),
-                    description: this.parse(row[0]?.cells[1]?.value),
+                    title: this.parse(row[1]?.cells[0]?.value),
+                    description: this.parse(row[1]?.cells[1]?.value),
+                  videoURL: this.parse(row[1]?.cells[2]?.value),
                 }
             })
         }))

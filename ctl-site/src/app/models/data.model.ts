@@ -32,6 +32,7 @@ export type ProjectItem = {
     description: string;
     iconSRC: string;
     photoSRCs: string[];
+    videoURL: string;
 }
 
 export type SectionItem = {

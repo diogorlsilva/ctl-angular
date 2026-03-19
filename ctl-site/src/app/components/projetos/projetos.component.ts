@@ -5,26 +5,30 @@ import { FetchDataService } from "@services/fetch-data.service";
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 import { ModalComponent } from "../modal/modal.component";
 import { CtlSectionMessageBoxComponent } from "@shared/ctl-section-message-box/ctl-section-message-box.component";
+import {DomSanitizer, SafeUrl} from "@angular/platform-browser";
+import {SanitizeYouTubeUrlPipe} from "../../pipes/url-sanitizer.pipe";
 
 @Component({
     selector: 'ctl-projects',
     standalone: true,
-    imports: [
-        CtlSectionBackgroundComponent,
-        ModalComponent,
-        CtlSectionMessageBoxComponent
-    ],
+  imports: [
+    CtlSectionBackgroundComponent,
+    ModalComponent,
+    CtlSectionMessageBoxComponent,
+    SanitizeYouTubeUrlPipe
+  ],
     templateUrl: './projetos.component.html',
     styleUrl: './projetos.component.scss',
   encapsulation: ViewEncapsulation.None
 })
 export class ProjetosComponent implements OnInit {
-    messageBoxText = 'A nossa equipa é composta por profissionais experientes e dedicados, que trabalham em estreita colaboração com os nossos clientes para garantir que cada projeto é concluído com sucesso. Desde a conceção inicial até à execução final, estamos comprometidos em fornecer soluções inovadoras e eficientes que atendam às necessidades específicas de cada cliente.';
-
+    messageBoxText = 'Quando o destino nos inspira, cada passo da jornada ganha sentido, sobretudo quando caminhamos juntos.';
+  safeURL: SafeUrl;
     projectItems: ProjectItem[];
 
     private readonly fetchDataService = inject(FetchDataService);
     private readonly destroyRef = inject(DestroyRef);
+  private readonly sanitizer = inject(DomSanitizer);
 
     ngOnInit(): void {
         if (this.fetchDataService.isSectionsDataLoaded) {
@@ -37,4 +41,14 @@ export class ProjetosComponent implements OnInit {
             .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe(() => this.projectItems = this.fetchDataService.projectsItems);
     }
+
+  private setSafeURL(videoURL?: string) {
+    if (!videoURL) return;
+
+    const videoId =  (videoURL?? '').split("?v=")[1];
+
+    this.safeURL = this.sanitizer.bypassSecurityTrustResourceUrl(
+      `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&loop=1&&playlist=${videoId}`
+    );
+  }
 }

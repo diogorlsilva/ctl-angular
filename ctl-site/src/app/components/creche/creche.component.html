@@ -17,7 +17,7 @@
       </div>
       <iframe
         class="iframe-video"
-        [src]="safeURL"
+        [src]="section.videoURL | SafeYouTubeUrl"
         allow='autoplay; encrypted-media'
         allowfullscreen
         [title]='section.videoTitle'

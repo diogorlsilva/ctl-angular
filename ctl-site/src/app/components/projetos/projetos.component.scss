@@ -1,6 +1,6 @@
 $global-size: 500px;
-
 $global-size-small: 400px;
+$global-size-smallest: 300px;
 
 .cards-container {
   padding: 150px 12% 5em 12%;
@@ -80,6 +80,12 @@ $global-size-small: 400px;
   display: flex;
 }
 
+.iframe-video {
+  margin: 20px 10px 60px 10px;
+  width: 28rem;
+  aspect-ratio: 16 / 9;
+}
+
 @media screen and (max-width: 1024px) {
   .modal-body {
     flex-direction: column;
@@ -92,10 +98,36 @@ $global-size-small: 400px;
 
   .carousel-inner {
     height: $global-size-small;
-    width: $global-size-small;
+    width: 100%;
 
     img {
       height: $global-size-small;
     }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .modal-body {
+    flex-direction: column;
+    overflow: auto;
+  }
+
+  .description-container {
+    max-height: $global-size-smallest;
+  }
+
+  .carousel-inner {
+    height: $global-size-smallest;
+    width: 100%;
+
+    img {
+      height: $global-size-smallest;
+    }
+  }
+
+  .iframe-video {
+
+    width: calc(100% - 20px);
+
   }
 }
