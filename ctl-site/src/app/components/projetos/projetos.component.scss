@@ -80,6 +80,10 @@ $global-size-smallest: 300px;
   display: flex;
 }
 
+.iframe-container {
+  height: $global-size;
+}
+
 .iframe-video {
   margin: 20px 10px 60px 10px;
   width: 28rem;
@@ -94,6 +98,10 @@ $global-size-smallest: 300px;
 
   .description-container {
     max-height: $global-size-small;
+  }
+
+  .iframe-container {
+    height: $global-size-small;
   }
 
   .carousel-inner {
@@ -114,6 +122,10 @@ $global-size-smallest: 300px;
 
   .description-container {
     max-height: $global-size-smallest;
+  }
+
+  .iframe-container {
+    height: $global-size-smallest;
   }
 
   .carousel-inner {

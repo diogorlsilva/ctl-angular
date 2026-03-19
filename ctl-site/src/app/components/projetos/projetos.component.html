@@ -29,6 +29,7 @@
             <ng-template #photos>
 
               @if (project.videoURL) {
+                <div class="iframe-container">
                 <iframe
                   class="iframe-video"
                   [src]=" project.videoURL | SafeYouTubeUrl"
@@ -37,8 +38,7 @@
                   [title]='project.title'
                 >
                 </iframe>
-
-
+                </div>
               } @else {
                 <div [id]="'carousel' + project.modalId"
                      class="carousel slide p-20" data-bs-ride="true">
