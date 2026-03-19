@@ -23,12 +23,10 @@
         </div>
         <ctl-modal [contentHtml]="photos"
                    [modalId]="project.modalId"
-                   [modalSize]="'lg'"
-                   [title]="project.title">
+                   [modalSize]="'xl'"
+                   [title]="project.title"
+                   [isScrollable]="false">
             <ng-template #photos>
-                <p [innerText]="project.description"
-                   class="p-20">
-                </p>
                 <div [id]="'carousel' + project.modalId"
                      class="carousel slide p-20" data-bs-ride="true">
                     <div class="carousel-inner">
@@ -37,7 +35,7 @@
                                  class="carousel-item">
                                 <img [alt]="'Imagem ' + ($index + 1) + ' do projeto ' + project.title"
                                      [src]="photoSRC"
-                                     class="d-block w-100">
+                                     class="d-block">
                             </div>
                         }
                     </div>
@@ -54,6 +52,11 @@
                         <span class="visually-hidden">Próximo</span>
                     </button>
                 </div>
+              <div class="description-container">
+                <p [innerText]="project.description"
+                   class="p-20">
+                </p>
+              </div>
             </ng-template>
 
         </ctl-modal>

@@ -1,4 +1,4 @@
-import { Component, Input, TemplateRef } from '@angular/core';
+import {Component, Input, TemplateRef, ViewEncapsulation} from '@angular/core';
 import { NgTemplateOutlet } from "@angular/common";
 
 @Component({
@@ -6,7 +6,7 @@ import { NgTemplateOutlet } from "@angular/common";
     standalone: true,
     imports: [NgTemplateOutlet],
     templateUrl: './modal.component.html',
-    styleUrl: './modal.component.scss'
+    styleUrl: './modal.component.scss',
 })
 export class ModalComponent {
     @Input({ required: true }) modalId: string;
@@ -15,4 +15,5 @@ export class ModalComponent {
     @Input() contentText: string;
     @Input() contentHtml: TemplateRef<HTMLElement>;
     @Input() hasFooter = false;
+    @Input() isScrollable = true;
 }

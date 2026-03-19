@@ -2,7 +2,8 @@
      class="modal" tabindex="-1">
     <div [class.modal-lg]="modalSize === 'lg'"
          [class.modal-xl]="modalSize === 'xl'"
-         class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+         [class.modal-dialog-scrollable]="isScrollable"
+         class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 [innerText]="title"

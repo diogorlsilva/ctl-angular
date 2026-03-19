@@ -1,4 +1,4 @@
-import { Component, DestroyRef, inject, OnInit } from '@angular/core';
+import {Component, DestroyRef, inject, OnInit, ViewEncapsulation} from '@angular/core';
 import { CtlSectionBackgroundComponent } from "@shared/ctl-section-background/ctl-section-background.component";
 import { ProjectItem } from "@models/data.model";
 import { FetchDataService } from "@services/fetch-data.service";
@@ -15,7 +15,8 @@ import { CtlSectionMessageBoxComponent } from "@shared/ctl-section-message-box/c
         CtlSectionMessageBoxComponent
     ],
     templateUrl: './projetos.component.html',
-    styleUrl: './projetos.component.scss'
+    styleUrl: './projetos.component.scss',
+  encapsulation: ViewEncapsulation.None
 })
 export class ProjetosComponent implements OnInit {
     messageBoxText = 'A nossa equipa é composta por profissionais experientes e dedicados, que trabalham em estreita colaboração com os nossos clientes para garantir que cada projeto é concluído com sucesso. Desde a conceção inicial até à execução final, estamos comprometidos em fornecer soluções inovadoras e eficientes que atendam às necessidades específicas de cada cliente.';

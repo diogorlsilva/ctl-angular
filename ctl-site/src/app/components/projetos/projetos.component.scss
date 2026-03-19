@@ -1,3 +1,7 @@
+$global-size: 500px;
+
+$global-size-small: 400px;
+
 .cards-container {
   padding: 150px 12% 5em 12%;
   display: flex;
@@ -49,9 +53,49 @@
   }
 }
 
-
 .button-container {
   text-align: end;
   padding: 20px 20px 5px 0;
   flex-basis: 100%;
+}
+
+.description-container {
+  max-height: $global-size;
+  overflow-y: auto;
+}
+
+.carousel-inner {
+  height: $global-size;
+  width: $global-size;
+  background-color: var(--ctl-blue-15);
+  border-radius: var(--border-radius);
+
+  img {
+    height: $global-size;
+    margin-inline: auto;
+  }
+}
+
+.modal-body {
+  display: flex;
+}
+
+@media screen and (max-width: 1024px) {
+  .modal-body {
+    flex-direction: column;
+    overflow: auto;
+  }
+
+  .description-container {
+    max-height: $global-size-small;
+  }
+
+  .carousel-inner {
+    height: $global-size-small;
+    width: $global-size-small;
+
+    img {
+      height: $global-size-small;
+    }
+  }
 }
