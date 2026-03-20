@@ -6,7 +6,7 @@ import {
     ctlEmail,
     institutionMessage,
     mission,
-    mobileNumber,
+    address,
     NewsItem,
     NumberItem,
     OrganisationItem,
@@ -36,7 +36,7 @@ export class InicioComponent implements OnInit {
 
     institutionMessage = institutionMessage;
     telephoneNumber = telephoneNumber;
-    mobileNumber = mobileNumber;
+    address = address;
     ctlEmail = ctlEmail;
     mission = mission;
     private readonly fetchDataService = inject(FetchDataService);

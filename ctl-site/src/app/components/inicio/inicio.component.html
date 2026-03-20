@@ -137,10 +137,11 @@
             </a>
         </div>
         <div>
-            <i class="fa-solid fa-mobile-screen"></i>
-            <a [href]="'tel:' + mobileNumber"
+          <i class="fa-solid fa-map"></i>
+            <a [href]="'https://maps.app.goo.gl/g8QyPuTkq2U12ceP7'"
+               target="_blank"
                class="clickable-label">
-        <span [innerText]="mobileNumber"
+        <span [innerText]="address"
               class="m-l-5">
         </span>
             </a>
@@ -156,12 +157,41 @@
             </a>
         </div>
 
-
     </div>
     <div class="footer-section">
         <h4 [innerText]="'Links'"
             class="footer-title">
         </h4>
+      <div>
+        <i class="fa-brands fa-facebook"></i>
+        <a [href]="'https://www.facebook.com/ctlsantaclara'"
+           target="_blank"
+           class="clickable-label">
+        <span [innerText]="'Facebook'"
+              class="m-l-5">
+        </span>
+        </a>
+      </div>
+      <div>
+        <i class="fa-brands fa-instagram"></i>
+        <a [href]="'https://www.instagram.com/ctlsantaclara'"
+           target="_blank"
+           class="clickable-label">
+        <span [innerText]="'Instagram'"
+              class="m-l-5">
+        </span>
+        </a>
+      </div>
+      <div>
+        <i class="fa-brands fa-linkedin"></i>
+        <a [href]="'https://pt.linkedin.com/company/clube-de-tempos-livres-de-santa-clara'"
+           target="_blank"
+           class="clickable-label">
+        <span [innerText]="'LinkedIn'"
+              class="m-l-5">
+        </span>
+        </a>
+      </div>
     </div>
 
 </div>

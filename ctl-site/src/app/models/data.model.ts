@@ -62,7 +62,7 @@ export type OrganisationItem = {
 }
 
 export const telephoneNumber = '239 445 810';
-export const mobileNumber = '+351 999 999 999';
+export const address = 'Edifício Arco-Íris';
 export const ctlEmail = 'ctlsc@outlook.com';
 
 export const mission = {
