@@ -3,7 +3,7 @@ import { HttpClient } from "@angular/common/http";
 
 import * as ExcelJS from 'exceljs';
 
-import { catchError, EMPTY, firstValueFrom, forkJoin, from, map, Observable, switchMap, tap } from "rxjs";
+import { catchError, EMPTY, forkJoin, from, map, Observable, switchMap, tap } from "rxjs";
 import {
     AccountReport,
     NewsItem,
@@ -15,7 +15,7 @@ import {
     SectionItem,
     Workbook
 } from "@models/data.model";
-import { arrayShuffle } from "../utils/utils.model";
+import {arrayShuffle, XLSXHomepageUrl, XLSXProjectUrl, XLSXUrl} from "../utils/utils.model";
 
 @Injectable({ providedIn: 'root' })
 export class FetchDataService {
@@ -64,13 +64,13 @@ export class FetchDataService {
     setSectionsData() {
         return forkJoin([
             this.getProjectsData(),
-            this.getSectionData('CRECHE', true),
-            this.getSectionData('CATL'),
-            this.getSectionData('AEC'),
-            this.getSectionData('REFEICOES'),
-            this.getSectionData('MUSICA'),
-            this.getSectionData('NATACAO'),
-            this.getSectionData('EXPLICACOES'),
+            this.getSectionDataByUrl(XLSXUrl.CRECHE, true),
+            this.getSectionDataByUrl(XLSXUrl.CATL),
+            this.getSectionDataByUrl(XLSXUrl.AEC),
+            this.getSectionDataByUrl(XLSXUrl.REFEICOES),
+            this.getSectionDataByUrl(XLSXUrl.MUSICA),
+            this.getSectionDataByUrl(XLSXUrl.NATACAO),
+            this.getSectionDataByUrl(XLSXUrl.EXPLICACOES),
         ]).pipe(
             tap(([
                      projectsItems,
@@ -97,45 +97,55 @@ export class FetchDataService {
 
 
     getNewsData(): Observable<NewsItem[]> {
-        return this.fetchData('PAGINA_INICIAL/NOTICIAS').pipe(map((workbook) => {
-            const rows = [...((workbook.model.worksheets[0] as any).rows as any[])];
+        return this.fetchDataByUrl(XLSXHomepageUrl.NOTICIAS).pipe(map((workbook) => {
+            const worksheet = workbook.worksheets[0];
+            const imageByRow = this.getImagesByRow(workbook);
 
-            rows.shift();
+            const news: NewsItem[] = [];
 
-            return rows.map((row, index) => {
-                const buffer = workbook.getImage(index)?.buffer as BlobPart;
+            worksheet.eachRow((row, rowNumber) => {
+                if (rowNumber === 1) {
+                    return;
+                }
 
-                return {
-                    title: this.parse(row.cells[0]?.value),
-                    description: this.parse(row.cells[1]?.value),
-                    photoSrc: buffer ? URL.createObjectURL(new Blob([buffer])) : null
-                };
-            }).filter(item =>
+                news.push({
+                    title: this.parse(row.getCell(1).value),
+                    description: this.parse(row.getCell(2).value),
+                    photoSrc: imageByRow.get(rowNumber) ?? null
+                });
+            });
+
+            return news.filter(item =>
                 Object.values(item).every(value => !!value)
             );
         }))
     }
 
     getPeopleData(): Observable<PersonItem[]> {
-        return this.fetchData('PAGINA_INICIAL/PESSOAS').pipe(map((workbook) => {
-            const rows = [...((workbook.model.worksheets[0] as any).rows as any[])];
+        return this.fetchDataByUrl(XLSXHomepageUrl.PESSOAS).pipe(map((workbook) => {
+            const worksheet = workbook.worksheets[0];
+            const imageByRow = this.getImagesByRow(workbook);
 
-            rows.shift();
+            const people: PersonItem[] = [];
 
-            return rows.map((row, index) => {
-                const buffer = workbook.getImage(index)?.buffer as BlobPart;
+            worksheet.eachRow((row, rowNumber) => {
+                if (rowNumber === 1) {
+                    return;
+                }
 
-                return {
-                    name: this.parse(row.cells[0]?.value),
-                    description: this.parse(row.cells[1]?.value),
-                    photoSrc: buffer ? URL.createObjectURL(new Blob([buffer])) : 'assets/images/no-photo.jpg'
-                };
-            })
+                people.push({
+                    name: this.parse(row.getCell(1).value),
+                    description: this.parse(row.getCell(2).value),
+                    photoSrc: imageByRow.get(rowNumber) ?? 'assets/images/no-photo.jpg'
+                });
+            });
+
+            return people;
         }))
     }
 
     getNumbersData(): Observable<NumberItem[]> {
-        return this.fetchData('PAGINA_INICIAL/NUMEROS').pipe(map((workbook) => {
+        return this.fetchDataByUrl(XLSXHomepageUrl.NUMEROS).pipe(map((workbook) => {
             const rows = [...((workbook.model.worksheets[0] as any).rows as any[])];
 
             rows.shift();
@@ -150,30 +160,43 @@ export class FetchDataService {
     }
 
     getPartnersPhotosURLs(): Observable<PartnerItem[]> {
-        return this.fetchData('PAGINA_INICIAL/PARCERIAS').pipe(map((workbook) => {
-            const rows = [...((workbook.model.worksheets[0] as any).rows as any[])];
+        return this.fetchDataByUrl(XLSXHomepageUrl.PARCERIAS).pipe(map((workbook) => {
+            const worksheet = workbook.worksheets[0];
+            const imageByRow = this.getImagesByRow(workbook);
 
-            rows.shift();
+            const partners: PartnerItem[] = [];
 
-            return rows.map((row, index) => {
-                const buffer = workbook.getImage(index)?.buffer as BlobPart;
+            worksheet.eachRow((row, rowNumber) => {
+                if (rowNumber === 1) {
+                    return;
+                }
 
-                return {
-                    alt: this.parse(row.cells[0]?.value),
-                    photoSrc: URL.createObjectURL(new Blob([buffer]))
-                };
-            })
+                const photoSrc = imageByRow.get(rowNumber);
+
+                if (photoSrc) {
+                    partners.push({
+                        alt: this.parse(row.getCell(1).value),
+                        photoSrc
+                    });
+                }
+            });
+
+            return partners;
         }), map(partners => partners.sort(() => Math.random() - 0.5)));
     }
 
     getProjectsData(): Observable<ProjectItem[]> {
-        return from(this.fetchProjectsData()).pipe(map((workbooks) => {
-            return workbooks.map((workbook, index) => {
+        return this.fetchProjectsData().pipe(map((workbooks) => {
+            return workbooks.filter((workbook) => {
+              const row = ((workbook.model.worksheets[0] as any).rows as any[]);
+
+              return  row[0].cells[1].value === 'SIM'
+            }).map((workbook, index) => {
                 const row = ((workbook.model.worksheets[0] as any).rows as any[]);
 
-                const photoSRCs = workbook.model.media.map(media =>
-                    URL.createObjectURL(new Blob([media.buffer]))
-                );
+                const photoSRCs = [...this.getImagesByRow(workbook).entries()]
+                    .sort(([rowA], [rowB]) => rowA - rowB)
+                    .map(([, src]) => src);
 
                 const iconSRC = photoSRCs.shift() ?? 'assets/images/no-image.jpg';
 
@@ -181,9 +204,9 @@ export class FetchDataService {
                     iconSRC,
                     photoSRCs: arrayShuffle(photoSRCs),
                     modalId: `projectModal_${index + 1}`,
-                    title: this.parse(row[1]?.cells[0]?.value),
-                    description: this.parse(row[1]?.cells[1]?.value),
-                  videoURL: this.parse(row[1]?.cells[2]?.value),
+                    title: this.parse(row[2]?.cells[0]?.value),
+                    description: this.parse(row[2]?.cells[1]?.value),
+                  videoURL: this.parse(row[2]?.cells[2]?.value),
                 }
             })
         }))
@@ -210,7 +233,7 @@ export class FetchDataService {
     }
 
     getOrganisationData(): Observable<OrganisationItem> {
-        return this.fetchData('PAGINA_INICIAL/ORGAOS_SOCIAIS').pipe(map((workbook) => {
+        return this.fetchDataByUrl(XLSXHomepageUrl.ORGAOS_SOCIAIS).pipe(map((workbook) => {
             const rows = [...((workbook.model.worksheets[0] as any).rows as any[])];
 
             return {
@@ -236,39 +259,40 @@ export class FetchDataService {
     }
 
 
-    getSectionData(sectionFileName: string, addVideo = false): Observable<SectionItem> {
-        return this.fetchData(sectionFileName).pipe(map((workbook) => {
-            const rows = ((workbook.model.worksheets[0] as any).rows as any[]);
+  getSectionDataByUrl(url: string, addVideo = false): Observable<SectionItem> {
+    return this.fetchDataByUrl(url).pipe(map((workbook) => {
+      const rows = ((workbook.model.worksheets[0] as any).rows as any[]);
 
-            const photoSRCs = workbook.model.media.map(media =>
-                URL.createObjectURL(new Blob([media.buffer]))
-            );
+      const photoSRCs = workbook.worksheets[0].getImages()
+        .map(image => workbook.getImage(+image.imageId))
+        .filter(media => !!media?.buffer)
+        .map(media => URL.createObjectURL(new Blob([media.buffer as BlobPart])));
 
-            const bullets = (rowIndex: number): string[] => {
-                const cells = [...rows[rowIndex]?.cells];
+      const bullets = (rowIndex: number): string[] => {
+        const cells = [...rows[rowIndex]?.cells];
 
-                cells.shift();
+        cells.shift();
 
-                return cells.map((cell: {
-                    value: any;
-                }) => this.parse(cell.value)).filter(value => !!value);
-            }
+        return cells.map((cell: {
+          value: any;
+        }) => this.parse(cell.value)).filter(value => !!value);
+      }
 
-            return {
-                photoSRCs: arrayShuffle(photoSRCs),
-                smallDescription: this.parse(rows[0]?.cells[1]?.value),
-                description: this.parse(rows[1]?.cells[1]?.value),
-                leftTitle: this.parse(rows[2]?.cells[1]?.value),
-                leftBullets: bullets(3),
-                rightTitle: this.parse(rows[4]?.cells[1]?.value),
-                rightBullets: bullets(5),
-              ...(addVideo && {
-                videoTitle: this.parse(rows[6]?.cells[1]?.value),
-                videoURL: this.parse(rows[7]?.cells[1]?.value),
-              })
-            }
-        }));
-    }
+      return {
+        photoSRCs: arrayShuffle(photoSRCs),
+        smallDescription: this.parse(rows[0]?.cells[1]?.value),
+        description: this.parse(rows[1]?.cells[1]?.value),
+        leftTitle: this.parse(rows[2]?.cells[1]?.value),
+        leftBullets: bullets(3),
+        rightTitle: this.parse(rows[4]?.cells[1]?.value),
+        rightBullets: bullets(5),
+        ...(addVideo && {
+          videoTitle: this.parse(rows[6]?.cells[1]?.value),
+          videoURL: this.parse(rows[7]?.cells[1]?.value),
+        })
+      }
+    }));
+  }
 
     private fetchData(fileName: string): Observable<Workbook> {
         return this.httpClient.get(`assets/${fileName}.xlsx`, {
@@ -281,6 +305,35 @@ export class FetchDataService {
             ));
     }
 
+  private fetchDataByUrl(url: string): Observable<Workbook> {
+    return this.httpClient.get(url, {
+      responseType: 'arraybuffer',
+      observe: 'response'
+    }).pipe(
+      catchError(() => EMPTY),
+      switchMap((response) =>
+        from(new ExcelJS.Workbook().xlsx.load(<any> response.body)).pipe(map((workbook) => <any> workbook))
+      ));
+  }
+
+
+    // getImage(index) returns media in zip-entry order, unrelated to cell
+    // anchors — key images by the row they are actually anchored to.
+    private getImagesByRow(workbook: Workbook): Map<number, string> {
+        const imageByRow = new Map<number, string>();
+
+        for (const image of workbook.worksheets[0].getImages()) {
+            const anchorRow = image.range?.tl?.nativeRow;
+            const media = workbook.getImage(+image.imageId);
+
+            if (anchorRow != null && media?.buffer) {
+                imageByRow.set(anchorRow + 1, URL.createObjectURL(new Blob([media.buffer as BlobPart])));
+            }
+        }
+
+        return imageByRow;
+    }
+
 
     private parse(value: unknown): string {
         if (typeof value === 'string' || typeof value === 'number') {
@@ -291,24 +344,16 @@ export class FetchDataService {
     }
 
 
-    private async fetchProjectsData(): Promise<Workbook[]> {
-        let projectNumber = 1;
-        let isDone = false;
-
-
-        const workbooks: Workbook[] = []
-
-        while (!isDone) {
-            const workbook = await firstValueFrom(this.fetchData(`PROJETOS/PROJETO_${projectNumber}`), { defaultValue: null });
-
-            isDone = !workbook;
-            projectNumber++;
-
-            if (workbook) {
-                workbooks.push(workbook);
-            }
-        }
-
-        return workbooks
+    private fetchProjectsData(): Observable<Workbook[]> {
+      return forkJoin([
+        this.fetchDataByUrl(XLSXProjectUrl.Project1),
+        this.fetchDataByUrl(XLSXProjectUrl.Project2),
+        this.fetchDataByUrl(XLSXProjectUrl.Project3),
+        this.fetchDataByUrl(XLSXProjectUrl.Project4),
+        this.fetchDataByUrl(XLSXProjectUrl.Project5),
+        this.fetchDataByUrl(XLSXProjectUrl.Project6),
+        this.fetchDataByUrl(XLSXProjectUrl.Project7),
+        this.fetchDataByUrl(XLSXProjectUrl.Project8),
+      ])
     }
 }
