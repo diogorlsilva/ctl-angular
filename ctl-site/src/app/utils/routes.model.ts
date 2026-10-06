@@ -1,24 +1,34 @@
 import { Routes } from "@angular/router";
-import { ProjetosComponent } from "../components/projetos/projetos.component";
-import { CatlComponent } from "../components/catl/catl.component";
 import { InicioComponent } from "../components/inicio/inicio.component";
-import { AecComponent } from "../components/aec/aec.component";
-import { RefeicoesComponent } from "../components/refeicoes/refeicoes.component";
-import { MusicaComponent } from "../components/musica/musica.component";
-import { ExplicacoesComponent } from "../components/explicacoes/explicacoes.component";
-import { NatacaoComponent } from "../components/natacao/natacao.component";
-import { CrecheComponent } from "../components/creche/creche.component";
 
+// Section pages are lazy-loaded so their code is only downloaded when visited.
 export const routes: Routes = [
     { path: '', component: InicioComponent },
-    { path: 'aec', component: AecComponent },
-    { path: 'creche', component: CrecheComponent },
-    { path: 'catl', component: CatlComponent },
-    { path: 'aec', component: AecComponent },
-    { path: 'refeicoes', component: RefeicoesComponent },
-    { path: 'musica', component: MusicaComponent },
-    { path: 'natacao', component: NatacaoComponent },
-    { path: 'explicacoes', component: ExplicacoesComponent },
-    { path: 'projetos', component: ProjetosComponent },
+    { path: 'aec', loadComponent: () => import('../components/aec/aec.component').then(m => m.AecComponent) },
+    {
+        path: 'creche',
+        loadComponent: () => import('../components/creche/creche.component').then(m => m.CrecheComponent)
+    },
+    { path: 'catl', loadComponent: () => import('../components/catl/catl.component').then(m => m.CatlComponent) },
+    {
+        path: 'refeicoes',
+        loadComponent: () => import('../components/refeicoes/refeicoes.component').then(m => m.RefeicoesComponent)
+    },
+    {
+        path: 'musica',
+        loadComponent: () => import('../components/musica/musica.component').then(m => m.MusicaComponent)
+    },
+    {
+        path: 'natacao',
+        loadComponent: () => import('../components/natacao/natacao.component').then(m => m.NatacaoComponent)
+    },
+    {
+        path: 'explicacoes',
+        loadComponent: () => import('../components/explicacoes/explicacoes.component').then(m => m.ExplicacoesComponent)
+    },
+    {
+        path: 'projetos',
+        loadComponent: () => import('../components/projetos/projetos.component').then(m => m.ProjetosComponent)
+    },
     { path: '**', component: InicioComponent },
 ]

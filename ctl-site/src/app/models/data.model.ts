@@ -1,4 +1,4 @@
-import * as ExcelJS from 'exceljs';
+import type * as ExcelJS from 'exceljs';
 
 export type Workbook = ExcelJS.Workbook
 export type WorkbookModel = ExcelJS.WorkbookModel;

@@ -14,6 +14,7 @@
         <!-- RESPOSTAS SOCIAIS -->
         <li class="nav-item dropdown">
             <a aria-expanded="false"
+               (pointerenter)="prefetch('respostasSociais')"
                class="nav-link dropdown-toggle"
                data-bs-toggle="dropdown"
                role="button">
@@ -42,6 +43,7 @@
         <!-- SERVIÇOS -->
         <li class="nav-item dropdown">
             <a aria-expanded="false"
+               (pointerenter)="prefetch('servicos')"
                class="nav-link dropdown-toggle"
                data-bs-toggle="dropdown"
                role="button">
@@ -97,6 +99,7 @@
         <!-- PROJETOS -->
         <a (click)="isToggled = false"
            [routerLinkActive]="'nav-item-selected'"
+           (pointerenter)="prefetch('projetos')"
            [routerLink]="'projetos'"
            class="nav-link">
             <span [innerText]="'Projetos'"></span>

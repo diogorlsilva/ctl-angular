@@ -48,7 +48,9 @@
         <div class="person-card">
             <div class="person-image">
                 <img [alt]="person.name"
-                     [src]="person.photoSrc">
+                     [src]="person.photoSrc"
+                     decoding="async"
+                     loading="lazy">
             </div>
             <div class="person-info">
                 <h2 [innerText]="person.name"></h2>
@@ -109,7 +111,9 @@
                 <div class="partner-image">
                     <abbr [title]="partner.alt">
                         <img [alt]="partner.alt"
-                             [src]="partner.photoSrc"></abbr>
+                             [src]="partner.photoSrc"
+                             decoding="async"
+                             loading="lazy"></abbr>
                 </div>
             } @empty {
                 @if (partnersLoading) {
@@ -128,7 +132,9 @@
                 <div class="partner-image">
                     <abbr [title]="partner.alt">
                         <img [alt]="partner.alt"
-                             [src]="partner.photoSrc"></abbr>
+                             [src]="partner.photoSrc"
+                             decoding="async"
+                             loading="lazy"></abbr>
                 </div>
             } @empty {
                 @if (partnersLoading) {

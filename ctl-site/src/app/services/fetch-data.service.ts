@@ -1,7 +1,7 @@
 import { inject, Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 
-import * as ExcelJS from 'exceljs';
+import type * as ExcelJSModule from 'exceljs';
 
 import {
     catchError,
@@ -35,6 +35,8 @@ export class FetchDataService {
     private readonly cache = new Map<string, Observable<any>>();
 
     private readonly httpClient = inject(HttpClient);
+
+    private excelJS?: Promise<typeof ExcelJSModule>;
 
 
     getNewsData(): Observable<NewsItem[]> {
@@ -236,25 +238,27 @@ export class FetchDataService {
     }
 
     private fetchData(fileName: string): Observable<Workbook> {
-        return this.httpClient.get(`assets/${fileName}.xlsx`, {
-            responseType: 'arraybuffer',
-            observe: 'response'
+        return this.fetchDataByUrl(`assets/${fileName}.xlsx`);
+    }
+
+    // ExcelJS is ~1 MB, so it is downloaded on first use (in parallel with the
+    // sheet request) instead of being bundled into main.js.
+    private fetchDataByUrl(url: string): Observable<Workbook> {
+        const excelJS = this.loadExcelJS();
+
+        return this.httpClient.get(url, {
+            responseType: 'arraybuffer'
         }).pipe(
             catchError(() => EMPTY),
-            switchMap((response) =>
-                from(new ExcelJS.Workbook().xlsx.load(<any> response.body)).pipe(map((workbook) => <any> workbook))
+            switchMap((body) =>
+                from(excelJS.then(ExcelJS => new ExcelJS.Workbook().xlsx.load(body)))
             ));
     }
 
-    private fetchDataByUrl(url: string): Observable<Workbook> {
-        return this.httpClient.get(url, {
-            responseType: 'arraybuffer',
-            observe: 'response'
-        }).pipe(
-            catchError(() => EMPTY),
-            switchMap((response) =>
-                from(new ExcelJS.Workbook().xlsx.load(<any> response.body)).pipe(map((workbook) => <any> workbook))
-            ));
+    private loadExcelJS(): Promise<typeof ExcelJSModule> {
+        this.excelJS ??= import('exceljs').then(module => (module as any).default ?? module);
+
+        return this.excelJS;
     }
 
 
