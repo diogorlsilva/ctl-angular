@@ -129,9 +129,9 @@ export class FetchDataService {
     getProjectsData(): Observable<ProjectItem[]> {
         return this.cached('PROJETOS', () => this.fetchProjectsData().pipe(map((workbooks) => {
             return workbooks.filter((workbook) => {
-              const row = ((workbook.model.worksheets[0] as any).rows as any[]);
+                const row = ((workbook.model.worksheets[0] as any).rows as any[]);
 
-              return  row[0].cells[1].value === 'SIM'
+                return row[0].cells[1].value === 'SIM'
             }).map((workbook, index) => {
                 const row = ((workbook.model.worksheets[0] as any).rows as any[]);
 
@@ -147,7 +147,7 @@ export class FetchDataService {
                     modalId: `projectModal_${index + 1}`,
                     title: this.parse(row[2]?.cells[0]?.value),
                     description: this.parse(row[2]?.cells[1]?.value),
-                  videoURL: this.parse(row[2]?.cells[2]?.value),
+                    videoURL: this.parse(row[2]?.cells[2]?.value),
                 }
             })
         })))
@@ -200,40 +200,40 @@ export class FetchDataService {
     }
 
 
-  getSectionDataByUrl(url: string, addVideo = false): Observable<SectionItem> {
-      return this.cached(url, () => this.fetchDataByUrl(url).pipe(map((workbook) => {
-      const rows = ((workbook.model.worksheets[0] as any).rows as any[]);
+    getSectionDataByUrl(url: string, addVideo = false): Observable<SectionItem> {
+        return this.cached(url, () => this.fetchDataByUrl(url).pipe(map((workbook) => {
+            const rows = ((workbook.model.worksheets[0] as any).rows as any[]);
 
-      const photoSRCs = workbook.worksheets[0].getImages()
-        .map(image => workbook.getImage(+image.imageId))
-        .filter(media => !!media?.buffer)
-        .map(media => URL.createObjectURL(new Blob([media.buffer as BlobPart])));
+            const photoSRCs = workbook.worksheets[0].getImages()
+                .map(image => workbook.getImage(+image.imageId))
+                .filter(media => !!media?.buffer)
+                .map(media => URL.createObjectURL(new Blob([media.buffer as BlobPart])));
 
-      const bullets = (rowIndex: number): string[] => {
-        const cells = [...rows[rowIndex]?.cells];
+            const bullets = (rowIndex: number): string[] => {
+                const cells = [...rows[rowIndex]?.cells];
 
-        cells.shift();
+                cells.shift();
 
-        return cells.map((cell: {
-          value: any;
-        }) => this.parse(cell.value)).filter(value => !!value);
-      }
+                return cells.map((cell: {
+                    value: any;
+                }) => this.parse(cell.value)).filter(value => !!value);
+            }
 
-      return {
-        photoSRCs: arrayShuffle(photoSRCs),
-        smallDescription: this.parse(rows[0]?.cells[1]?.value),
-        description: this.parse(rows[1]?.cells[1]?.value),
-        leftTitle: this.parse(rows[2]?.cells[1]?.value),
-        leftBullets: bullets(3),
-        rightTitle: this.parse(rows[4]?.cells[1]?.value),
-        rightBullets: bullets(5),
-        ...(addVideo && {
-          videoTitle: this.parse(rows[6]?.cells[1]?.value),
-          videoURL: this.parse(rows[7]?.cells[1]?.value),
-        })
-      }
-      })));
-  }
+            return {
+                photoSRCs: arrayShuffle(photoSRCs),
+                smallDescription: this.parse(rows[0]?.cells[1]?.value),
+                description: this.parse(rows[1]?.cells[1]?.value),
+                leftTitle: this.parse(rows[2]?.cells[1]?.value),
+                leftBullets: bullets(3),
+                rightTitle: this.parse(rows[4]?.cells[1]?.value),
+                rightBullets: bullets(5),
+                ...(addVideo && {
+                    videoTitle: this.parse(rows[6]?.cells[1]?.value),
+                    videoURL: this.parse(rows[7]?.cells[1]?.value),
+                })
+            }
+        })));
+    }
 
     private fetchData(fileName: string): Observable<Workbook> {
         return this.httpClient.get(`assets/${fileName}.xlsx`, {
@@ -246,16 +246,16 @@ export class FetchDataService {
             ));
     }
 
-  private fetchDataByUrl(url: string): Observable<Workbook> {
-    return this.httpClient.get(url, {
-      responseType: 'arraybuffer',
-      observe: 'response'
-    }).pipe(
-      catchError(() => EMPTY),
-      switchMap((response) =>
-        from(new ExcelJS.Workbook().xlsx.load(<any> response.body)).pipe(map((workbook) => <any> workbook))
-      ));
-  }
+    private fetchDataByUrl(url: string): Observable<Workbook> {
+        return this.httpClient.get(url, {
+            responseType: 'arraybuffer',
+            observe: 'response'
+        }).pipe(
+            catchError(() => EMPTY),
+            switchMap((response) =>
+                from(new ExcelJS.Workbook().xlsx.load(<any> response.body)).pipe(map((workbook) => <any> workbook))
+            ));
+    }
 
 
     // getImage(index) returns media in zip-entry order, unrelated to cell

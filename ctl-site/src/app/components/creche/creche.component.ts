@@ -11,12 +11,12 @@ import { SanitizeYouTubeUrlPipe } from "../../pipes/url-sanitizer.pipe";
 @Component({
     selector: 'ctl-creche',
     standalone: true,
-  imports: [
-    CtlGalleryComponent,
-    CtlSectionBackgroundComponent,
-    CtlSectionMessageBoxComponent,
-    SanitizeYouTubeUrlPipe,
-  ],
+    imports: [
+        CtlGalleryComponent,
+        CtlSectionBackgroundComponent,
+        CtlSectionMessageBoxComponent,
+        SanitizeYouTubeUrlPipe,
+    ],
     templateUrl: './creche.component.html',
     styleUrl: './creche.component.scss'
 })

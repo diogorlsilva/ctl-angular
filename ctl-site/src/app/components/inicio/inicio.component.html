@@ -24,18 +24,18 @@
             }
         </div>
     } @else if (newsLoading) {
-        <div class="news-container"
-             aria-busy="true"
-             aria-label="A carregar notícias">
+        <div aria-busy="true"
+             aria-label="A carregar notícias"
+             class="news-container">
             <div class="news-description">
-                <ctl-skeleton width="60%" height="1.5em"></ctl-skeleton>
+                <ctl-skeleton height="1.5em" width="60%"></ctl-skeleton>
                 <ctl-skeleton></ctl-skeleton>
                 <ctl-skeleton></ctl-skeleton>
                 <ctl-skeleton width="70%"></ctl-skeleton>
             </div>
 
             <div class="news-image news-image-loading">
-                <ctl-skeleton width="" height=""></ctl-skeleton>
+                <ctl-skeleton height="" width=""></ctl-skeleton>
             </div>
         </div>
     }
@@ -58,14 +58,14 @@
     } @empty {
         @if (peopleLoading) {
             @for (_ of peopleSkeletons; track $index) {
-                <div class="person-card"
-                     aria-busy="true"
-                     aria-label="A carregar pessoas">
+                <div aria-busy="true"
+                     aria-label="A carregar pessoas"
+                     class="person-card">
                     <div class="person-image">
-                        <ctl-skeleton width="150px" height="150px" [circle]="true"></ctl-skeleton>
+                        <ctl-skeleton [circle]="true" height="150px" width="150px"></ctl-skeleton>
                     </div>
                     <div class="person-info">
-                        <ctl-skeleton width="180px" height="2rem"></ctl-skeleton>
+                        <ctl-skeleton height="2rem" width="180px"></ctl-skeleton>
                         <ctl-skeleton width="220px"></ctl-skeleton>
                     </div>
                 </div>
@@ -102,8 +102,8 @@
         <h2>Parcerias</h2>
     </div>
 
-    <div class="partners-gallery-container"
-         [attr.aria-busy]="partnersLoading">
+    <div [attr.aria-busy]="partnersLoading"
+         class="partners-gallery-container">
         <div class="partners-photo-group">
             @for (partner of partnersSrcUrs; track $index) {
                 <div class="partner-image">
@@ -115,7 +115,7 @@
                 @if (partnersLoading) {
                     @for (_ of partnersSkeletons; track $index) {
                         <div class="partner-image">
-                            <ctl-skeleton width="168px" height="168px"></ctl-skeleton>
+                            <ctl-skeleton height="168px" width="168px"></ctl-skeleton>
                         </div>
                     }
                 }
@@ -134,7 +134,7 @@
                 @if (partnersLoading) {
                     @for (_ of partnersSkeletons; track $index) {
                         <div class="partner-image">
-                            <ctl-skeleton width="168px" height="168px"></ctl-skeleton>
+                            <ctl-skeleton height="168px" width="168px"></ctl-skeleton>
                         </div>
                     }
                 }
@@ -185,10 +185,10 @@
             </a>
         </div>
         <div>
-          <i class="fa-solid fa-map"></i>
+            <i class="fa-solid fa-map"></i>
             <a [href]="'https://maps.app.goo.gl/g8QyPuTkq2U12ceP7'"
-               target="_blank"
-               class="clickable-label">
+               class="clickable-label"
+               target="_blank">
         <span [innerText]="address"
               class="m-l-5">
         </span>
@@ -210,36 +210,36 @@
         <h4 [innerText]="'Links'"
             class="footer-title">
         </h4>
-      <div>
-        <i class="fa-brands fa-facebook"></i>
-        <a [href]="'https://www.facebook.com/ctlsantaclara'"
-           target="_blank"
-           class="clickable-label">
+        <div>
+            <i class="fa-brands fa-facebook"></i>
+            <a [href]="'https://www.facebook.com/ctlsantaclara'"
+               class="clickable-label"
+               target="_blank">
         <span [innerText]="'Facebook'"
               class="m-l-5">
         </span>
-        </a>
-      </div>
-      <div>
-        <i class="fa-brands fa-instagram"></i>
-        <a [href]="'https://www.instagram.com/ctlsantaclara'"
-           target="_blank"
-           class="clickable-label">
+            </a>
+        </div>
+        <div>
+            <i class="fa-brands fa-instagram"></i>
+            <a [href]="'https://www.instagram.com/ctlsantaclara'"
+               class="clickable-label"
+               target="_blank">
         <span [innerText]="'Instagram'"
               class="m-l-5">
         </span>
-        </a>
-      </div>
-      <div>
-        <i class="fa-brands fa-linkedin"></i>
-        <a [href]="'https://pt.linkedin.com/company/clube-de-tempos-livres-de-santa-clara'"
-           target="_blank"
-           class="clickable-label">
+            </a>
+        </div>
+        <div>
+            <i class="fa-brands fa-linkedin"></i>
+            <a [href]="'https://pt.linkedin.com/company/clube-de-tempos-livres-de-santa-clara'"
+               class="clickable-label"
+               target="_blank">
         <span [innerText]="'LinkedIn'"
               class="m-l-5">
         </span>
-        </a>
-      </div>
+            </a>
+        </div>
     </div>
 
 </div>
