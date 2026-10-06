@@ -20,28 +20,40 @@
   top: calc(0px - var(--nav-height));
 }
 
+// Sits low on the bar, as on the original site (text in the bottom half).
 .logo-container {
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   height: 100%;
+  padding: 0 0.5rem 6px;
   border-radius: 8px;
+  text-decoration: none;
+  font-family: "starlinerbtnregular", "Century Gothic", sans-serif;
+  font-size: 1.2rem;
+  line-height: 1.5;
+  font-weight: bold;
+  color: var(--ctl-blue);
+  user-select: none;
+  white-space: nowrap;
+
+  &:hover {
+    color: var(--ctl-blue);
+  }
 
   &:focus-visible {
     outline: 3px solid var(--ctl-orange);
     outline-offset: 2px;
   }
-}
 
-.logo {
-  height: 44px;
-  width: auto;
-  display: block;
+  .abbrev-text {
+    display: none;
+  }
 }
 
 .nav {
   display: flex;
   align-items: center;
-  gap: 0.25rem;
+  gap: 0.75rem;
   margin-left: auto;
   padding: 0;
   list-style: none;
@@ -55,20 +67,20 @@
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
-  padding: 0.55rem 1.1rem;
+  padding: 0.4rem 0.9rem;
   border-radius: 999px;
   font-weight: 500;
   font-size: 1.05rem;
-  color: var(--ink);
-  background: transparent;
+  color: white;
+  background: var(--ctl-blue);
   cursor: pointer;
   user-select: none;
   transition: background-color 0.15s ease;
 
   &:hover,
   &:focus-visible {
-    background: white;
-    color: var(--ctl-blue);
+    background: var(--ctl-orange);
+    color: white;
   }
 
   &:focus-visible {
@@ -77,7 +89,7 @@
   }
 
   &.nav-item-selected {
-    background: var(--ctl-blue);
+    background: #9295db;
     color: white;
   }
 }
@@ -90,7 +102,8 @@
   margin-top: 0.5rem !important;
   padding: 0.5rem;
   border: 0;
-  border-radius: 18px;
+  // Item pills are ~21px radius; adding the 8px padding keeps the corners concentric.
+  border-radius: 29px;
   background: white;
   box-shadow: var(--soft-shadow), 0 0 0 1px var(--lilac);
   font-family: var(--font-body);
@@ -98,8 +111,8 @@
 }
 
 .dropdown-item {
-  padding: 0.6rem 0.9rem;
-  border-radius: 12px;
+  padding: 0.5rem 0.9rem;
+  border-radius: 999px;
   font-weight: 600;
   color: var(--ink);
   cursor: pointer;
@@ -138,7 +151,7 @@
     gap: 0.25rem;
     min-width: 15rem;
     padding: 0.75rem;
-    border-radius: 18px;
+    border-radius: 32px;
     background: white;
     box-shadow: var(--soft-shadow), 0 0 0 1px var(--lilac);
   }
@@ -150,7 +163,6 @@
   .nav-link {
     display: flex;
     justify-content: space-between;
-    border-radius: 12px;
   }
 
   // Sub-menus open in place inside the panel instead of floating.
@@ -171,8 +183,8 @@
     margin-left: auto;
     border: 0;
     border-radius: 50%;
-    background: white;
-    color: var(--ctl-blue);
+    background: var(--ctl-blue);
+    color: white;
     font-size: 1.25rem;
 
     &:focus-visible {
@@ -182,9 +194,15 @@
   }
 }
 
-@media screen and (max-width: 480px) {
-  .logo {
-    height: 36px;
+@media screen and (max-width: 768px) {
+  .logo-container {
+    .full-text {
+      display: none;
+    }
+
+    .abbrev-text {
+      display: inline;
+    }
   }
 }
 
