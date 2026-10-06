@@ -7,6 +7,7 @@ import { ModalComponent } from "../modal/modal.component";
 import { CtlSectionMessageBoxComponent } from "@shared/ctl-section-message-box/ctl-section-message-box.component";
 import { DomSanitizer, SafeUrl } from "@angular/platform-browser";
 import { SanitizeYouTubeUrlPipe } from "../../pipes/url-sanitizer.pipe";
+import { CtlSkeletonComponent } from "@shared/ctl-skeleton/ctl-skeleton.component";
 
 @Component({
     selector: 'ctl-projects',
