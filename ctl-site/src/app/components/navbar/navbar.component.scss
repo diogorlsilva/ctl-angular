@@ -165,27 +165,80 @@
     justify-content: space-between;
   }
 
-  // Sub-menus open in place inside the panel instead of floating.
-  .dropdown-menu {
-    position: static !important;
-    transform: none !important;
-    margin: 0.25rem 0 0.5rem !important;
-    padding: 0.25rem 0 0.25rem 0.75rem;
-    box-shadow: none;
-    background: transparent;
+  // Each group is an accordion row: the button, then a sub-list that grows
+  // from 0 to its natural height when Bootstrap adds .show to the menu.
+  .nav-item.dropdown {
+    display: grid;
+    grid-template-rows: auto 0fr;
+    // Without this the auto row stretches mid-transition and the button jumps.
+    align-content: start;
+    transition: grid-template-rows 0.3s ease;
+
+    &:has(> .dropdown-menu.show) {
+      grid-template-rows: auto 1fr;
+    }
   }
 
+  // The open group's button turns orange so it reads as the parent of the
+  // items below it, and its chevron flips.
+  .dropdown-toggle {
+    &::after {
+      transition: transform 0.3s ease;
+    }
+
+    &[aria-expanded="true"] {
+      background: var(--ctl-orange);
+
+      &::after {
+        transform: rotate(180deg);
+      }
+    }
+  }
+
+  // Sub-menus open in place inside the panel instead of floating. The list is
+  // always rendered so the grid row can animate; overflow hides the collapsed
+  // content and visibility keeps the hidden links out of the tab order.
+  .dropdown-menu {
+    display: block !important;
+    position: static !important;
+    transform: none !important;
+    min-height: 0;
+    overflow: hidden;
+    margin: 0 0 0 1.1rem !important;
+    padding: 0 0 0 0.75rem;
+    border-left: 2px solid var(--ctl-blue-25);
+    border-radius: 0;
+    box-shadow: none;
+    background: transparent;
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s 0.3s, opacity 0.2s ease;
+
+    &.show {
+      visibility: visible;
+      opacity: 1;
+      transition: visibility 0s, opacity 0.2s ease 0.1s;
+    }
+
+    > li:first-child {
+      padding-top: 0.35rem;
+    }
+
+    > li:last-child {
+      padding-bottom: 0.5rem;
+    }
+  }
+
+  // Plain icon, as on the main branch: no filled circle behind it.
   .toggle {
-    display: grid;
-    place-items: center;
-    width: 44px;
-    height: 44px;
-    margin-left: auto;
+    display: block;
+    margin: 0 5px 0 auto;
+    padding: 0.25rem;
     border: 0;
-    border-radius: 50%;
-    background: var(--ctl-blue);
-    color: white;
-    font-size: 1.25rem;
+    background: transparent;
+    color: var(--ctl-blue);
+    font-size: 1.5rem;
+    line-height: 1;
 
     &:focus-visible {
       outline: 3px solid var(--ctl-orange);
@@ -208,7 +261,10 @@
 
 @media (prefers-reduced-motion: reduce) {
   .navbar-container,
-  .nav-link {
+  .nav-link,
+  .nav-item.dropdown,
+  .dropdown-toggle::after,
+  .dropdown-menu {
     transition: none;
   }
 }

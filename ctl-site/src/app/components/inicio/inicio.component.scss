@@ -155,7 +155,8 @@
 }
 
 .news-card {
-  flex: 0 0 min(100%, 320px);
+  // Never the full row width: the next card peeks in so it is clear there is more to scroll.
+  flex: 0 0 min(78%, 320px);
   scroll-snap-align: start;
   display: flex;
   flex-direction: column;
