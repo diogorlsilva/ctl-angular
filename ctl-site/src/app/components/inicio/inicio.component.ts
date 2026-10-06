@@ -3,10 +3,10 @@ import { FetchDataService } from "@services/fetch-data.service";
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 import {
     AccountReport,
+    address,
     ctlEmail,
     institutionMessage,
     mission,
-    address,
     NewsItem,
     NumberItem,
     OrganisationItem,
@@ -15,12 +15,14 @@ import {
     telephoneNumber
 } from "@models/data.model";
 import { ModalComponent } from "../modal/modal.component";
+import { CtlSkeletonComponent } from "@shared/ctl-skeleton/ctl-skeleton.component";
 
 @Component({
     selector: 'ctl-inicio',
     standalone: true,
     imports: [
-        ModalComponent
+        ModalComponent,
+        CtlSkeletonComponent
     ],
     templateUrl: './inicio.component.html',
     styleUrl: './inicio.component.scss'
@@ -31,6 +33,11 @@ export class InicioComponent implements OnInit {
     numbersItems: NumberItem[] = [];
     partnersSrcUrs: PartnerItem[];
     currentItem: NewsItem;
+    newsLoading = true;
+    peopleLoading = true;
+    readonly peopleSkeletons = Array(5);
+    partnersLoading = true;
+    readonly partnersSkeletons = Array(5);
     reports: AccountReport[];
     organisation: OrganisationItem;
 
@@ -48,35 +55,47 @@ export class InicioComponent implements OnInit {
             location.pathname = "";
         }
 
-        if (this.fetchDataService.isReceptionDataLoaded) {
-            this.newsItems = this.fetchDataService.newsItems;
-            this.peopleItems = this.fetchDataService.peopleItems;
-            this.numbersItems = this.fetchDataService.numbersItems;
-            this.partnersSrcUrs = this.fetchDataService.partnersSrcUrs;
-            this.reports = this.fetchDataService.reportsItems;
-            this.organisation = this.fetchDataService.organisationItem;
+        this.destroyRef.onDestroy(() => clearInterval(this.interval));
 
-            this.setNewsCarousel();
-            setTimeout(() => this.setNewsModalListeners());
-
-            return
-        }
-
-
-        this.fetchDataService.setHomepageData()
+        // Each block renders as soon as its own sheet arrives.
+        this.fetchDataService.getNewsData()
             .pipe(takeUntilDestroyed(this.destroyRef))
-            .subscribe(([newsItems, peopleItems, numbersItems, partnersSrcUrs, reportsItems, organisationItem]) => {
-                this.newsItems = newsItems;
-                this.peopleItems = peopleItems;
-                this.numbersItems = numbersItems;
-                this.partnersSrcUrs = partnersSrcUrs;
-                this.reports = reportsItems;
-                this.organisation = organisationItem;
+            .subscribe({
+                next: (newsItems) => {
+                    this.newsItems = newsItems;
 
-                this.setNewsCarousel();
-                setTimeout(() => this.setNewsModalListeners());
+                    this.setNewsCarousel();
+                    setTimeout(() => this.setNewsModalListeners());
+                },
+                // Also fires when the request fails, so the skeleton never sticks.
+                complete: () => this.newsLoading = false
             });
 
+        this.fetchDataService.getPeopleData()
+            .pipe(takeUntilDestroyed(this.destroyRef))
+            .subscribe({
+                next: (peopleItems) => this.peopleItems = peopleItems,
+                complete: () => this.peopleLoading = false
+            });
+
+        this.fetchDataService.getNumbersData()
+            .pipe(takeUntilDestroyed(this.destroyRef))
+            .subscribe((numbersItems) => this.numbersItems = numbersItems);
+
+        this.fetchDataService.getPartnersPhotosURLs()
+            .pipe(takeUntilDestroyed(this.destroyRef))
+            .subscribe({
+                next: (partnersSrcUrs) => this.partnersSrcUrs = partnersSrcUrs,
+                complete: () => this.partnersLoading = false
+            });
+
+        this.fetchDataService.getReportsData()
+            .pipe(takeUntilDestroyed(this.destroyRef))
+            .subscribe((reports) => this.reports = reports);
+
+        this.fetchDataService.getOrganisationData()
+            .pipe(takeUntilDestroyed(this.destroyRef))
+            .subscribe((organisation) => this.organisation = organisation);
     }
 
     private setNewsCarousel(): void {

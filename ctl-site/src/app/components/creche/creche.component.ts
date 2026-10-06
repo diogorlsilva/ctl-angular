@@ -1,13 +1,12 @@
-import {Component, DestroyRef, inject, OnInit, Sanitizer} from '@angular/core';
+import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { CtlGalleryComponent } from "@shared/ctl-gallery/ctl-gallery.component";
 import { CtlSectionBackgroundComponent } from "@shared/ctl-section-background/ctl-section-background.component";
 import { SectionItem } from "@models/data.model";
 import { FetchDataService } from "@services/fetch-data.service";
+import { XLSXUrl } from "../../utils/utils.model";
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 import { CtlSectionMessageBoxComponent } from "@shared/ctl-section-message-box/ctl-section-message-box.component";
-import { CtlSectionContentComponent } from "@shared/ctl-section-content/ctl-section-content.component";
-import {DomSanitizer, SafeUrl} from "@angular/platform-browser";
-import {SanitizeYouTubeUrlPipe} from "../../pipes/url-sanitizer.pipe";
+import { SanitizeYouTubeUrlPipe } from "../../pipes/url-sanitizer.pipe";
 
 @Component({
     selector: 'ctl-creche',
@@ -22,21 +21,19 @@ import {SanitizeYouTubeUrlPipe} from "../../pipes/url-sanitizer.pipe";
     styleUrl: './creche.component.scss'
 })
 export class CrecheComponent implements OnInit {
-    section: SectionItem;
+    section?: SectionItem;
+    loading = true;
 
     private readonly fetchDataService = inject(FetchDataService);
     private readonly destroyRef = inject(DestroyRef);
 
 
     ngOnInit(): void {
-        if (this.fetchDataService.isSectionsDataLoaded) {
-            this.section = this.fetchDataService.crecheSection;
-
-            return;
-        }
-
-        this.fetchDataService.setSectionsData()
+        this.fetchDataService.getSectionDataByUrl(XLSXUrl.CRECHE, true)
             .pipe(takeUntilDestroyed(this.destroyRef))
-            .subscribe(() =>  this.section = this.fetchDataService.crecheSection);
+            .subscribe({
+                next: (section) => this.section = section,
+                complete: () => this.loading = false
+            });
     }
 }

@@ -23,6 +23,21 @@
                 </div>
             }
         </div>
+    } @else if (newsLoading) {
+        <div class="news-container"
+             aria-busy="true"
+             aria-label="A carregar notícias">
+            <div class="news-description">
+                <ctl-skeleton width="60%" height="1.5em"></ctl-skeleton>
+                <ctl-skeleton></ctl-skeleton>
+                <ctl-skeleton></ctl-skeleton>
+                <ctl-skeleton width="70%"></ctl-skeleton>
+            </div>
+
+            <div class="news-image news-image-loading">
+                <ctl-skeleton width="" height=""></ctl-skeleton>
+            </div>
+        </div>
     }
 </div>
 
@@ -40,6 +55,22 @@
                 <p [innerText]="person.description"></p>
             </div>
         </div>
+    } @empty {
+        @if (peopleLoading) {
+            @for (_ of peopleSkeletons; track $index) {
+                <div class="person-card"
+                     aria-busy="true"
+                     aria-label="A carregar pessoas">
+                    <div class="person-image">
+                        <ctl-skeleton width="150px" height="150px" [circle]="true"></ctl-skeleton>
+                    </div>
+                    <div class="person-info">
+                        <ctl-skeleton width="180px" height="2rem"></ctl-skeleton>
+                        <ctl-skeleton width="220px"></ctl-skeleton>
+                    </div>
+                </div>
+            }
+        }
     }
 </div>
 
@@ -71,7 +102,8 @@
         <h2>Parcerias</h2>
     </div>
 
-    <div class="partners-gallery-container">
+    <div class="partners-gallery-container"
+         [attr.aria-busy]="partnersLoading">
         <div class="partners-photo-group">
             @for (partner of partnersSrcUrs; track $index) {
                 <div class="partner-image">
@@ -79,6 +111,14 @@
                         <img [alt]="partner.alt"
                              [src]="partner.photoSrc"></abbr>
                 </div>
+            } @empty {
+                @if (partnersLoading) {
+                    @for (_ of partnersSkeletons; track $index) {
+                        <div class="partner-image">
+                            <ctl-skeleton width="168px" height="168px"></ctl-skeleton>
+                        </div>
+                    }
+                }
             }
         </div>
 
@@ -90,6 +130,14 @@
                         <img [alt]="partner.alt"
                              [src]="partner.photoSrc"></abbr>
                 </div>
+            } @empty {
+                @if (partnersLoading) {
+                    @for (_ of partnersSkeletons; track $index) {
+                        <div class="partner-image">
+                            <ctl-skeleton width="168px" height="168px"></ctl-skeleton>
+                        </div>
+                    }
+                }
             }
         </div>
     </div>

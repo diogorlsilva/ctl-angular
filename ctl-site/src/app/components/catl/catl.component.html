@@ -1,9 +1,11 @@
 <ctl-section-background [backgroundUrl]="'/assets/images/catl/catl_background.png'"></ctl-section-background>
+<ctl-section-message-box [iconSrc]="'assets/images/catl/catl_logo.png'"
+                         [loading]="loading"
+                         [messageBoxText]="section?.smallDescription ?? ''"
+                         [title]="'CATL'">
+</ctl-section-message-box>
+<ctl-gallery [imagesSRCs]="section?.photoSRCs ?? []"
+             [loading]="loading"></ctl-gallery>
 @if (section) {
-    <ctl-section-message-box [iconSrc]="'assets/images/catl/catl_logo.png'"
-                             [messageBoxText]="section.smallDescription"
-                             [title]="'CATL'">
-    </ctl-section-message-box>
-    <ctl-gallery [imagesSRCs]="section.photoSRCs"></ctl-gallery>
     <ctl-section-content [section]="section"></ctl-section-content>
 }

@@ -5,6 +5,7 @@ import { CtlGalleryComponent } from "@shared/ctl-gallery/ctl-gallery.component";
 import { CtlSectionContentComponent } from "@shared/ctl-section-content/ctl-section-content.component";
 import { SectionItem } from "@models/data.model";
 import { FetchDataService } from "@services/fetch-data.service";
+import { XLSXUrl } from "../../utils/utils.model";
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 
 @Component({
@@ -20,20 +21,18 @@ import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
     styleUrl: './explicacoes.component.scss'
 })
 export class ExplicacoesComponent implements OnInit {
-    section: SectionItem;
+    section?: SectionItem;
+    loading = true;
 
     private readonly fetchDataService = inject(FetchDataService);
     private readonly destroyRef = inject(DestroyRef);
 
     ngOnInit(): void {
-        if (this.fetchDataService.isSectionsDataLoaded) {
-            this.section = this.fetchDataService.explicacoesSection;
-
-            return;
-        }
-
-        this.fetchDataService.setSectionsData()
+        this.fetchDataService.getSectionDataByUrl(XLSXUrl.EXPLICACOES)
             .pipe(takeUntilDestroyed(this.destroyRef))
-            .subscribe(() => this.section = this.fetchDataService.explicacoesSection);
+            .subscribe({
+                next: (section) => this.section = section,
+                complete: () => this.loading = false
+            });
     }
 }

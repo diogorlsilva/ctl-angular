@@ -11,8 +11,12 @@
   </span>
     <div></div>
     <div class="box-container"
-         [class.hide]="!messageBoxText">
-        <span [innerText]="messageBoxText"></span>
+         [class.hide]="!messageBoxText && !loading">
+        @if (loading) {
+            <ctl-skeleton height="30px" width="min(400px, 50vw)"></ctl-skeleton>
+        } @else {
+            <span [innerText]="messageBoxText"></span>
+        }
     </div>
 </div>
 

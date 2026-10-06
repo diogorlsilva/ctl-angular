@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python3 *)",
+      "Bash(rm -f fix_images.py)",
+      "Bash(rm -f \"../CATL_copy.xlsx\")",
+      "PowerShell(& \"C:\\\\Users\\\\drsilva\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\C--code-ctl-site\\\\c51e88e9-3a7d-48f7-adb2-6804fdb1f78f\\\\scratchpad\\\\convert-to-gdrive.ps1\")"
+    ]
+  }
+}

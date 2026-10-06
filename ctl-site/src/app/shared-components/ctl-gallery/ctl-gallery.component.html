@@ -1,24 +1,40 @@
-<div class="gallery-container">
-    <div class="photo-group">
-        @for (src of arrayToRight; track $index) {
-            <img [src]="src">
-        }
+@if (loading) {
+    @for (direction of ['', 'to-right']; track direction) {
+        <div class="gallery-container"
+             [class.gap-margin-top]="direction"
+             aria-busy="true">
+            @for (group of [0, 1]; track group) {
+                <div class="photo-group {{ direction }}">
+                    @for (_ of skeletons; track $index) {
+                        <ctl-skeleton width="267px" height="200px"></ctl-skeleton>
+                    }
+                </div>
+            }
+        </div>
+    }
+} @else if (arrayToRight.length) {
+    <div class="gallery-container">
+        <div class="photo-group">
+            @for (src of arrayToRight; track $index) {
+                <img [src]="src">
+            }
+        </div>
+        <div aria-hidden="true" class="photo-group">
+            @for (src of arrayToRight; track $index) {
+                <img [src]="src">
+            }
+        </div>
     </div>
-    <div aria-hidden="true" class="photo-group">
-        @for (src of arrayToRight; track $index) {
-            <img [src]="src">
-        }
+    <div class="gallery-container gap-margin-top">
+        <div class="photo-group to-right">
+            @for (src of arrayToLeft; track $index) {
+                <img [src]="src">
+            }
+        </div>
+        <div aria-hidden="true" class="photo-group to-right">
+            @for (src of arrayToLeft; track $index) {
+                <img [src]="src">
+            }
+        </div>
     </div>
-</div>
-<div class="gallery-container gap-margin-top">
-    <div class="photo-group to-right">
-        @for (src of arrayToLeft; track $index) {
-            <img [src]="src">
-        }
-    </div>
-    <div aria-hidden="true" class="photo-group to-right">
-        @for (src of arrayToLeft; track $index) {
-            <img [src]="src">
-        }
-    </div>
-</div>
+}

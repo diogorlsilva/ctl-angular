@@ -2,6 +2,7 @@ import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { CtlGalleryComponent } from "@shared/ctl-gallery/ctl-gallery.component";
 import { SectionItem } from "@models/data.model";
 import { FetchDataService } from "@services/fetch-data.service";
+import { XLSXUrl } from "../../utils/utils.model";
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 import { CtlSectionBackgroundComponent } from "@shared/ctl-section-background/ctl-section-background.component";
 import { CtlSectionContentComponent } from "@shared/ctl-section-content/ctl-section-content.component";
@@ -15,20 +16,18 @@ import { CtlSectionMessageBoxComponent } from "@shared/ctl-section-message-box/c
     styleUrl: './catl.component.scss'
 })
 export class CatlComponent implements OnInit {
-    section: SectionItem;
+    section?: SectionItem;
+    loading = true;
 
     private readonly fetchDataService = inject(FetchDataService);
     private readonly destroyRef = inject(DestroyRef);
 
     ngOnInit(): void {
-        if (this.fetchDataService.isSectionsDataLoaded) {
-            this.section = this.fetchDataService.catlSection;
-
-            return;
-        }
-
-        this.fetchDataService.setSectionsData()
+        this.fetchDataService.getSectionDataByUrl(XLSXUrl.CATL)
             .pipe(takeUntilDestroyed(this.destroyRef))
-            .subscribe(() => this.section = this.fetchDataService.catlSection);
+            .subscribe({
+                next: (section) => this.section = section,
+                complete: () => this.loading = false
+            });
     }
 }

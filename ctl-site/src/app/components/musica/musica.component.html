@@ -1,9 +1,11 @@
 <ctl-section-background [backgroundUrl]="'/assets/images/musica/musica_background.png'"></ctl-section-background>
+<ctl-section-message-box [iconSrc]="'assets/images/musica/musica_logo.png'"
+                         [messageBoxText]="section?.smallDescription ?? ''"
+                         [title]="'Oficina de Música'"
+                         [loading]="loading">
+</ctl-section-message-box>
+<ctl-gallery [imagesSRCs]="section?.photoSRCs ?? []"
+             [loading]="loading"></ctl-gallery>
 @if (section) {
-    <ctl-section-message-box [iconSrc]="'assets/images/musica/musica_logo.png'"
-                             [messageBoxText]="section.smallDescription"
-                             [title]="'Oficina de Música'">
-    </ctl-section-message-box>
-    <ctl-gallery [imagesSRCs]="section.photoSRCs"></ctl-gallery>
     <ctl-section-content [section]="section"></ctl-section-content>
 }

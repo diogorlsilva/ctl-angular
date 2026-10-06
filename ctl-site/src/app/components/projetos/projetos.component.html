@@ -74,5 +74,28 @@
             </ng-template>
 
         </ctl-modal>
+    } @empty {
+        @if (loading) {
+            @for (_ of skeletons; track $index) {
+                <div class="project-card-container"
+                     aria-busy="true"
+                     aria-label="A carregar projetos">
+                    <div class="card-img-container">
+                        <ctl-skeleton width="150px" height="150px"></ctl-skeleton>
+                    </div>
+                    <div class="info-container">
+                        <ctl-skeleton width="min(220px, 50vw)" height="24px"></ctl-skeleton>
+                        @for (width of ['350px', '350px', '350px', '250px']; track $index) {
+                            <ctl-skeleton [width]="'min(' + width + ', 55vw)'"></ctl-skeleton>
+                        }
+                    </div>
+                    <div class="button-container">
+                        <ctl-skeleton width="70px" height="31px"></ctl-skeleton>
+                    </div>
+                </div>
+                <!-- Stands in for the zero-width <ctl-modal>, which takes a flex gap next to each real card. -->
+                <div></div>
+            }
+        }
     }
 </div>

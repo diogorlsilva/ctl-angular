@@ -3,7 +3,19 @@ import { HttpClient } from "@angular/common/http";
 
 import * as ExcelJS from 'exceljs';
 
-import { catchError, EMPTY, forkJoin, from, map, Observable, switchMap, tap } from "rxjs";
+import {
+    catchError,
+    defaultIfEmpty,
+    EMPTY,
+    finalize,
+    forkJoin,
+    from,
+    map,
+    Observable,
+    shareReplay,
+    switchMap,
+    tap
+} from "rxjs";
 import {
     AccountReport,
     NewsItem,
@@ -15,89 +27,18 @@ import {
     SectionItem,
     Workbook
 } from "@models/data.model";
-import {arrayShuffle, XLSXHomepageUrl, XLSXProjectUrl, XLSXUrl} from "../utils/utils.model";
+import { arrayShuffle, XLSXHomepageUrl, XLSXProjectUrl } from "../utils/utils.model";
 
 @Injectable({ providedIn: 'root' })
 export class FetchDataService {
-    newsItems: NewsItem[];
-    peopleItems: PersonItem[]
-    numbersItems: NumberItem[];
-    partnersSrcUrs: PartnerItem[];
-    projectsItems: ProjectItem[];
-    reportsItems: AccountReport[];
-    organisationItem: OrganisationItem;
-
-    crecheSection: SectionItem;
-    catlSection: SectionItem;
-    aecSection: SectionItem;
-    refeicoesSection: SectionItem;
-    musicaSection: SectionItem;
-    natacaoSection: SectionItem
-    explicacoesSection: SectionItem;
-
-    isReceptionDataLoaded = false;
-    isSectionsDataLoaded = false;
+    // Each sheet is requested only once; later subscribers get the cached result.
+    private readonly cache = new Map<string, Observable<any>>();
 
     private readonly httpClient = inject(HttpClient);
 
 
-    setHomepageData() {
-        return forkJoin([
-            this.getNewsData(),
-            this.getPeopleData(),
-            this.getNumbersData(),
-            this.getPartnersPhotosURLs(),
-            this.getReportsData(),
-            this.getOrganisationData()
-        ]).pipe(tap(([newsItems, peopleItems, numbersItems, partnersSrcUrs, reportsItems, organisationItem]) => {
-            this.newsItems = newsItems;
-            this.peopleItems = peopleItems;
-            this.numbersItems = numbersItems;
-            this.partnersSrcUrs = partnersSrcUrs;
-            this.reportsItems = reportsItems;
-            this.organisationItem = organisationItem;
-
-            this.isReceptionDataLoaded = true;
-        }))
-    }
-
-    setSectionsData() {
-        return forkJoin([
-            this.getProjectsData(),
-            this.getSectionDataByUrl(XLSXUrl.CRECHE, true),
-            this.getSectionDataByUrl(XLSXUrl.CATL),
-            this.getSectionDataByUrl(XLSXUrl.AEC),
-            this.getSectionDataByUrl(XLSXUrl.REFEICOES),
-            this.getSectionDataByUrl(XLSXUrl.MUSICA),
-            this.getSectionDataByUrl(XLSXUrl.NATACAO),
-            this.getSectionDataByUrl(XLSXUrl.EXPLICACOES),
-        ]).pipe(
-            tap(([
-                     projectsItems,
-                     crecheSection,
-                     catlSection,
-                     aecSection,
-                     refeicoesSection,
-                     musicaSection,
-                     natacaoSection,
-                     explicacoesSection
-                 ]) => {
-                this.projectsItems = projectsItems;
-                this.crecheSection = crecheSection;
-                this.catlSection = catlSection;
-                this.aecSection = aecSection;
-                this.refeicoesSection = refeicoesSection;
-                this.musicaSection = musicaSection;
-                this.natacaoSection = natacaoSection;
-                this.explicacoesSection = explicacoesSection;
-
-                this.isSectionsDataLoaded = true;
-            }))
-    }
-
-
     getNewsData(): Observable<NewsItem[]> {
-        return this.fetchDataByUrl(XLSXHomepageUrl.NOTICIAS).pipe(map((workbook) => {
+        return this.cached(XLSXHomepageUrl.NOTICIAS, () => this.fetchDataByUrl(XLSXHomepageUrl.NOTICIAS).pipe(map((workbook) => {
             const worksheet = workbook.worksheets[0];
             const imageByRow = this.getImagesByRow(workbook);
 
@@ -118,11 +59,11 @@ export class FetchDataService {
             return news.filter(item =>
                 Object.values(item).every(value => !!value)
             );
-        }))
+        })))
     }
 
     getPeopleData(): Observable<PersonItem[]> {
-        return this.fetchDataByUrl(XLSXHomepageUrl.PESSOAS).pipe(map((workbook) => {
+        return this.cached(XLSXHomepageUrl.PESSOAS, () => this.fetchDataByUrl(XLSXHomepageUrl.PESSOAS).pipe(map((workbook) => {
             const worksheet = workbook.worksheets[0];
             const imageByRow = this.getImagesByRow(workbook);
 
@@ -141,11 +82,11 @@ export class FetchDataService {
             });
 
             return people;
-        }))
+        })))
     }
 
     getNumbersData(): Observable<NumberItem[]> {
-        return this.fetchDataByUrl(XLSXHomepageUrl.NUMEROS).pipe(map((workbook) => {
+        return this.cached(XLSXHomepageUrl.NUMEROS, () => this.fetchDataByUrl(XLSXHomepageUrl.NUMEROS).pipe(map((workbook) => {
             const rows = [...((workbook.model.worksheets[0] as any).rows as any[])];
 
             rows.shift();
@@ -156,11 +97,11 @@ export class FetchDataService {
                     value: this.parse(row.cells[1]?.value),
                 };
             })
-        }))
+        })))
     }
 
     getPartnersPhotosURLs(): Observable<PartnerItem[]> {
-        return this.fetchDataByUrl(XLSXHomepageUrl.PARCERIAS).pipe(map((workbook) => {
+        return this.cached(XLSXHomepageUrl.PARCERIAS, () => this.fetchDataByUrl(XLSXHomepageUrl.PARCERIAS).pipe(map((workbook) => {
             const worksheet = workbook.worksheets[0];
             const imageByRow = this.getImagesByRow(workbook);
 
@@ -182,11 +123,11 @@ export class FetchDataService {
             });
 
             return partners;
-        }), map(partners => partners.sort(() => Math.random() - 0.5)));
+        }), map(partners => partners.sort(() => Math.random() - 0.5))));
     }
 
     getProjectsData(): Observable<ProjectItem[]> {
-        return this.fetchProjectsData().pipe(map((workbooks) => {
+        return this.cached('PROJETOS', () => this.fetchProjectsData().pipe(map((workbooks) => {
             return workbooks.filter((workbook) => {
               const row = ((workbook.model.worksheets[0] as any).rows as any[]);
 
@@ -209,11 +150,11 @@ export class FetchDataService {
                   videoURL: this.parse(row[2]?.cells[2]?.value),
                 }
             })
-        }))
+        })))
     }
 
     getReportsData(): Observable<AccountReport[]> {
-        return this.fetchData('RELATORIOS_CONTAS/INFO_RELATORIOS_CONTAS').pipe(map((workbook) => {
+        return this.cached('RELATORIOS_CONTAS', () => this.fetchData('RELATORIOS_CONTAS/INFO_RELATORIOS_CONTAS').pipe(map((workbook) => {
             const rows = [...((workbook.model.worksheets[0] as any).rows as any[])];
 
             rows.shift();
@@ -229,11 +170,11 @@ export class FetchDataService {
             }).filter(item =>
                 Object.values(item).every(value => !!value)
             );
-        }))
+        })))
     }
 
     getOrganisationData(): Observable<OrganisationItem> {
-        return this.fetchDataByUrl(XLSXHomepageUrl.ORGAOS_SOCIAIS).pipe(map((workbook) => {
+        return this.cached(XLSXHomepageUrl.ORGAOS_SOCIAIS, () => this.fetchDataByUrl(XLSXHomepageUrl.ORGAOS_SOCIAIS).pipe(map((workbook) => {
             const rows = [...((workbook.model.worksheets[0] as any).rows as any[])];
 
             return {
@@ -255,12 +196,12 @@ export class FetchDataService {
                     { title: this.parse(rows[13]?.cells[0]?.value), name: this.parse(rows[13]?.cells[1]?.value) },
                 ]
             }
-        }))
+        })))
     }
 
 
   getSectionDataByUrl(url: string, addVideo = false): Observable<SectionItem> {
-    return this.fetchDataByUrl(url).pipe(map((workbook) => {
+      return this.cached(url, () => this.fetchDataByUrl(url).pipe(map((workbook) => {
       const rows = ((workbook.model.worksheets[0] as any).rows as any[]);
 
       const photoSRCs = workbook.worksheets[0].getImages()
@@ -291,7 +232,7 @@ export class FetchDataService {
           videoURL: this.parse(rows[7]?.cells[1]?.value),
         })
       }
-    }));
+      })));
   }
 
     private fetchData(fileName: string): Observable<Workbook> {
@@ -344,16 +285,27 @@ export class FetchDataService {
     }
 
 
+    // A failed project sheet is skipped instead of hiding every project.
     private fetchProjectsData(): Observable<Workbook[]> {
-      return forkJoin([
-        this.fetchDataByUrl(XLSXProjectUrl.Project1),
-        this.fetchDataByUrl(XLSXProjectUrl.Project2),
-        this.fetchDataByUrl(XLSXProjectUrl.Project3),
-        this.fetchDataByUrl(XLSXProjectUrl.Project4),
-        this.fetchDataByUrl(XLSXProjectUrl.Project5),
-        this.fetchDataByUrl(XLSXProjectUrl.Project6),
-        this.fetchDataByUrl(XLSXProjectUrl.Project7),
-        this.fetchDataByUrl(XLSXProjectUrl.Project8),
-      ])
+        return forkJoin(
+            Object.values(XLSXProjectUrl).map(url => this.fetchDataByUrl(url).pipe(defaultIfEmpty(null)))
+        ).pipe(map(workbooks => workbooks.filter((workbook): workbook is Workbook => !!workbook)));
+    }
+
+
+    // Shares one request per key. If the request fails (completes without a value),
+    // the entry is dropped so the next visit tries again.
+    private cached<T>(key: string, factory: () => Observable<T>): Observable<T> {
+        if (!this.cache.has(key)) {
+            let emitted = false;
+
+            this.cache.set(key, factory().pipe(
+                tap(() => emitted = true),
+                finalize(() => !emitted && this.cache.delete(key)),
+                shareReplay(1)
+            ));
+        }
+
+        return this.cache.get(key)!;
     }
 }

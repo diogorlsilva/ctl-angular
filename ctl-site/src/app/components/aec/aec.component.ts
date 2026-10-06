@@ -5,6 +5,7 @@ import { CtlSectionContentComponent } from "@shared/ctl-section-content/ctl-sect
 import { CtlSectionMessageBoxComponent } from "@shared/ctl-section-message-box/ctl-section-message-box.component";
 import { SectionItem } from "@models/data.model";
 import { FetchDataService } from "@services/fetch-data.service";
+import { XLSXUrl } from "../../utils/utils.model";
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 
 @Component({
@@ -20,20 +21,18 @@ import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
     styleUrl: './aec.component.scss'
 })
 export class AecComponent implements OnInit {
-    section: SectionItem;
+    section?: SectionItem;
+    loading = true;
 
     private readonly fetchDataService = inject(FetchDataService);
     private readonly destroyRef = inject(DestroyRef);
 
     ngOnInit(): void {
-        if (this.fetchDataService.isSectionsDataLoaded) {
-            this.section = this.fetchDataService.aecSection;
-
-            return;
-        }
-
-        this.fetchDataService.setSectionsData()
+        this.fetchDataService.getSectionDataByUrl(XLSXUrl.AEC)
             .pipe(takeUntilDestroyed(this.destroyRef))
-            .subscribe(() => this.section = this.fetchDataService.aecSection);
+            .subscribe({
+                next: (section) => this.section = section,
+                complete: () => this.loading = false
+            });
     }
 }

@@ -62,7 +62,7 @@ $news-image-width: 300px;
 }
 
 .news-image {
-  img {
+  img, ctl-skeleton {
     width: $news-image-width;
     max-width: 400px;
     aspect-ratio: 1 / 1;
@@ -73,6 +73,10 @@ $news-image-width: 300px;
     border-radius: var(--border-radius);
     box-shadow: var(--box-shadow);
   }
+}
+
+.news-description ctl-skeleton {
+  margin-bottom: 0.5em;
 }
 
 
@@ -107,6 +111,10 @@ $news-image-width: 300px;
 .person-info {
   text-align: center;
   margin-top: 1.5em;
+
+  ctl-skeleton {
+    margin: 0 auto 0.5em;
+  }
 }
 
 // INSTITUTION SECTION
@@ -281,6 +289,20 @@ $news-image-width: 300px;
 
     img {
       width: 80%;
+    }
+  }
+
+  .news-description ctl-skeleton {
+    margin: 0 auto 0.3em;
+  }
+
+  // The real wrapper shrinks to the image; the skeleton has no intrinsic size.
+  .news-image-loading {
+    width: 100%;
+
+    ctl-skeleton {
+      width: min(80%, 320px);
+      margin: 0 auto;
     }
   }
 
