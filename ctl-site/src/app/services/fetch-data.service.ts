@@ -40,7 +40,9 @@ export class FetchDataService {
 
 
     getNewsData(): Observable<NewsItem[]> {
-        return this.cached(XLSXHomepageUrl.NOTICIAS, () => this.fetchDataByUrl(XLSXHomepageUrl.NOTICIAS).pipe(map((workbook) => {
+        // News must be current on every visit, so it skips the service worker
+        // cache; cached() still keeps it in memory while navigating between routes.
+        return this.cached(XLSXHomepageUrl.NOTICIAS, () => this.fetchDataByUrl(XLSXHomepageUrl.NOTICIAS, { alwaysFresh: true }).pipe(map((workbook) => {
             const worksheet = workbook.worksheets[0];
             const imageByRow = this.getImagesByRow(workbook);
 
@@ -243,10 +245,15 @@ export class FetchDataService {
 
     // ExcelJS is ~1 MB, so it is downloaded on first use (in parallel with the
     // sheet request) instead of being bundled into main.js.
-    private fetchDataByUrl(url: string): Observable<Workbook> {
+    private fetchDataByUrl(url: string, { alwaysFresh = false } = {}): Observable<Workbook> {
         const excelJS = this.loadExcelJS();
 
-        return this.httpClient.get(url, {
+        // Google Sheets responses are cached stale-while-revalidate by the
+        // service worker (see the google-sheets data group in ngsw-config.json).
+        // `ngsw-bypass` in the URL makes the service worker ignore the request.
+        const requestUrl = alwaysFresh ? `${url}${url.includes('?') ? '&' : '?'}ngsw-bypass` : url;
+
+        return this.httpClient.get(requestUrl, {
             responseType: 'arraybuffer'
         }).pipe(
             catchError(() => EMPTY),
