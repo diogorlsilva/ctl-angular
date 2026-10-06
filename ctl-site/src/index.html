@@ -10,6 +10,10 @@
     <link crossorigin="" href="https://docs.google.com" rel="preconnect">
     <link href="manifest.webmanifest" rel="manifest">
     <meta content="#6468CC" name="theme-color">
+    <!-- Loaded as a plain asset instead of through angular.json "scripts": the production
+         minifier (terser with pure_getters) strips Bootstrap's reflow helper, which breaks
+         the carousel slide animation. The bundle is already minified. -->
+    <script defer src="bootstrap.bundle.min.js"></script>
 </head>
 <body>
 <ctl-root></ctl-root>

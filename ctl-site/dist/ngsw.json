@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1791300829882,
+  "timestamp": 1791301510665,
   "index": "/index.html",
   "assetGroups": [
     {
@@ -20,6 +20,7 @@
         "/765.5e287bcb666bb292.js",
         "/809.fa31ee9615c2112f.js",
         "/887.49fa5e057007e5fa.js",
+        "/bootstrap.bundle.min.js",
         "/common.5d5a0603c5811411.js",
         "/favicon.ico",
         "/index.html",
@@ -27,7 +28,6 @@
         "/manifest.webmanifest",
         "/polyfills.f22ca7ec744bb0c7.js",
         "/runtime.f066d2aad1be979e.js",
-        "/scripts.1ac6d0d02f230370.js",
         "/styles.3cdc90e8ea98b5ad.css"
       ],
       "patterns": []
@@ -206,18 +206,18 @@
     "/assets/images/refeicoes/refeicoes_background.jpg": "d3a1ca74ea1c247d0e387ad8bc0d6f80869bdbcc",
     "/assets/images/refeicoes/refeicoes_background.webp": "548dd97db0f03a9cb6faef32eb7c3b7378f94995",
     "/assets/images/refeicoes/refeicoes_logo.png": "4bdce1b2d017644c513889f19821c85940db52f6",
+    "/bootstrap.bundle.min.js": "ddc6e9ead6d16ae9237399ce41e8c1620cc59c36",
     "/common.5d5a0603c5811411.js": "649bfbc26deb3f425e9a33e45116132621a342d4",
     "/fa-brands-400.86ee2658f0f3b5a5.woff2": "31c30351084e2670bbe5c47bd342e11540a68717",
     "/fa-brands-400.8eaf0c8893de015e.ttf": "da6f537cd597b76d264970f1c95e4beebc82fde9",
     "/fa-solid-900.7a5aa5abd625137f.ttf": "780a8ff16ebb681f85d5d30fac94ebe845a12b5e",
     "/fa-solid-900.ee6983981ffcbb41.woff2": "7cd8afd6501962fda35d66f0e4c3b8815ac471d8",
     "/favicon.ico": "282e237bc9086f004cf220fd57c39bfd0b0673b3",
-    "/index.html": "bc8482f0f5b67563be5bc519b845ad810ad5b911",
+    "/index.html": "982be6e6ba793ce09f53dd39cd52802da5596047",
     "/main.2586ec588b3a5a46.js": "e83e94eb4e25b71ae2841d31c8bb27e79e57c4b6",
     "/manifest.webmanifest": "9aeabc1703a1bf02dd1f5d6c3d23a54cbbb0d3f5",
     "/polyfills.f22ca7ec744bb0c7.js": "2451eeaf0b7036361b6596d14e2cad2026580fdf",
     "/runtime.f066d2aad1be979e.js": "daaefa0b7a94569687fa0e92cda4a988ffce91b5",
-    "/scripts.1ac6d0d02f230370.js": "3e03c7963828ff9539f82dcd788ff3ac916212d2",
     "/styles.3cdc90e8ea98b5ad.css": "36eb0237b7cf128d25ba03a06d29b17e9d9aa0e0"
   },
   "navigationUrls": [

@@ -29,7 +29,12 @@
               "src/favicon.ico",
               "src/assets",
               "src/index.css",
-              "src/manifest.webmanifest"
+              "src/manifest.webmanifest",
+              {
+                "glob": "bootstrap.bundle.min.js",
+                "input": "node_modules/bootstrap/dist/js",
+                "output": "/"
+              }
             ],
             "styles": [
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
@@ -38,9 +43,7 @@
               "node_modules/@fortawesome/fontawesome-free/css/brands.min.css",
               "src/styles.scss"
             ],
-            "scripts": [
-              "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
-            ],
+            "scripts": [],
             "allowedCommonJsDependencies": [
               "exceljs"
             ],
