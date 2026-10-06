@@ -2,9 +2,11 @@
   margin-top: 20px;
 }
 
+// No backdrop-filter: on Android it makes animated children (the photo
+// carousel) composite in the wrong order, and the dimmed backdrop already
+// separates the dialog from the page.
 .modal-content {
-  backdrop-filter: blur(20px);
-  background-color: rgba(255, 255, 255, 0.92);
+  background-color: white;
   border: none;
   box-shadow: 0 24px 48px -24px rgba(35, 36, 90, 0.5);
   border-radius: 24px;

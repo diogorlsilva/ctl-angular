@@ -63,11 +63,12 @@
                         @for (photoSRC of project.photoSRCs; track $index) {
                             <div [class.active]="$index === 0"
                                  class="carousel-item">
+                                <!-- Eager and sync: the photos are in-memory blobs, and a lazy image
+                                     in a hidden slide only loads when the slide starts moving. -->
                                 <img [alt]="'Imagem ' + ($index + 1) + ' do projeto ' + project.title"
                                      [src]="photoSRC"
                                      class="d-block"
-                                     decoding="async"
-                                     loading="lazy">
+                                     decoding="sync">
                             </div>
                         }
                     </div>
