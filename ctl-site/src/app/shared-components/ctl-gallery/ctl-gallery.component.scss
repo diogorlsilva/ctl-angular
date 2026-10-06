@@ -1,37 +1,39 @@
-$gap: 10px;
+// Photo strip the visitor scrolls sideways. Its side padding lines up with .wrap.
 
 ctl-gallery {
-  padding: $gap 0;
   display: block;
-  position: relative;
+  margin-top: 2.5rem;
 }
 
-.gap-margin-top {
-  margin-top: $gap;
-}
-
-.gallery-container {
-  height: 200px;
+.gallery-row {
   display: flex;
-  overflow: hidden;
-  width: 100%;
-  opacity: 0.7;
+  gap: 12px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding: 0.25rem max(1.25rem, calc((100% - 1120px) / 2)) 1rem;
+  scrollbar-width: thin;
+  scrollbar-color: var(--ctl-blue-25) transparent;
 
-  .photo-group {
-    padding-right: $gap;
-    display: flex;
-    gap: $gap;
-    animation: spin 150s linear infinite;
-    animation-delay: 500ms;
-
-    &.to-right {
-      animation-direction: reverse;
-    }
+  img,
+  ctl-skeleton {
+    flex: 0 0 auto;
+    height: 220px;
+    border-radius: var(--border-radius);
+    scroll-snap-align: start;
   }
 
   img {
-    height: 200px;
-    border-radius: var(--border-radius);
+    width: auto;
+    max-width: 85vw;
+    object-fit: cover;
   }
 }
 
+@media screen and (max-width: 640px) {
+  .gallery-row {
+    img,
+    ctl-skeleton {
+      height: 180px;
+    }
+  }
+}

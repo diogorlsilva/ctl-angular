@@ -1,13 +1,18 @@
 <div [class.navbar-hide-on-scroll-down]="isGoingDown"
      class="navbar-container glass">
-    <div [routerLink]="''"
-         class="logo-container">
-        <span class="full-text">Clube de Tempos Livres</span>
-        <span class="abbrev-text">CTL</span>
-    </div>
+    <a [routerLink]="''"
+       aria-label="Página inicial"
+       class="logo-container">
+        <img alt="Clube de Tempos Livres de Santa Clara"
+             class="logo"
+             src="assets/images/logo_ctl.png">
+    </a>
     <button (click)="isToggled = !isToggled"
-            class="toggle">
-        <i class="fa-solid fa-bars"></i>
+            [attr.aria-expanded]="isToggled"
+            aria-label="Menu"
+            class="toggle"
+            type="button">
+        <i [class]="isToggled ? 'fa-solid fa-xmark' : 'fa-solid fa-bars'" aria-hidden="true"></i>
     </button>
     <nav [class.show-nav]="isToggled"
          class="nav">

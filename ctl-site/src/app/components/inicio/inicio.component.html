@@ -1,347 +1,367 @@
-<!-- RECEPTION SECTION-->
+<!-- HERO -->
 
-<div class="reception-container">
-    <div class="reception-title">
-        <span [innerText]="'Criamos oportunidades, promovemos experiências'"></span>
+<section class="hero wrap">
+    <div class="hero-text">
+        <h1 class="hero-title">Criamos oportunidades,<br>promovemos experiências</h1>
+        <p class="hero-lede">
+            O Clube de Tempos Livres de Santa Clara acompanha crianças e famílias todos os dias:
+            creche, CATL, atividades depois da escola e muito mais.
+        </p>
+        <div class="hero-actions">
+            <a [href]="'tel:' + telephoneNumber"
+               class="btn-pill btn-pill-primary">
+                <i aria-hidden="true" class="fa-solid fa-phone"></i>
+                Ligar {{ telephoneNumber }}
+            </a>
+            <a [href]="'mailto:' + ctlEmail"
+               class="btn-pill btn-pill-secondary">
+                Escrever ao CTL
+            </a>
+        </div>
     </div>
-    @if (currentItem) {
-        <div class="news-container"
-             data-bs-target="#news"
-             data-bs-toggle="modal">
-            <div class="news-description ">
-                <div [innerText]="currentItem.title"
-                     class="news-title truncate">
-                </div>
-                <span [innerText]="currentItem.description"
-                      class="multi-line-truncate"></span>
-            </div>
 
-            @if (currentItem.photoSrc) {
-                <div class="news-image">
-                    <img [alt]="currentItem.description"
-                         [src]="currentItem.photoSrc">
-                </div>
+    <nav aria-label="Respostas sociais e serviços"
+         class="tiles">
+        @for (column of serviceColumns; track $index) {
+            <div class="tile-col">
+                @for (service of column; track service.route) {
+                    <a [attr.aria-label]="service.name"
+                       [routerLink]="service.route"
+                       [style.--i]="service.order"
+                       [style.--tilt]="service.tilt"
+                       class="tile">
+                        <span [style.background]="service.color"
+                              class="tile-art">
+                            @if (service.iconSrc) {
+                                <img [src]="service.iconSrc"
+                                     alt=""
+                                     decoding="async">
+                            } @else {
+                                <i [class]="'fa-solid ' + service.faIcon" aria-hidden="true"></i>
+                                <span [innerText]="service.name"
+                                      class="tile-art-label"></span>
+                            }
+                        </span>
+                        <span [innerText]="service.name"
+                              class="tile-name"></span>
+                    </a>
+                }
+            </div>
+        }
+    </nav>
+</section>
+
+<!-- NEWS -->
+
+@if (newsItems.length || newsLoading) {
+    <section class="news wrap">
+        <h2 class="section-title">Notícias</h2>
+        <div [attr.aria-busy]="newsLoading"
+             class="news-row">
+            @for (item of newsItems; track $index) {
+                <button (click)="currentItem = item"
+                        class="news-card"
+                        data-bs-target="#news"
+                        data-bs-toggle="modal"
+                        type="button">
+                    @if (item.photoSrc) {
+                        <img [alt]="''"
+                             [src]="item.photoSrc"
+                             class="news-photo"
+                             decoding="async"
+                             loading="lazy">
+                    } @else {
+                        <span class="news-photo news-photo-empty"></span>
+                    }
+                    <span [innerText]="item.title"
+                          class="news-title"></span>
+                    <span [innerText]="item.description"
+                          class="news-excerpt"></span>
+                </button>
+            } @empty {
+                @for (_ of newsSkeletons; track $index) {
+                    <div aria-label="A carregar notícias"
+                         class="news-card">
+                        <ctl-skeleton class="news-photo" height="" width=""></ctl-skeleton>
+                        <ctl-skeleton height="1.4em" width="70%"></ctl-skeleton>
+                        <ctl-skeleton></ctl-skeleton>
+                        <ctl-skeleton width="80%"></ctl-skeleton>
+                    </div>
+                }
             }
         </div>
-    } @else if (newsLoading) {
-        <div aria-busy="true"
-             aria-label="A carregar notícias"
-             class="news-container">
-            <div class="news-description">
-                <ctl-skeleton height="1.5em" width="60%"></ctl-skeleton>
-                <ctl-skeleton></ctl-skeleton>
-                <ctl-skeleton></ctl-skeleton>
-                <ctl-skeleton width="70%"></ctl-skeleton>
-            </div>
+    </section>
+}
 
-            <div class="news-image news-image-loading">
-                <ctl-skeleton height="" width=""></ctl-skeleton>
-            </div>
-        </div>
-    }
-</div>
+<!-- ABOUT -->
 
-<!-- PEOPLE SECTION-->
+<section class="about wrap">
+    <div>
+        <h2 class="section-title">Quem somos</h2>
+        <button class="link-button"
+                data-bs-target="#mission"
+                data-bs-toggle="modal"
+                type="button">
+            Missão, visão e valores
+        </button>
+    </div>
+    <p [innerText]="institutionMessage"
+       class="about-text"></p>
+</section>
 
-<div class="people-container flex-container aos">
-    @for (person of peopleItems; track $index) {
-        <div class="person-card">
-            <div class="person-image">
+<!-- TEAM -->
+
+<section class="team wrap">
+    <h2 class="section-title">Equipa</h2>
+    <div [attr.aria-busy]="peopleLoading"
+         class="team-row">
+        @for (person of peopleItems; track $index) {
+            <div class="person">
                 <img [alt]="person.name"
                      [src]="person.photoSrc"
+                     class="person-photo"
                      decoding="async"
                      loading="lazy">
+                <span [innerText]="person.name"
+                      class="person-name"></span>
+                <span [innerText]="person.description"
+                      class="person-role"></span>
             </div>
-            <div class="person-info">
-                <h2 [innerText]="person.name"></h2>
-                <p [innerText]="person.description"></p>
-            </div>
-        </div>
-    } @empty {
-        @if (peopleLoading) {
-            @for (_ of peopleSkeletons; track $index) {
-                <div aria-busy="true"
-                     aria-label="A carregar pessoas"
-                     class="person-card">
-                    <div class="person-image">
-                        <ctl-skeleton [circle]="true" height="150px" width="150px"></ctl-skeleton>
+        } @empty {
+            @if (peopleLoading) {
+                @for (_ of peopleSkeletons; track $index) {
+                    <div aria-label="A carregar equipa"
+                         class="person">
+                        <ctl-skeleton [circle]="true" class="person-photo" height="" width=""></ctl-skeleton>
+                        <ctl-skeleton height="1.3em" width="140px"></ctl-skeleton>
+                        <ctl-skeleton width="100px"></ctl-skeleton>
                     </div>
-                    <div class="person-info">
-                        <ctl-skeleton height="2rem" width="180px"></ctl-skeleton>
-                        <ctl-skeleton width="220px"></ctl-skeleton>
-                    </div>
-                </div>
+                }
             }
         }
-    }
-</div>
-
-<!-- INSTITUTION MESSAGE SECTION-->
-
-<div class="institution-message-container aos">
-  <span [innerText]="institutionMessage"
-        class="institution-message">
-  </span>
-</div>
-
-<!-- NUMBERS SECTION-->
-
-<div class="flex-container aos">
-    @for (number of numbersItems; track $index) {
-        <div class="number-card">
-            <h1 [innerText]="number.value"
-                class="number-value">
-            </h1>
-            <p [innerText]="number.description"></p>
-        </div>
-    }
-</div>
-
-<!-- PARTNERS SECTION-->
-
-<div class="aos">
-    <div class="partners-title">
-        <h2>Parcerias</h2>
     </div>
+</section>
 
+<!-- NUMBERS -->
+
+@if (numbersItems.length) {
+    <section class="numbers">
+        <div class="numbers-grid wrap">
+            @for (number of numbersItems; track $index) {
+                <div class="number">
+                    <span [innerText]="number.value"
+                          class="number-value"></span>
+                    <span [innerText]="number.description"
+                          class="number-label"></span>
+                </div>
+            }
+        </div>
+    </section>
+}
+
+<!-- PARTNERS -->
+
+<section class="partners wrap">
+    <h2 class="section-title">Parcerias</h2>
     <div [attr.aria-busy]="partnersLoading"
-         class="partners-gallery-container">
-        <div class="partners-photo-group">
-            @for (partner of partnersSrcUrs; track $index) {
-                <div class="partner-image">
-                    <abbr [title]="partner.alt">
-                        <img [alt]="partner.alt"
-                             [src]="partner.photoSrc"
-                             decoding="async"
-                             loading="lazy"></abbr>
-                </div>
-            } @empty {
-                @if (partnersLoading) {
-                    @for (_ of partnersSkeletons; track $index) {
-                        <div class="partner-image">
-                            <ctl-skeleton height="168px" width="168px"></ctl-skeleton>
-                        </div>
-                    }
+         class="partners-row">
+        @for (partner of partnersSrcUrs; track $index) {
+            <span [attr.data-name]="partner.alt"
+                  class="partner"
+                  tabindex="0">
+                <img [alt]="partner.alt"
+                     [src]="partner.photoSrc"
+                     class="partner-logo"
+                     decoding="async"
+                     loading="lazy">
+            </span>
+        } @empty {
+            @if (partnersLoading) {
+                @for (_ of partnersSkeletons; track $index) {
+                    <ctl-skeleton class="partner-logo" height="72px" width="140px"></ctl-skeleton>
                 }
             }
-        </div>
-
-        <div aria-hidden="true"
-             class="partners-photo-group">
-            @for (partner of partnersSrcUrs; track $index) {
-                <div class="partner-image">
-                    <abbr [title]="partner.alt">
-                        <img [alt]="partner.alt"
-                             [src]="partner.photoSrc"
-                             decoding="async"
-                             loading="lazy"></abbr>
-                </div>
-            } @empty {
-                @if (partnersLoading) {
-                    @for (_ of partnersSkeletons; track $index) {
-                        <div class="partner-image">
-                            <ctl-skeleton height="168px" width="168px"></ctl-skeleton>
-                        </div>
-                    }
-                }
-            }
-        </div>
+        }
     </div>
-</div>
+</section>
 
-<!--FOOTER SECTION-->
+<!-- FOOTER -->
 
-<div class="flex-container footer-container">
-
-    <div class="footer-section">
-        <h4 [innerText]="'Sobre Nós'"
-            class="footer-title">
-        </h4>
-
-        <div [innerText]="mission.title"
-             class="clickable-label"
-             data-bs-target="#mission"
-             data-bs-toggle="modal">
+<footer class="footer">
+    <div class="footer-grid wrap">
+        <div class="footer-brand">
+            <span class="footer-wordmark">Clube de Tempos Livres de Santa Clara</span>
+            <span class="footer-tagline">Instituição Particular de Solidariedade Social</span>
         </div>
 
-        <div [innerText]="'Orgãos Sociais'"
-             class="clickable-label"
-             data-bs-target="#organisation"
-             data-bs-toggle="modal">
+        <div class="footer-col">
+            <h3 class="footer-title">Sobre nós</h3>
+            <button [innerText]="mission.title"
+                    class="footer-link"
+                    data-bs-target="#mission"
+                    data-bs-toggle="modal"
+                    type="button"></button>
+            <button class="footer-link"
+                    data-bs-target="#organisation"
+                    data-bs-toggle="modal"
+                    type="button">Órgãos sociais
+            </button>
+            <button class="footer-link"
+                    data-bs-target="#reports"
+                    data-bs-toggle="modal"
+                    type="button">Relatórios de contas
+            </button>
         </div>
 
-        <div [innerText]="'Relatórios de Contas'"
-             class="clickable-label"
-             data-bs-target="#reports"
-             data-bs-toggle="modal">
-        </div>
-    </div>
-
-    <div class="footer-section">
-        <h4 [innerText]="'Contatos'"
-            class="footer-title">
-        </h4>
-        <div>
-            <i class="fa-solid fa-phone"></i>
+        <div class="footer-col">
+            <h3 class="footer-title">Contactos</h3>
             <a [href]="'tel:' + telephoneNumber"
-               class="clickable-label">
-        <span [innerText]="telephoneNumber"
-              class="m-l-5">
-        </span>
+               class="footer-link">
+                <i aria-hidden="true" class="fa-solid fa-phone"></i>
+                <span [innerText]="telephoneNumber"></span>
             </a>
-        </div>
-        <div>
-            <i class="fa-solid fa-map"></i>
-            <a [href]="'https://maps.app.goo.gl/g8QyPuTkq2U12ceP7'"
-               class="clickable-label"
+            <a class="footer-link"
+               href="https://maps.app.goo.gl/g8QyPuTkq2U12ceP7"
+               rel="noopener"
                target="_blank">
-        <span [innerText]="address"
-              class="m-l-5">
-        </span>
+                <i aria-hidden="true" class="fa-solid fa-map"></i>
+                <span [innerText]="address"></span>
             </a>
-        </div>
-
-        <div>
-            <i class="fa-solid fa-envelope"></i>
             <a [href]="'mailto:' + ctlEmail"
-               class="clickable-label">
-        <span [innerText]="ctlEmail"
-              class="m-l-5">
-        </span>
+               class="footer-link">
+                <i aria-hidden="true" class="fa-solid fa-envelope"></i>
+                <span [innerText]="ctlEmail"></span>
             </a>
         </div>
 
-    </div>
-    <div class="footer-section">
-        <h4 [innerText]="'Links'"
-            class="footer-title">
-        </h4>
-        <div>
-            <i class="fa-brands fa-facebook"></i>
-            <a [href]="'https://www.facebook.com/ctlsantaclara'"
-               class="clickable-label"
+        <div class="footer-col">
+            <h3 class="footer-title">Redes</h3>
+            <a class="footer-link"
+               href="https://www.facebook.com/ctlsantaclara"
+               rel="noopener"
                target="_blank">
-        <span [innerText]="'Facebook'"
-              class="m-l-5">
-        </span>
+                <i aria-hidden="true" class="fa-brands fa-facebook"></i>
+                <span>Facebook</span>
             </a>
-        </div>
-        <div>
-            <i class="fa-brands fa-instagram"></i>
-            <a [href]="'https://www.instagram.com/ctlsantaclara'"
-               class="clickable-label"
+            <a class="footer-link"
+               href="https://www.instagram.com/ctlsantaclara"
+               rel="noopener"
                target="_blank">
-        <span [innerText]="'Instagram'"
-              class="m-l-5">
-        </span>
+                <i aria-hidden="true" class="fa-brands fa-instagram"></i>
+                <span>Instagram</span>
             </a>
-        </div>
-        <div>
-            <i class="fa-brands fa-linkedin"></i>
-            <a [href]="'https://pt.linkedin.com/company/clube-de-tempos-livres-de-santa-clara'"
-               class="clickable-label"
+            <a class="footer-link"
+               href="https://pt.linkedin.com/company/clube-de-tempos-livres-de-santa-clara"
+               rel="noopener"
                target="_blank">
-        <span [innerText]="'LinkedIn'"
-              class="m-l-5">
-        </span>
+                <i aria-hidden="true" class="fa-brands fa-linkedin"></i>
+                <span>LinkedIn</span>
             </a>
         </div>
     </div>
+</footer>
 
-</div>
+<!-- MODALS -->
 
-<!-- MODALS SECTION -->
-
-@if (currentItem) {
-    <ctl-modal [contentHtml]="newsContent"
-               [modalId]="'news'"
-               [modalSize]="'lg'"
-               [title]="currentItem.title">
-        <ng-template #newsContent>
+<ctl-modal [contentHtml]="newsContent"
+           [modalId]="'news'"
+           [modalSize]="'lg'"
+           [title]="currentItem?.title ?? ''">
+    <ng-template #newsContent>
+        @if (currentItem) {
             <div class="news-modal-container">
                 @if (currentItem.photoSrc) {
-                    <img [alt]="currentItem.description"
+                    <img [alt]="''"
                          [src]="currentItem.photoSrc">
                 }
-                <p [innerText]="currentItem.description">
-                </p>
+                <p [innerText]="currentItem.description"></p>
             </div>
-        </ng-template>
-    </ctl-modal>
-}
+        }
+    </ng-template>
+</ctl-modal>
 
 <ctl-modal [contentHtml]="missionContent"
            [modalId]="'mission'"
            [title]="mission.title">
     <ng-template #missionContent>
-        <div class="p-20">
+        <div class="dialog-sections">
             @for (section of mission.sections; track $index) {
-                <h6 [innerText]="section.title"
-                    class="orange-text"></h6>
-                <p [innerText]="section.message"></p>
+                <section class="dialog-section">
+                    <h3 [innerText]="section.title"
+                        class="dialog-heading"></h3>
+                    @if (section.title === 'Valores') {
+                        <ul class="value-pills">
+                            @for (value of section.message.split(', '); track value) {
+                                <li [innerText]="value"></li>
+                            }
+                        </ul>
+                    } @else {
+                        <p [innerText]="section.message"
+                           class="dialog-text"></p>
+                    }
+                </section>
             }
         </div>
     </ng-template>
 </ctl-modal>
 
 <ctl-modal [contentHtml]="organisationTemplate"
+           [isScrollable]="true"
            [modalId]="'organisation'"
-           [title]="'Orgãos Sociais'">
+           [title]="'Órgãos Sociais'">
     <ng-template #organisationTemplate>
         @if (organisation) {
-            <h6 [innerText]="'Assembleia Geral'"
-                class="orange-text">
-            </h6>
-            @for (member of organisation.generalAssembly; track $index) {
-                <div>
-                    <span [innerText]="member.title"></span> - <span [innerText]="member.name"></span>
-                </div>
-            }
-
-            <h6 [innerText]="'Direção'"
-                class="orange-text m-t-20">
-            </h6>
-            @for (member of organisation.direction; track $index) {
-                <div>
-                    <span [innerText]="member.title"></span> - <span [innerText]="member.name"></span>
-                </div>
-            }
-
-            <h6 [innerText]="'Conseho Fiscal'"
-                class="orange-text m-t-20">
-            </h6>
-            @for (member of organisation.fiscalCouncil; track $index) {
-                <div>
-                    <span [innerText]="member.title"></span> - <span [innerText]="member.name"></span>
-                </div>
-            }
-        }
-    </ng-template>
-</ctl-modal>
-
-<ctl-modal [contentHtml]="reportsContent"
-           [modalId]="'reports'"
-           [title]="'Relatórios de Contas'">
-    <ng-template #reportsContent>
-        @for (report of reports; track $index) {
-            <div class="report-item-container">
-                <h6 [innerText]="report.year"
-                    class="orange-text">
-                </h6>
-                <div class="m-l-15">
-                    <a [href]="'assets/RELATORIOS_CONTAS/' + report.balanceSheetFile"
-                       rel="noopener noreferrer"
-                       target="_blank">
-                        <span [innerText]="report.balanceSheetName"></span>
-                    </a> e
-                    <a [href]="'assets/RELATORIOS_CONTAS/' + report.profitAndLossFile"
-                       rel="noopener noreferrer"
-                       target="_blank">
-                        <span [innerText]="report.profitAndLossName"></span>
-                    </a>
-                </div>
+            <div class="dialog-sections">
+                @for (group of [
+                    { title: 'Assembleia Geral', members: organisation.generalAssembly },
+                    { title: 'Direção', members: organisation.direction },
+                    { title: 'Conselho Fiscal', members: organisation.fiscalCouncil }
+                ]; track group.title) {
+                    <section class="dialog-section">
+                        <h3 [innerText]="group.title"
+                            class="dialog-heading"></h3>
+                        <dl class="members">
+                            @for (member of group.members; track $index) {
+                                <dt [innerText]="member.title"></dt>
+                                <dd [innerText]="member.name"></dd>
+                            }
+                        </dl>
+                    </section>
+                }
             </div>
         }
     </ng-template>
 </ctl-modal>
 
+<ctl-modal [contentHtml]="reportsContent"
+           [isScrollable]="true"
+           [modalId]="'reports'"
+           [modalSize]="'lg'"
+           [title]="'Relatórios de Contas'">
+    <ng-template #reportsContent>
+        <div class="reports">
+            @for (report of reports; track $index) {
+                <div class="report-row">
+                    <span [innerText]="report.year"
+                          class="report-year"></span>
+                    <div class="report-files">
+                        <a [href]="'assets/RELATORIOS_CONTAS/' + report.balanceSheetFile"
+                           class="report-file"
+                           rel="noopener noreferrer"
+                           target="_blank">
+                            <i aria-hidden="true" class="fa-solid fa-file-lines"></i>
+                            <span [innerText]="report.balanceSheetName"></span>
+                        </a>
+                        <a [href]="'assets/RELATORIOS_CONTAS/' + report.profitAndLossFile"
+                           class="report-file"
+                           rel="noopener noreferrer"
+                           target="_blank">
+                            <i aria-hidden="true" class="fa-solid fa-file-lines"></i>
+                            <span [innerText]="report.profitAndLossName"></span>
+                        </a>
+                    </div>
+                </div>
+            }
+        </div>
+    </ng-template>
+</ctl-modal>

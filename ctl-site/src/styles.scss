@@ -1,3 +1,5 @@
+@use 'fonts';
+
 :root {
   --nav-height: 70px;
   --ctl-blue: #6468CC;
@@ -8,6 +10,162 @@
   --ctl-orange: #FD620D;
   --border-radius: 15px;
   --box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+
+  // Design tokens shared by every page.
+  --ink: #23245a;
+  --ink-soft: #5b5c86;
+  --lilac: var(--ctl-blue-15);
+  --font-display: "Fredoka", "Century Gothic", sans-serif;
+  --font-body: "Nunito", "Segoe UI", sans-serif;
+  --section-gap: clamp(4rem, 8vw, 6.5rem);
+  --soft-shadow: 0 14px 28px -14px rgba(35, 36, 90, 0.55);
+}
+
+// styles.scss is loaded after Bootstrap (see angular.json), so these win.
+body {
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  color: var(--ink);
+  background: white;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.wrap {
+  width: min(1120px, 100% - 2.5rem);
+  margin-inline: auto;
+}
+
+.section-title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(1.75rem, 3vw, 2.25rem);
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  margin: 0 0 1.5rem;
+}
+
+.btn-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.85rem 1.5rem;
+  border: 0;
+  border-radius: 999px;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 1.05rem;
+  line-height: 1;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 0.15s ease, background-color 0.15s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+  }
+
+  &:focus-visible {
+    outline: 3px solid var(--ctl-orange);
+    outline-offset: 3px;
+  }
+}
+
+.btn-pill-primary {
+  background: var(--ctl-orange);
+  color: white;
+
+  &:hover {
+    background: #e55400;
+    color: white;
+  }
+}
+
+.btn-pill-secondary {
+  background: var(--lilac);
+  color: var(--ctl-blue);
+
+  &:hover {
+    background: var(--ctl-blue-25);
+    color: var(--ctl-blue);
+  }
+}
+
+.btn-pill-white {
+  background: white;
+  color: var(--ctl-blue);
+
+  &:hover {
+    background: var(--ctl-blue-25);
+    color: var(--ctl-blue);
+  }
+}
+
+// Activity pages: description followed by columns of bullet points.
+// Shared by ctl-section-content and the creche page.
+.section-content-container {
+  width: min(1120px, 100% - 2.5rem);
+  margin: 3rem auto var(--section-gap);
+}
+
+.section-description {
+  font-size: 1.15rem;
+  line-height: 1.65;
+  max-width: 68ch;
+  white-space: pre-line;
+}
+
+.info-columns-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 2.5rem 3rem;
+  margin-top: 3rem;
+}
+
+.column-title {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 1.35rem;
+  line-height: 1.2;
+  color: var(--ink);
+  margin-bottom: 1rem;
+}
+
+.column-item {
+  position: relative;
+  padding: 0.35rem 0 0.35rem 1.4rem;
+
+  &::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.95em;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--ctl-blue);
+  }
+}
+
+.section-video {
+  display: block;
+  width: 100%;
+  max-width: 560px;
+  aspect-ratio: 16 / 9;
+  border: 0;
+  border-radius: var(--border-radius);
+  box-shadow: var(--soft-shadow);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn-pill {
+    transition: none;
+  }
 }
 
 * {

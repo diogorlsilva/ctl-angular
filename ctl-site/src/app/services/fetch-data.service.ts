@@ -218,9 +218,10 @@ export class FetchDataService {
 
                 cells.shift();
 
+                // The page draws its own bullet marker, so a "- " or "• " typed in the sheet is dropped.
                 return cells.map((cell: {
                     value: any;
-                }) => this.parse(cell.value)).filter(value => !!value);
+                }) => this.parse(cell.value).replace(/^\s*[-–•]\s*/, '')).filter(value => !!value);
             }
 
             return {

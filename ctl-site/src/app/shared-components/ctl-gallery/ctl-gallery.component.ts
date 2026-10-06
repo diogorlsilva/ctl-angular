@@ -1,5 +1,4 @@
 import { Component, Input, ViewEncapsulation } from '@angular/core';
-import { arrayShuffle } from "../../utils/utils.model";
 import { CtlSkeletonComponent } from "@shared/ctl-skeleton/ctl-skeleton.component";
 
 @Component({
@@ -11,14 +10,12 @@ import { CtlSkeletonComponent } from "@shared/ctl-skeleton/ctl-skeleton.componen
     encapsulation: ViewEncapsulation.None
 })
 export class CtlGalleryComponent {
-    arrayToLeft: string[] = [];
-    arrayToRight: string[] = [];
-    readonly skeletons = Array(8);
+    images: string[] = [];
+    readonly skeletons = Array(6);
 
     @Input() loading = false;
 
     @Input() set imagesSRCs(array: string[]) {
-        this.arrayToLeft = arrayShuffle(array);
-        this.arrayToRight = arrayShuffle(array);
+        this.images = array;
     }
 }

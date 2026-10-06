@@ -1,98 +1,78 @@
+// Page title block for the activity pages. The service tile overlaps the
+// photo above it, like the stickers on the home page.
+
 ctl-section-message-box {
-  position: relative;
   display: block;
+  position: relative;
+  z-index: 1;
 }
 
-.img-logo-container {
-  height: 150px;
-}
-
-.img-logo {
-  height: 100%;
-}
-
-.message-box-grid {
+.section-head {
   display: grid;
-  grid-template-columns: 150px auto;
-  gap: 20px;
-  align-items: center;
-  position: absolute;
-  z-index: 1;
-  left: 50%;
-  bottom: 0;
-  transform: translate(-50%, 35px);
-  max-width: 90%;
-  padding: 0 10px;
+  grid-template-columns: 150px minmax(0, 1fr);
+  gap: 0 2rem;
+  align-items: start;
+  margin-top: -70px;
 }
 
-.box-container {
-  background-color: white;
-  border-radius: var(--border-radius);
-  box-shadow: var(--box-shadow);
-  padding: 20px 30px;
-  max-width: 60vw;
-  z-index: 1;
-  margin-left: 20px;
-  white-space:nowrap;
-  width: fit-content;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  font-family: "favescriptbold", serif;
-  font-size: 30px;
-  letter-spacing: 2px;
+.section-head-no-tile {
+  grid-template-columns: minmax(0, 1fr);
+  margin-top: 0;
+
+  .section-head-text {
+    padding-top: 2.5rem;
+  }
+}
+
+.section-tile {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 22%;
+  transform: rotate(-3deg);
+  box-shadow: 0 0 0 5px white, var(--soft-shadow);
+}
+
+.section-head-text {
+  padding-top: 82px;
+}
+
+.section-heading {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(2.2rem, 4.5vw, 3.5rem);
+  line-height: 1.05;
+  letter-spacing: -0.015em;
   color: var(--ctl-blue);
-  line-height: 30px;
-
-  &.hide {
-   background-color: transparent;
-    box-shadow: transparent 0 0 0 0;
-  }
+  margin: 0 0 0.75rem;
+  text-wrap: balance;
 }
 
-.title-label {
-  font-size: 5rem;
-  color: white;
-  margin-left: 20px;
-  font-family: Century Gothic, CenturyGothic, AppleGothic, sans-serif;
-  font-weight: bold;
-  text-wrap: nowrap;
-  transition: font 0.3s ease;
+.section-lede {
+  font-size: clamp(1.1rem, 1.6vw, 1.3rem);
+  line-height: 1.5;
+  color: var(--ink-soft);
+  max-width: 56ch;
+  margin: 0;
 }
 
-@media screen and (max-width: 1024px) {
-  .message-box-grid {
-    grid-template-columns: 150px 600px;
+@media screen and (max-width: 640px) {
+  .section-head {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    margin-top: -55px;
   }
 
-  .img-logo-container {
-    height: 125px;
+  .section-tile {
+    width: 110px;
+    height: 110px;
   }
 
-
-  .title-label {
-    font-size: 4rem;
-  }
-}
-
-@media screen and (max-width: 768px) {
-  .message-box-grid {
-    display: grid;
-    grid-template-columns: 100%;
-    justify-items: center;
+  .section-head-text {
+    padding-top: 0;
   }
 
-  .img-logo-container {
-    height: 100px;
-  }
-
-  .title-label {
-    font-size: 3rem;
-    text-align: center;
-    margin: 0;
-  }
-
-  .box-container {
-    margin-left: 0;
-    max-width: 90vw;
+  .section-head-no-tile .section-head-text {
+    padding-top: 1.75rem;
   }
 }
