@@ -1,23 +1,18 @@
-<div class="message-box-grid">
-    <div class="img-logo-container">
-        @if (iconSrc) {
-            <img [alt]="title"
-                 [src]="iconSrc"
-                 class="img-logo">
-        }
-    </div>
-    <span [innerText]="title"
-          class="title-label">
-  </span>
-    <div></div>
-    <div [class.hide]="!messageBoxText && !loading"
-         class="box-container">
+<div [class.section-head-no-tile]="!iconSrc"
+     class="section-head wrap">
+    @if (iconSrc) {
+        <img [alt]="''"
+             [src]="iconSrc"
+             class="section-tile">
+    }
+    <div class="section-head-text">
+        <h1 [innerText]="title"
+            class="section-heading"></h1>
         @if (loading) {
-            <ctl-skeleton height="30px" width="min(400px, 50vw)"></ctl-skeleton>
-        } @else {
-            <span [innerText]="messageBoxText"></span>
+            <ctl-skeleton height="1.4em" width="min(520px, 100%)"></ctl-skeleton>
+        } @else if (messageBoxText) {
+            <p [innerText]="messageBoxText"
+               class="section-lede"></p>
         }
     </div>
 </div>
-
-
