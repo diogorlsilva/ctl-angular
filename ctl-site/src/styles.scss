@@ -199,12 +199,6 @@ abbr {
   -webkit-box-orient: vertical;
 }
 
-.glass {
-  backdrop-filter: blur(20px);
-  background: rgba(255, 255, 255, 0.4);
-  box-shadow: 0 2px 15px 0 rgba(0, 0, 0, 0.3);
-}
-
 @keyframes spin {
   from {
     translate: 0;

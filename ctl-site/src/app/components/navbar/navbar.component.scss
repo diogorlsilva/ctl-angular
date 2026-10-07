@@ -16,10 +16,32 @@
   transition: top 0.3s ease-in-out;
   font-family: var(--font-display);
   border-radius: 999px;
-  // Translucent lilac over the section photos; the .glass blur keeps the links
-  // readable through it.
-  background: rgba(232, 232, 247, 0.5);
+  // Translucent lilac over the section photos; the blur below keeps the links
+  // readable through it. The dropdown panels use a denser version of the same
+  // lilac so their text stays readable over busy photos.
+  --nav-glass: rgba(232, 232, 247, 0.5);
+  --nav-glass-panel: rgba(232, 232, 247, 0.75);
+  // Hover stays in the blue family: the pills darken a step, the dropdown
+  // items get a light blue tint that still reads over a light page.
+  --nav-hover-pill: #5257bd;
+  --nav-hover-pill-active: #464ba8;
+  --nav-hover-item: rgba(100, 104, 204, 0.8);
+  --nav-hover-item-active: var(--ctl-blue);
+  background: var(--nav-glass);
   box-shadow: var(--soft-shadow);
+  isolation: isolate;
+
+  // The blur lives on a pseudo-element rather than the bar itself: a
+  // backdrop-filter on the bar would make the dropdown panels (its
+  // descendants) blur only the bar's own box, not the page behind them.
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    backdrop-filter: blur(20px);
+  }
 }
 
 // Home sits on a white page, so the bar gets a subtle ramp around the
@@ -89,10 +111,16 @@
   user-select: none;
   transition: background-color 0.15s ease;
 
-  &:hover,
-  &:focus-visible {
-    background: var(--ctl-orange);
-    color: white;
+  // Hover only where a pointer can hover: on touch screens a tap would leave
+  // the group header stuck in orange after it opens.
+  @media (hover: hover) {
+    &:hover {
+      background: var(--nav-hover-pill);
+    }
+  }
+
+  &:active {
+    background: var(--nav-hover-pill-active);
   }
 
   &:focus-visible {
@@ -116,11 +144,16 @@
   border: 0;
   // Item pills are ~21px radius; adding the 8px padding keeps the corners concentric.
   border-radius: 29px;
-  // Light purple panel; the lilac hover/selected pills still read against it.
-  background: #f3f3fb;
+  // Same glass as the bar, a little denser, on every page.
+  background: var(--nav-glass-panel);
+  backdrop-filter: blur(20px);
   box-shadow: var(--soft-shadow), 0 0 0 1px var(--ctl-blue-25);
   font-family: var(--font-body);
   min-width: 12rem;
+
+  > li + li {
+    margin-top: 0.25rem;
+  }
 }
 
 .dropdown-item {
@@ -132,13 +165,13 @@
 
   &:hover,
   &:focus-visible {
-    background: var(--lilac);
-    color: var(--ctl-blue);
+    background: var(--nav-hover-item);
+    color: white;
   }
 
   &:active {
-    background: var(--ctl-blue-25);
-    color: var(--ctl-blue);
+    background: var(--nav-hover-item-active);
+    color: white;
   }
 
   &.nav-item-selected {
@@ -149,7 +182,8 @@
 
 .dropdown-divider {
   margin: 0.4rem 0.5rem;
-  border-color: var(--lilac);
+  // Blue tint rather than lilac, which matches the glass fill and vanishes.
+  border-color: rgba(100, 104, 204, 0.4);
   opacity: 1;
 }
 
@@ -165,7 +199,8 @@
     min-width: 15rem;
     padding: 0.75rem;
     border-radius: 32px;
-    background: #f3f3fb;
+    background: var(--nav-glass-panel);
+    backdrop-filter: blur(20px);
     box-shadow: var(--soft-shadow), 0 0 0 1px var(--ctl-blue-25);
   }
 
@@ -192,19 +227,14 @@
     }
   }
 
-  // The open group's button turns orange so it reads as the parent of the
-  // items below it, and its chevron flips.
+  // The open group's chevron flips; the button itself keeps its colour.
   .dropdown-toggle {
     &::after {
       transition: transform 0.3s ease;
     }
 
-    &[aria-expanded="true"] {
-      background: var(--ctl-orange);
-
-      &::after {
-        transform: rotate(180deg);
-      }
+    &[aria-expanded="true"]::after {
+      transform: rotate(180deg);
     }
   }
 
@@ -219,10 +249,13 @@
     overflow: hidden;
     margin: 0 0 0 1.1rem !important;
     padding: 0 0 0 0.75rem;
-    border-left: 2px solid var(--ctl-blue-25);
+    border-left: 2px solid rgba(100, 104, 204, 0.4);
     border-radius: 0;
     box-shadow: none;
     background: transparent;
+    // The panel already blurs the page; a second blur here would render the
+    // sub-list as a lighter patch inside it.
+    backdrop-filter: none;
     visibility: hidden;
     opacity: 0;
     transition: visibility 0s 0.3s, opacity 0.2s ease;

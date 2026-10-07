@@ -1,13 +1,13 @@
 <div [class.navbar-hide-on-scroll-down]="isGoingDown"
      [class.navbar-home]="isHome"
-     class="navbar-container glass">
+     class="navbar-container">
     <a [routerLink]="''"
        aria-label="Página inicial"
        class="logo-container">
         <span class="full-text">Clube de Tempos Livres</span>
         <span class="abbrev-text">CTL</span>
     </a>
-    <button (click)="isToggled = !isToggled"
+    <button (click)="toggleMenu()"
             [attr.aria-expanded]="isToggled"
             aria-label="Menu"
             class="toggle"
@@ -19,6 +19,7 @@
         <!-- RESPOSTAS SOCIAIS -->
         <li class="nav-item dropdown">
             <a aria-expanded="false"
+               #groupToggle data-group="respostasSociais"
                (pointerenter)="prefetch('respostasSociais')"
                class="nav-link dropdown-toggle"
                data-bs-toggle="dropdown"
@@ -27,7 +28,7 @@
             </a>
             <ul class="dropdown-menu dropdown-menu-end">
                 <li>
-                    <a (click)="isToggled = false"
+                    <a (click)="closeMenu()"
                        [routerLinkActive]="'nav-item-selected'"
                        [routerLink]="'creche'"
                        class="dropdown-item">
@@ -35,7 +36,7 @@
                     </a>
                 </li>
                 <li>
-                    <a (click)="isToggled = false"
+                    <a (click)="closeMenu()"
                        [routerLinkActive]="'nav-item-selected'"
                        [routerLink]="'catl'"
                        class="dropdown-item">
@@ -48,6 +49,7 @@
         <!-- SERVIÇOS -->
         <li class="nav-item dropdown">
             <a aria-expanded="false"
+               #groupToggle data-group="servicos"
                (pointerenter)="prefetch('servicos')"
                class="nav-link dropdown-toggle"
                data-bs-toggle="dropdown"
@@ -56,7 +58,7 @@
             </a>
             <ul class="dropdown-menu dropdown-menu-end">
                 <li>
-                    <a (click)="isToggled = false"
+                    <a (click)="closeMenu()"
                        [routerLinkActive]="'nav-item-selected'"
                        [routerLink]="'aec'"
                        class="dropdown-item">
@@ -64,7 +66,7 @@
                     </a>
                 </li>
                 <li>
-                    <a (click)="isToggled = false"
+                    <a (click)="closeMenu()"
                        [routerLinkActive]="'nav-item-selected'"
                        [routerLink]="'refeicoes'"
                        class="dropdown-item">
@@ -75,7 +77,7 @@
                     <hr class="dropdown-divider">
                 </li>
                 <li>
-                    <a (click)="isToggled = false"
+                    <a (click)="closeMenu()"
                        [routerLinkActive]="'nav-item-selected'"
                        [routerLink]="'musica'"
                        class="dropdown-item">
@@ -83,7 +85,7 @@
                     </a>
                 </li>
                 <li>
-                    <a (click)="isToggled = false"
+                    <a (click)="closeMenu()"
                        [routerLinkActive]="'nav-item-selected'"
                        [routerLink]="'natacao'"
                        class="dropdown-item">
@@ -91,7 +93,7 @@
                     </a>
                 </li>
                 <li>
-                    <a (click)="isToggled = false"
+                    <a (click)="closeMenu()"
                        [routerLinkActive]="'nav-item-selected'"
                        [routerLink]="'explicacoes'"
                        class="dropdown-item">
@@ -102,7 +104,7 @@
         </li>
 
         <!-- PROJETOS -->
-        <a (click)="isToggled = false"
+        <a (click)="closeMenu()"
            [routerLinkActive]="'nav-item-selected'"
            (pointerenter)="prefetch('projetos')"
            [routerLink]="'projetos'"

@@ -1,11 +1,32 @@
-import { Component, HostBinding, inject } from '@angular/core';
+import { Component, ElementRef, HostBinding, inject, QueryList, ViewChildren } from '@angular/core';
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
-import { NavigationEnd, Router, RouterLink, RouterLinkActive } from "@angular/router";
+import { NavigationEnd, NavigationStart, Router, RouterLink, RouterLinkActive } from "@angular/router";
 import { filter, fromEvent, Observable } from "rxjs";
 import { FetchDataService } from "@services/fetch-data.service";
 import { XLSXUrl } from "../../utils/utils.model";
 
 type NavGroup = 'respostasSociais' | 'servicos' | 'projetos';
+
+// Bootstrap is loaded as a plain script (see index.html); only the dropdown
+// API is needed here.
+declare global {
+    interface Window {
+        bootstrap?: {
+            Dropdown: { getOrCreateInstance(element: Element): { show(): void; hide(): void } };
+        };
+    }
+}
+
+// Which accordion group each section page belongs to.
+const ROUTE_GROUPS: Record<string, NavGroup> = {
+    creche: 'respostasSociais',
+    catl: 'respostasSociais',
+    aec: 'servicos',
+    refeicoes: 'servicos',
+    musica: 'servicos',
+    natacao: 'servicos',
+    explicacoes: 'servicos',
+};
 
 @Component({
     selector: 'ctl-navbar',
@@ -24,9 +45,14 @@ export class NavbarComponent {
     // pads the body by the same amount; the fixed bar needs its own offset.
     @HostBinding('style.--scrollbar-comp') scrollbarComp = '0px';
 
+    @ViewChildren('groupToggle') private groupToggles!: QueryList<ElementRef<HTMLElement>>;
+
     private scrollY = window.scrollY;
+    // First URL segment of the current page ('' on home).
+    private currentPath = '';
 
     private readonly router = inject(Router);
+    private readonly host = inject<ElementRef<HTMLElement>>(ElementRef);
     private readonly fetchDataService = inject(FetchDataService);
     private readonly prefetched = new Set<NavGroup>();
 
@@ -58,7 +84,28 @@ export class NavbarComponent {
                 filter((event): event is NavigationEnd => event instanceof NavigationEnd),
                 takeUntilDestroyed()
             )
-            .subscribe(event => this.isHome = event.urlAfterRedirects.split(/[?#]/)[0] === '/');
+            .subscribe(event => {
+                this.currentPath = event.urlAfterRedirects.split(/[?#]/)[0].replace(/^\//, '').split('/')[0];
+                this.isHome = this.currentPath === '';
+            });
+
+        // Any navigation (logo, browser back, in-page links) closes the menu.
+        this.router.events
+            .pipe(
+                filter(event => event instanceof NavigationStart),
+                takeUntilDestroyed()
+            )
+            .subscribe(() => this.closeMenu());
+
+        // A press anywhere outside the bar closes the menu. pointerdown covers
+        // mouse and touch alike, and fires even where iOS skips click.
+        fromEvent<PointerEvent>(document, 'pointerdown')
+            .pipe(
+                filter(() => this.isToggled),
+                filter(event => !this.host.nativeElement.contains(event.target as Node)),
+                takeUntilDestroyed()
+            )
+            .subscribe(() => this.closeMenu());
 
         // show.bs.modal fires before Bootstrap hides the scrollbar, so its
         // width can still be measured; hidden.bs.modal fires after it is back.
@@ -73,6 +120,9 @@ export class NavbarComponent {
         window.addEventListener('scroll', (e) => {
             e.stopPropagation()
 
+            // Scrolling dismisses every open menu, desktop dropdowns included.
+            this.closeMenu();
+
             if (document.body.style.overflow === 'hidden') {
                 return;
             }
@@ -80,6 +130,35 @@ export class NavbarComponent {
             this.isGoingDown = window.scrollY >= this.scrollY;
             this.scrollY = window.scrollY;
         })
+    }
+
+    // Opens the hamburger panel with the current page's group already
+    // expanded, or closes it.
+    toggleMenu(): void {
+        if (this.isToggled) {
+            this.closeMenu();
+            return;
+        }
+
+        this.isToggled = true;
+        const group = ROUTE_GROUPS[this.currentPath];
+        // Bootstrap closes every open dropdown when a click reaches the
+        // document, so the group is expanded only after this click has bubbled.
+        setTimeout(() => this.groupToggles.forEach(toggle => {
+            const dropdown = window.bootstrap?.Dropdown.getOrCreateInstance(toggle.nativeElement);
+            if (toggle.nativeElement.dataset['group'] === group) {
+                dropdown?.show();
+            } else {
+                dropdown?.hide();
+            }
+        }));
+    }
+
+    // Closes the panel and collapses every group, so nothing stays open
+    // behind the hidden panel or in the desktop dropdowns.
+    closeMenu(): void {
+        this.isToggled = false;
+        this.groupToggles?.forEach(toggle => window.bootstrap?.Dropdown.getOrCreateInstance(toggle.nativeElement).hide());
     }
 
     // Starts loading a menu's sheets when the user points at it, so the page
