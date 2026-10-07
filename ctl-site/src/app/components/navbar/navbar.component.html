@@ -9,107 +9,99 @@
     </a>
     <button (click)="toggleMenu()"
             [attr.aria-expanded]="isToggled"
+            aria-controls="main-menu"
             aria-label="Menu"
             class="toggle"
             type="button">
-        <i [class]="isToggled ? 'fa-solid fa-xmark' : 'fa-solid fa-bars'" aria-hidden="true"></i>
+        <svg aria-hidden="true" class="icon">
+            <use [attr.href]="isToggled ? '#i-close' : '#i-menu'"/>
+        </svg>
     </button>
-    <nav [class.show-nav]="isToggled"
-         class="nav">
-        <!-- RESPOSTAS SOCIAIS -->
-        <li class="nav-item dropdown">
-            <a aria-expanded="false"
-               #groupToggle data-group="respostasSociais"
-               (pointerenter)="prefetch('respostasSociais')"
-               class="nav-link dropdown-toggle"
-               data-bs-toggle="dropdown"
-               role="button">
-                <span [innerText]="'Respostas Sociais'"></span>
-            </a>
-            <ul class="dropdown-menu dropdown-menu-end">
-                <li>
-                    <a (click)="closeMenu()"
-                       [routerLinkActive]="'nav-item-selected'"
-                       [routerLink]="'creche'"
-                       class="dropdown-item">
-                        <span [innerText]="'Creche'"></span>
-                    </a>
-                </li>
-                <li>
-                    <a (click)="closeMenu()"
-                       [routerLinkActive]="'nav-item-selected'"
-                       [routerLink]="'catl'"
-                       class="dropdown-item">
-                        <span [innerText]="'CATL'"></span>
-                    </a>
-                </li>
-            </ul>
-        </li>
+    <nav aria-label="Principal">
+        <ul [class.show-nav]="isToggled"
+            class="nav"
+            id="main-menu">
+            <!-- RESPOSTAS SOCIAIS -->
+            <li class="nav-item dropdown">
+                <button #groupToggle
+                        (pointerenter)="prefetch('respostasSociais')"
+                        aria-expanded="false"
+                        class="nav-link dropdown-toggle"
+                        data-bs-toggle="dropdown"
+                        data-group="respostasSociais"
+                        type="button">Respostas Sociais
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end">
+                    <li>
+                        <a (click)="closeMenu()"
+                           [routerLinkActive]="'nav-item-selected'"
+                           [routerLink]="'creche'"
+                           class="dropdown-item">Creche</a>
+                    </li>
+                    <li>
+                        <a (click)="closeMenu()"
+                           [routerLinkActive]="'nav-item-selected'"
+                           [routerLink]="'catl'"
+                           class="dropdown-item">CATL</a>
+                    </li>
+                </ul>
+            </li>
 
-        <!-- SERVIÇOS -->
-        <li class="nav-item dropdown">
-            <a aria-expanded="false"
-               #groupToggle data-group="servicos"
-               (pointerenter)="prefetch('servicos')"
-               class="nav-link dropdown-toggle"
-               data-bs-toggle="dropdown"
-               role="button">
-                <span [innerText]="'Serviços'"></span>
-            </a>
-            <ul class="dropdown-menu dropdown-menu-end">
-                <li>
-                    <a (click)="closeMenu()"
-                       [routerLinkActive]="'nav-item-selected'"
-                       [routerLink]="'aec'"
-                       class="dropdown-item">
-                        <span [innerText]="'AEC'"></span>
-                    </a>
-                </li>
-                <li>
-                    <a (click)="closeMenu()"
-                       [routerLinkActive]="'nav-item-selected'"
-                       [routerLink]="'refeicoes'"
-                       class="dropdown-item">
-                        <span [innerText]="'Refeições'"></span>
-                    </a>
-                </li>
-                <li>
-                    <hr class="dropdown-divider">
-                </li>
-                <li>
-                    <a (click)="closeMenu()"
-                       [routerLinkActive]="'nav-item-selected'"
-                       [routerLink]="'musica'"
-                       class="dropdown-item">
-                        <span [innerText]="'Música'"></span>
-                    </a>
-                </li>
-                <li>
-                    <a (click)="closeMenu()"
-                       [routerLinkActive]="'nav-item-selected'"
-                       [routerLink]="'natacao'"
-                       class="dropdown-item">
-                        <span [innerText]="'Natação'"></span>
-                    </a>
-                </li>
-                <li>
-                    <a (click)="closeMenu()"
-                       [routerLinkActive]="'nav-item-selected'"
-                       [routerLink]="'explicacoes'"
-                       class="dropdown-item">
-                        <span [innerText]="'Explicações'"></span>
-                    </a>
-                </li>
-            </ul>
-        </li>
+            <!-- SERVIÇOS -->
+            <li class="nav-item dropdown">
+                <button #groupToggle
+                        (pointerenter)="prefetch('servicos')"
+                        aria-expanded="false"
+                        class="nav-link dropdown-toggle"
+                        data-bs-toggle="dropdown"
+                        data-group="servicos"
+                        type="button">Serviços
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end">
+                    <li>
+                        <a (click)="closeMenu()"
+                           [routerLinkActive]="'nav-item-selected'"
+                           [routerLink]="'aec'"
+                           class="dropdown-item">AEC</a>
+                    </li>
+                    <li>
+                        <a (click)="closeMenu()"
+                           [routerLinkActive]="'nav-item-selected'"
+                           [routerLink]="'refeicoes'"
+                           class="dropdown-item">Refeições</a>
+                    </li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <li>
+                        <a (click)="closeMenu()"
+                           [routerLinkActive]="'nav-item-selected'"
+                           [routerLink]="'musica'"
+                           class="dropdown-item">Música</a>
+                    </li>
+                    <li>
+                        <a (click)="closeMenu()"
+                           [routerLinkActive]="'nav-item-selected'"
+                           [routerLink]="'natacao'"
+                           class="dropdown-item">Natação</a>
+                    </li>
+                    <li>
+                        <a (click)="closeMenu()"
+                           [routerLinkActive]="'nav-item-selected'"
+                           [routerLink]="'explicacoes'"
+                           class="dropdown-item">Explicações</a>
+                    </li>
+                </ul>
+            </li>
 
-        <!-- PROJETOS -->
-        <a (click)="closeMenu()"
-           [routerLinkActive]="'nav-item-selected'"
-           (pointerenter)="prefetch('projetos')"
-           [routerLink]="'projetos'"
-           class="nav-link">
-            <span [innerText]="'Projetos'"></span>
-        </a>
+            <!-- PROJETOS -->
+            <li class="nav-item">
+                <a (click)="closeMenu()"
+                   (pointerenter)="prefetch('projetos')"
+                   [routerLinkActive]="'nav-item-selected'"
+                   [routerLink]="'projetos'"
+                   class="nav-link">Projetos</a>
+            </li>
+        </ul>
     </nav>
 </div>

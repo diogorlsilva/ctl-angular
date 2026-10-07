@@ -17,8 +17,7 @@ import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
         CtlSectionContentComponent,
         CtlSectionMessageBoxComponent
     ],
-    templateUrl: './aec.component.html',
-    styleUrl: './aec.component.scss'
+    templateUrl: './aec.component.html'
 })
 export class AecComponent implements OnInit {
     section?: SectionItem;

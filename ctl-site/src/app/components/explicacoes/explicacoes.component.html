@@ -1,11 +1,10 @@
-<ctl-section-background
-        [backgroundUrl]="'/assets/images/explicacoes/explicacoes_background.webp'"></ctl-section-background>
-<ctl-section-message-box [iconSrc]="'assets/images/explicacoes/explicacoes_logo.png'"
+<ctl-section-background [backgroundUrl]="'assets/images/explicacoes/explicacoes_background.webp'"></ctl-section-background>
+<ctl-section-message-box [iconSrc]="'assets/images/explicacoes/explicacoes_logo.webp'"
                          [loading]="loading"
                          [messageBoxText]="section?.smallDescription ?? ''"
                          [title]="'Explicações'">
 </ctl-section-message-box>
-<ctl-gallery [imagesSRCs]="section?.photoSRCs ?? []"
+<ctl-gallery [images]="section?.photoSRCs ?? []"
              [loading]="loading"></ctl-gallery>
 @if (section) {
     <ctl-section-content [section]="section"></ctl-section-content>

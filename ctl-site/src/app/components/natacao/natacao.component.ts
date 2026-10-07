@@ -17,8 +17,7 @@ import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
         CtlSectionContentComponent,
         CtlSectionMessageBoxComponent
     ],
-    templateUrl: './natacao.component.html',
-    styleUrl: './natacao.component.scss'
+    templateUrl: './natacao.component.html'
 })
 export class NatacaoComponent implements OnInit {
     section?: SectionItem;

@@ -1,7 +1,4 @@
-// Page title block for the activity pages. The service tile overlaps the
-// photo above it, like the stickers on the home page.
-
-ctl-section-message-box {
+:host {
   display: block;
   position: relative;
   z-index: 1;
@@ -15,21 +12,10 @@ ctl-section-message-box {
   margin-top: -70px;
 }
 
-.section-head-no-tile {
-  grid-template-columns: minmax(0, 1fr);
-  margin-top: 0;
-
-  .section-head-text {
-    padding-top: 2.5rem;
-  }
-}
-
 .section-tile {
   width: 150px;
   height: 150px;
-  object-fit: cover;
-  border-radius: 22%;
-  transform: rotate(-3deg);
+  --tilt: -3deg;
   box-shadow: 0 0 0 5px white, var(--soft-shadow);
 }
 
@@ -70,9 +56,5 @@ ctl-section-message-box {
 
   .section-head-text {
     padding-top: 0;
-  }
-
-  .section-head-no-tile .section-head-text {
-    padding-top: 1.75rem;
   }
 }

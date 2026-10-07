@@ -1,14 +1,14 @@
 @if (loading) {
     <div aria-busy="true"
-         aria-label="A carregar fotografias"
          class="gallery-row">
+        <span class="visually-hidden">A carregar fotografias</span>
         @for (_ of skeletons; track $index) {
             <ctl-skeleton height="220px" width="293px"></ctl-skeleton>
         }
     </div>
 } @else if (images.length) {
     <div class="gallery-row">
-        @for (src of images; track $index) {
+        @for (src of images; track src) {
             <img [src]="src"
                  alt=""
                  decoding="async"

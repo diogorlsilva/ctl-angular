@@ -1,6 +1,7 @@
-import {Component, Input, TemplateRef, ViewEncapsulation} from '@angular/core';
+import { Component, Input, TemplateRef } from '@angular/core';
 import { NgTemplateOutlet } from "@angular/common";
 
+// Bootstrap modal shell. Open it with data-bs-toggle="modal" data-bs-target="#<modalId>".
 @Component({
     selector: 'ctl-modal',
     standalone: true,
@@ -10,10 +11,8 @@ import { NgTemplateOutlet } from "@angular/common";
 })
 export class ModalComponent {
     @Input({ required: true }) modalId: string;
-    @Input() modalSize: 'xl' | 'lg';
-    @Input() title: string;
-    @Input() contentText: string;
-    @Input() contentHtml: TemplateRef<HTMLElement>;
-    @Input() hasFooter = false;
+    @Input({ required: true }) contentHtml: TemplateRef<unknown>;
+    @Input() modalSize?: 'xl' | 'lg';
+    @Input() title = '';
     @Input() isScrollable = true;
 }

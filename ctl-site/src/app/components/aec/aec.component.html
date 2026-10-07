@@ -1,10 +1,10 @@
-<ctl-section-background [backgroundUrl]="'/assets/images/aec/aec_background.webp'"></ctl-section-background>
-<ctl-section-message-box [iconSrc]="'assets/images/aec/aec_logo.png'"
+<ctl-section-background [backgroundUrl]="'assets/images/aec/aec_background.webp'"></ctl-section-background>
+<ctl-section-message-box [iconSrc]="'assets/images/aec/aec_logo.webp'"
+                         [loading]="loading"
                          [messageBoxText]="section?.smallDescription ?? ''"
-                         [title]="'AEC'"
-                         [loading]="loading">
+                         [title]="'AEC'">
 </ctl-section-message-box>
-<ctl-gallery [imagesSRCs]="section?.photoSRCs ?? []"
+<ctl-gallery [images]="section?.photoSRCs ?? []"
              [loading]="loading"></ctl-gallery>
 @if (section) {
     <ctl-section-content [section]="section"></ctl-section-content>

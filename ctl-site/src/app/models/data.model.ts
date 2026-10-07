@@ -1,8 +1,6 @@
 import type * as ExcelJS from 'exceljs';
 
 export type Workbook = ExcelJS.Workbook
-export type WorkbookModel = ExcelJS.WorkbookModel;
-export type WorksheetModel = ExcelJS.WorksheetModel;
 
 export type NewsItem = {
     title: string;
@@ -65,8 +63,11 @@ export const telephoneNumber = '239 445 810';
 export const address = 'Edifício Arco-Íris';
 export const ctlEmail = 'ctlsc@outlook.com';
 
-export const mission = {
-    title: 'Missão, Visão, Valores',
+export const mission: {
+    title: string;
+    sections: { title: string; message?: string; values?: string[] }[];
+} = {
+    title: 'Missão, visão e valores',
     sections: [{
         title: 'Missão',
         message: 'O Clube de Tempos Livres de Santa Clara tem como missão uma resposta social qualificada que se espelha no desenvolvimento de atividades culturais, recreativas e desportivas.'
@@ -75,7 +76,7 @@ export const mission = {
         message: 'O CTL pretende ser identificado como uma IPSS pró ativa de referência no apoio à família, à infância, à juventude, à pessoa idosa, bem como na implementação de políticas e práticas de apoio à integração social e comunitária.'
     }, {
         title: 'Valores',
-        message: 'Afetividade, Realização pessoal, Capacitação, Oportunidades, Igualdade, Respeito, Inovação social, Solidariedade'
+        values: ['Afetividade', 'Realização pessoal', 'Capacitação', 'Oportunidades', 'Igualdade', 'Respeito', 'Inovação social', 'Solidariedade']
     }]
 }
 

@@ -12,8 +12,7 @@ import { CtlSectionMessageBoxComponent } from "@shared/ctl-section-message-box/c
     selector: 'ctl-catl',
     standalone: true,
     imports: [CtlGalleryComponent, CtlSectionBackgroundComponent, CtlSectionContentComponent, CtlSectionMessageBoxComponent],
-    templateUrl: './catl.component.html',
-    styleUrl: './catl.component.scss'
+    templateUrl: './catl.component.html'
 })
 export class CatlComponent implements OnInit {
     section?: SectionItem;

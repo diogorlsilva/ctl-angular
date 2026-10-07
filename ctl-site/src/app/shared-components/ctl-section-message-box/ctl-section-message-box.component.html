@@ -1,9 +1,20 @@
-<div [class.section-head-no-tile]="!iconSrc"
-     class="section-head wrap">
+<div class="section-head wrap">
     @if (iconSrc) {
-        <img [alt]="''"
-             [src]="iconSrc"
-             class="section-tile">
+        <img [src]="iconSrc"
+             alt=""
+             class="section-tile sticker"
+             decoding="async"
+             height="150"
+             width="150">
+    } @else {
+        <span [style.background]="tileColor"
+              class="section-tile sticker">
+            <svg aria-hidden="true" class="icon"><use [attr.href]="'#i-' + tileIcon"/></svg>
+            @if (tileLabel) {
+                <span [innerText]="tileLabel"
+                      class="sticker-label"></span>
+            }
+        </span>
     }
     <div class="section-head-text">
         <h1 [innerText]="title"

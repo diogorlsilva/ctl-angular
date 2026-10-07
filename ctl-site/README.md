@@ -12,6 +12,11 @@ change any of the source files.
 Run `ng generate component component-name` to generate a new component. You can also use
 `ng generate directive|pipe|service|class|guard|interface|enum|module`.
 
+## Images
+
+Original photos and logos live in `raw-images/` and are not deployed. Run `npm run optimize-images` to regenerate the
+WebP files in `src/assets/images` (1920px and 960px page backgrounds, 400px service tiles).
+
 ## Build
 
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.

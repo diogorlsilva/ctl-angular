@@ -76,9 +76,6 @@ export class NavbarComponent {
     };
 
     constructor() {
-
-        this.scrollY = window.scrollY;
-
         this.router.events
             .pipe(
                 filter((event): event is NavigationEnd => event instanceof NavigationEnd),
@@ -117,19 +114,27 @@ export class NavbarComponent {
             .pipe(takeUntilDestroyed())
             .subscribe(() => this.scrollbarComp = '0px');
 
-        window.addEventListener('scroll', (e) => {
-            e.stopPropagation()
+        // The bar slides away while scrolling down and returns on the way up.
+        // Scrolling also dismisses every open menu, desktop dropdowns included.
+        fromEvent(window, 'scroll', { passive: true })
+            .pipe(takeUntilDestroyed())
+            .subscribe(() => {
+                this.closeMenu();
 
-            // Scrolling dismisses every open menu, desktop dropdowns included.
-            this.closeMenu();
+                // While a modal locks the page, the scroll position does not change.
+                if (document.body.style.overflow === 'hidden') {
+                    return;
+                }
 
-            if (document.body.style.overflow === 'hidden') {
-                return;
-            }
+                const goingDown = window.scrollY > this.scrollY;
 
-            this.isGoingDown = window.scrollY >= this.scrollY;
-            this.scrollY = window.scrollY;
-        })
+                // Ignore the small jitter near the top so the bar does not flicker.
+                if (goingDown !== this.isGoingDown && (window.scrollY > 80 || !goingDown)) {
+                    this.isGoingDown = goingDown;
+                }
+
+                this.scrollY = window.scrollY;
+            });
     }
 
     // Opens the hamburger panel with the current page's group already

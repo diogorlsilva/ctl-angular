@@ -1,12 +1,8 @@
-$global-size: 500px;
-$global-size-small: 400px;
-$global-size-smallest: 300px;
-
 // PROJECT CARDS
 
 .projects {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
   gap: 2rem;
   margin-top: 3rem;
   margin-bottom: var(--section-gap);
@@ -28,9 +24,6 @@ $global-size-smallest: 300px;
 .project-icon {
   width: 120px;
   height: 120px;
-  object-fit: cover;
-  border-radius: 22%;
-  transform: rotate(-3deg);
   margin: 0.25rem 0 1rem 0.25rem;
   box-shadow: 0 0 0 4px white, var(--soft-shadow);
 }
@@ -57,89 +50,73 @@ $global-size-smallest: 300px;
   align-self: flex-start;
 }
 
-// MODAL
-
-.description-container {
-  max-height: $global-size;
-  overflow-y: auto;
-  scrollbar-width: thin;
-
-  p {
-    white-space: pre-line;
-  }
+.projects-empty {
+  grid-column: 1 / -1;
+  color: var(--ink-soft);
 }
 
-.carousel-inner {
-  height: $global-size;
-  width: $global-size;
-  background-color: var(--lilac);
+// DIALOG: photos or video on the left, the full text on the right. The media
+// box keeps a 4:3 frame so the dialog does not resize between slides.
+
+.project-dialog {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  gap: 1.5rem 2rem;
+  align-items: start;
+}
+
+.project-media {
+  position: sticky;
+  top: 0;
+  aspect-ratio: 4 / 3;
   border-radius: var(--border-radius);
+  overflow: hidden;
+  background: var(--lilac);
 
-  img {
-    height: $global-size;
-    margin-inline: auto;
+  .carousel,
+  .carousel-inner,
+  .carousel-item {
+    height: 100%;
+  }
+
+  .carousel-item img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  .carousel-control-prev-icon,
+  .carousel-control-next-icon {
+    // Dark buttons read on light photos; Bootstrap's default is white on white.
+    filter: invert(1) grayscale(1);
   }
 }
 
-.modal-body {
-  display: flex;
-}
-
-.iframe-container {
-  height: $global-size;
-}
-
-.iframe-video {
-  margin: 20px 10px 60px 10px;
-  width: 28rem;
-  aspect-ratio: 16 / 9;
+.project-video {
+  display: block;
+  width: 100%;
+  height: 100%;
   border: 0;
-  border-radius: var(--border-radius);
 }
 
-@media screen and (max-width: 1024px) {
-  .modal-body {
-    flex-direction: column;
-    overflow: auto;
-  }
-
-  .description-container {
-    max-height: $global-size-small;
-  }
-
-  .iframe-container {
-    height: $global-size-small;
-  }
-
-  .carousel-inner {
-    height: $global-size-small;
-    width: 100%;
-
-    img {
-      height: $global-size-small;
-    }
-  }
+.project-media-icon {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
-@media screen and (max-width: 768px) {
-  .description-container {
-    max-height: $global-size-smallest;
+.project-text {
+  margin: 0;
+  white-space: pre-line;
+}
+
+@media screen and (max-width: 900px) {
+  .project-dialog {
+    grid-template-columns: 1fr;
   }
 
-  .iframe-container {
-    height: $global-size-smallest;
-  }
-
-  .carousel-inner {
-    height: $global-size-smallest;
-    width: 100%;
-
-    img {
-      height: $global-size-smallest;
-    }
-  }
-
-  .iframe-video {
-    width: calc(100% - 20px);
+  .project-media {
+    position: static;
   }
 }

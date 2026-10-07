@@ -1,17 +1,22 @@
-<ctl-section-background [backgroundUrl]="'/assets/images/projetos/projetos_background.webp'"></ctl-section-background>
+<ctl-section-background [backgroundUrl]="'assets/images/projetos/projetos_background.webp'"></ctl-section-background>
 <ctl-section-message-box [messageBoxText]="messageBoxText"
+                         [tileColor]="'#6B63D1'"
+                         [tileIcon]="'users'"
+                         [tileLabel]="'Projetos'"
                          [title]="'Projetos'">
 </ctl-section-message-box>
 
 <div [attr.aria-busy]="loading"
      class="projects wrap">
-    @for (project of projectItems; track $index) {
+    @for (project of projectItems; track project.modalId) {
         <article class="project-card">
-            <img [alt]="''"
-                 [src]="project.iconSRC"
-                 class="project-icon"
+            <img [src]="project.iconSRC"
+                 alt=""
+                 class="project-icon sticker"
                  decoding="async"
-                 loading="lazy">
+                 height="120"
+                 loading="lazy"
+                 width="120">
             <h2 [innerText]="project.title"
                 class="project-title"></h2>
             <p [innerText]="project.description"
@@ -25,9 +30,9 @@
         </article>
     } @empty {
         @if (loading) {
+            <span class="visually-hidden">A carregar projetos</span>
             @for (_ of skeletons; track $index) {
-                <div aria-label="A carregar projetos"
-                     class="project-card">
+                <div class="project-card">
                     <ctl-skeleton class="project-icon" height="" radius="22%" width=""></ctl-skeleton>
                     <ctl-skeleton height="1.6em" width="70%"></ctl-skeleton>
                     <ctl-skeleton></ctl-skeleton>
@@ -36,60 +41,68 @@
                     <ctl-skeleton class="project-more" height="44px" radius="999px" width="110px"></ctl-skeleton>
                 </div>
             }
+        } @else {
+            <p class="projects-empty">Ainda não há projetos publicados. Volte em breve.</p>
         }
     }
 </div>
 
-@for (project of projectItems; track $index) {
-    <ctl-modal [contentHtml]="photos"
-               [isScrollable]="false"
+@for (project of projectItems; track project.modalId) {
+    <ctl-modal [contentHtml]="projectContent"
                [modalId]="project.modalId"
                [modalSize]="'xl'"
                [title]="project.title">
-        <ng-template #photos>
-            @if (project.videoURL) {
-                <div class="iframe-container">
-                    <iframe [src]="project.videoURL | SafeYouTubeUrl"
-                            [title]="project.title"
-                            allow="autoplay; encrypted-media"
-                            allowfullscreen
-                            class="iframe-video">
-                    </iframe>
-                </div>
-            } @else {
-                <div [id]="'carousel' + project.modalId"
-                     class="carousel slide p-20" data-bs-ride="true">
-                    <div class="carousel-inner">
-                        @for (photoSRC of project.photoSRCs; track $index) {
-                            <div [class.active]="$index === 0"
-                                 class="carousel-item">
-                                <!-- Eager and sync: the photos are in-memory blobs, and a lazy image
-                                     in a hidden slide only loads when the slide starts moving. -->
-                                <img [alt]="'Imagem ' + ($index + 1) + ' do projeto ' + project.title"
-                                     [src]="photoSRC"
-                                     class="d-block"
-                                     decoding="sync">
+        <ng-template #projectContent>
+            <div class="project-dialog">
+                <div class="project-media">
+                    @if (project.videoURL) {
+                        <iframe [src]="project.videoURL | SafeYouTubeUrl"
+                                [title]="project.title"
+                                allow="autoplay; encrypted-media"
+                                allowfullscreen
+                                class="project-video">
+                        </iframe>
+                    } @else if (project.photoSRCs.length) {
+                        <div [id]="'carousel' + project.modalId"
+                             class="carousel slide"
+                             data-bs-ride="true">
+                            <div class="carousel-inner">
+                                @for (photoSRC of project.photoSRCs; track photoSRC) {
+                                    <div [class.active]="$index === 0"
+                                         class="carousel-item">
+                                        <!-- Eager and sync: the photos are in-memory blobs, and a lazy image
+                                             in a hidden slide only loads when the slide starts moving. -->
+                                        <img [alt]="'Imagem ' + ($index + 1) + ' do projeto ' + project.title"
+                                             [src]="photoSRC"
+                                             decoding="sync">
+                                    </div>
+                                }
                             </div>
-                        }
-                    </div>
-                    <button [attr.data-bs-target]="'#carousel' + project.modalId" class="carousel-control-prev"
-                            data-bs-slide="prev"
-                            type="button">
-                        <span aria-hidden="true" class="carousel-control-prev-icon"></span>
-                        <span class="visually-hidden">Anterior</span>
-                    </button>
-                    <button [attr.data-bs-target]="'#carousel' + project.modalId" class="carousel-control-next"
-                            data-bs-slide="next"
-                            type="button">
-                        <span aria-hidden="true" class="carousel-control-next-icon"></span>
-                        <span class="visually-hidden">Próximo</span>
-                    </button>
+                            @if (project.photoSRCs.length > 1) {
+                                <button [attr.data-bs-target]="'#carousel' + project.modalId"
+                                        class="carousel-control-prev"
+                                        data-bs-slide="prev"
+                                        type="button">
+                                    <span aria-hidden="true" class="carousel-control-prev-icon"></span>
+                                    <span class="visually-hidden">Anterior</span>
+                                </button>
+                                <button [attr.data-bs-target]="'#carousel' + project.modalId"
+                                        class="carousel-control-next"
+                                        data-bs-slide="next"
+                                        type="button">
+                                    <span aria-hidden="true" class="carousel-control-next-icon"></span>
+                                    <span class="visually-hidden">Seguinte</span>
+                                </button>
+                            }
+                        </div>
+                    } @else {
+                        <img [src]="project.iconSRC"
+                             alt=""
+                             class="project-media-icon">
+                    }
                 </div>
-            }
-            <div class="description-container">
                 <p [innerText]="project.description"
-                   class="p-20">
-                </p>
+                   class="project-text"></p>
             </div>
         </ng-template>
     </ctl-modal>

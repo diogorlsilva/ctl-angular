@@ -3,14 +3,10 @@ import { RouterLink } from "@angular/router";
 import { FetchDataService } from "@services/fetch-data.service";
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 import {
-    AccountReport,
-    address,
     ctlEmail,
     institutionMessage,
-    mission,
     NewsItem,
     NumberItem,
-    OrganisationItem,
     PartnerItem,
     PersonItem,
     telephoneNumber
@@ -27,7 +23,7 @@ type ServiceTile = {
     tilt: string;
     order: number;
     iconSrc?: string;
-    faIcon?: string;
+    icon?: string;
 };
 
 @Component({
@@ -43,18 +39,16 @@ type ServiceTile = {
 })
 export class InicioComponent implements OnInit {
     newsItems: NewsItem[] = [];
-    peopleItems: PersonItem[] = []
+    peopleItems: PersonItem[] = [];
     numbersItems: NumberItem[] = [];
-    partnersSrcUrs: PartnerItem[];
-    currentItem: NewsItem | undefined;
+    partners: PartnerItem[] = [];
+    currentItem?: NewsItem;
     newsLoading = true;
     readonly newsSkeletons = Array(3);
     peopleLoading = true;
     readonly peopleSkeletons = Array(5);
     partnersLoading = true;
     readonly partnersSkeletons = Array(5);
-    reports: AccountReport[];
-    organisation: OrganisationItem;
 
     // Three columns, the middle one shorter so it sits half a tile lower.
     readonly serviceColumns: ServiceTile[][] = [
@@ -65,7 +59,7 @@ export class InicioComponent implements OnInit {
                 color: '#C8102E',
                 tilt: '-3deg',
                 order: 0,
-                iconSrc: 'assets/images/creche/creche_logo.png'
+                iconSrc: 'assets/images/creche/creche_logo.webp'
             },
             {
                 name: 'CATL',
@@ -73,7 +67,7 @@ export class InicioComponent implements OnInit {
                 color: '#E8699A',
                 tilt: '2deg',
                 order: 3,
-                iconSrc: 'assets/images/catl/catl_logo.png'
+                iconSrc: 'assets/images/catl/catl_logo.webp'
             },
             {
                 name: 'Refeições',
@@ -81,7 +75,7 @@ export class InicioComponent implements OnInit {
                 color: '#4B2177',
                 tilt: '-2deg',
                 order: 6,
-                iconSrc: 'assets/images/refeicoes/refeicoes_logo.png'
+                iconSrc: 'assets/images/refeicoes/refeicoes_logo.webp'
             },
         ],
         [
@@ -91,7 +85,7 @@ export class InicioComponent implements OnInit {
                 color: '#5CA54B',
                 tilt: '3deg',
                 order: 1,
-                iconSrc: 'assets/images/aec/aec_logo.png'
+                iconSrc: 'assets/images/aec/aec_logo.webp'
             },
             {
                 name: 'Projetos',
@@ -99,7 +93,7 @@ export class InicioComponent implements OnInit {
                 color: '#6B63D1',
                 tilt: '-3deg',
                 order: 4,
-                faIcon: 'fa-people-group'
+                icon: 'users'
             },
         ],
         [
@@ -109,7 +103,7 @@ export class InicioComponent implements OnInit {
                 color: '#2D9CDB',
                 tilt: '2deg',
                 order: 2,
-                iconSrc: 'assets/images/natacao/natacao_logo.jpg'
+                iconSrc: 'assets/images/natacao/natacao_logo.webp'
             },
             {
                 name: 'Música',
@@ -117,7 +111,7 @@ export class InicioComponent implements OnInit {
                 color: '#F0A500',
                 tilt: '-2deg',
                 order: 5,
-                iconSrc: 'assets/images/musica/musica_logo.png'
+                iconSrc: 'assets/images/musica/musica_logo.webp'
             },
             {
                 name: 'Explicações',
@@ -125,30 +119,31 @@ export class InicioComponent implements OnInit {
                 color: '#E8701A',
                 tilt: '3deg',
                 order: 7,
-                iconSrc: 'assets/images/explicacoes/explicacoes_logo.png'
+                iconSrc: 'assets/images/explicacoes/explicacoes_logo.webp'
             },
         ],
     ];
 
-    institutionMessage = institutionMessage;
-    telephoneNumber = telephoneNumber;
-    address = address;
-    ctlEmail = ctlEmail;
-    mission = mission;
+    readonly institutionMessage = institutionMessage;
+    readonly telephoneNumber = telephoneNumber;
+    readonly ctlEmail = ctlEmail;
+
     private readonly fetchDataService = inject(FetchDataService);
     private readonly destroyRef = inject(DestroyRef);
 
     ngOnInit(): void {
+        // Routes live after the hash; a path before it means the host served
+        // index.html for an old-style link, so go back to the root.
         if (location.pathname !== "/") {
             location.pathname = "";
         }
 
-        // Each block renders as soon as its own sheet arrives.
+        // Each block renders as soon as its own sheet arrives. `complete` also
+        // fires when the request fails, so no skeleton sticks around.
         this.fetchDataService.getNewsData()
             .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe({
                 next: (newsItems) => this.newsItems = newsItems,
-                // Also fires when the request fails, so the skeleton never sticks.
                 complete: () => this.newsLoading = false
             });
 
@@ -166,16 +161,8 @@ export class InicioComponent implements OnInit {
         this.fetchDataService.getPartnersPhotosURLs()
             .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe({
-                next: (partnersSrcUrs) => this.partnersSrcUrs = partnersSrcUrs,
+                next: (partners) => this.partners = partners,
                 complete: () => this.partnersLoading = false
             });
-
-        this.fetchDataService.getReportsData()
-            .pipe(takeUntilDestroyed(this.destroyRef))
-            .subscribe((reports) => this.reports = reports);
-
-        this.fetchDataService.getOrganisationData()
-            .pipe(takeUntilDestroyed(this.destroyRef))
-            .subscribe((organisation) => this.organisation = organisation);
     }
 }

@@ -1,3 +1,10 @@
-<div class="background-container"
-     style="--background-url: url({{ backgroundUrl }})">
+<div class="background-container">
+    <!-- The largest element on the page: load it first, never lazily. -->
+    <img [src]="backgroundUrl"
+         [srcset]="srcset"
+         alt=""
+         class="background-image"
+         decoding="async"
+         fetchpriority="high"
+         sizes="100vw">
 </div>

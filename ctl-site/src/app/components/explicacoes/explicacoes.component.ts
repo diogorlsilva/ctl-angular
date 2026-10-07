@@ -17,8 +17,7 @@ import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
         CtlGalleryComponent,
         CtlSectionContentComponent
     ],
-    templateUrl: './explicacoes.component.html',
-    styleUrl: './explicacoes.component.scss'
+    templateUrl: './explicacoes.component.html'
 })
 export class ExplicacoesComponent implements OnInit {
     section?: SectionItem;

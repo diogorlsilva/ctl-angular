@@ -1,8 +1,9 @@
-// Photo strip the visitor scrolls sideways. Its side padding lines up with .wrap.
-
-ctl-gallery {
+// The strip bleeds to the viewport edges; its side padding lines up with .wrap.
+// scroll-padding keeps the first photo from snapping under that padding.
+:host {
   display: block;
   margin-top: 2.5rem;
+  --gallery-gutter: max(1.25rem, calc((100% - 1120px) / 2));
 }
 
 .gallery-row {
@@ -10,7 +11,8 @@ ctl-gallery {
   gap: 12px;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
-  padding: 0.25rem max(1.25rem, calc((100% - 1120px) / 2)) 1rem;
+  scroll-padding-inline: var(--gallery-gutter);
+  padding: 0.25rem var(--gallery-gutter) 1rem;
   scrollbar-width: thin;
   scrollbar-color: var(--ctl-blue-25) transparent;
 
@@ -26,6 +28,7 @@ ctl-gallery {
     width: auto;
     max-width: 85vw;
     object-fit: cover;
+    background: var(--lilac);
   }
 }
 

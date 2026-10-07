@@ -1,34 +1,66 @@
 @use 'fonts';
 
+// Only the Bootstrap pieces the site uses (its JS bundle is loaded in index.html):
+// the reset, dropdowns for the navbar, modals, the project photo carousel and
+// the close button. Everything else is written here or in the components.
+$enable-dark-mode: false;
+$enable-shadows: false;
+$enable-gradients: false;
+$modal-content-border-radius: 24px;
+$modal-content-border-width: 0;
+$modal-backdrop-opacity: 0.55;
+$dropdown-min-width: 12rem;
+
+@import 'bootstrap/scss/functions';
+@import 'bootstrap/scss/variables';
+@import 'bootstrap/scss/variables-dark';
+@import 'bootstrap/scss/maps';
+@import 'bootstrap/scss/mixins';
+@import 'bootstrap/scss/root';
+@import 'bootstrap/scss/reboot';
+@import 'bootstrap/scss/transitions';
+@import 'bootstrap/scss/dropdown';
+@import 'bootstrap/scss/modal';
+@import 'bootstrap/scss/carousel';
+@import 'bootstrap/scss/close';
+@import 'bootstrap/scss/helpers/visually-hidden';
+
 :root {
   --nav-height: 60px;
   --nav-gap: clamp(0.375rem, 1vw, 0.625rem);
+
+  // Brand
   --ctl-blue: #6468CC;
   --ctl-blue-25: #d8d9f2;
   --ctl-blue-15: #e8e8f7;
   --ctl-blue-50: rgba(100, 104, 204, 0.5);
-  --ctl-blue-70: rgba(100, 104, 204, 0.70);
   --ctl-orange: #FD620D;
-  --border-radius: 15px;
-  --box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-
-  // Design tokens shared by every page.
+  --ctl-orange-dark: #e55400;
   --ink: #23245a;
   --ink-soft: #5b5c86;
   --lilac: var(--ctl-blue-15);
+
+  // Type
   --font-display: "Fredoka", "Century Gothic", sans-serif;
   --font-body: "Nunito", "Segoe UI", sans-serif;
+
+  // Shape and rhythm
+  --border-radius: 15px;
+  --tile-radius: 22%;
   --section-gap: clamp(4rem, 8vw, 6.5rem);
   --soft-shadow: 0 14px 28px -14px rgba(35, 36, 90, 0.55);
+  --focus-ring: 3px solid var(--ctl-orange);
 }
 
-// styles.scss is loaded after Bootstrap (see angular.json), so these win.
 body {
   font-family: var(--font-body);
   font-size: 1.0625rem;
   line-height: 1.6;
   color: var(--ink);
   background: white;
+  // Bootstrap pads the body by the scrollbar width while a modal is open so
+  // the content stays still; the navbar compensates on its own.
+  overflow-x: hidden;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -36,6 +68,25 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 600;
   color: var(--ink);
 }
+
+* {
+  scrollbar-color: var(--ctl-blue-50) transparent;
+}
+
+// Inline icons: symbols live in the sprite at the top of index.html.
+.icon {
+  width: 1em;
+  height: 1em;
+  flex: none;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vertical-align: -0.125em;
+}
+
+// LAYOUT
 
 .wrap {
   width: min(1120px, 100% - 2.5rem);
@@ -51,6 +102,44 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--ink);
   margin: 0 0 1.5rem;
 }
+
+// Service tile: square sticker with the activity's artwork, tilted a little.
+// Used by the home mosaic, the page headers and the project cards.
+.sticker {
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 4cqw;
+  overflow: hidden;
+  border-radius: var(--tile-radius);
+  color: white;
+  box-shadow: var(--soft-shadow);
+  transform: rotate(var(--tilt, -3deg));
+  // Icon and label scale with the tile, whatever size it is rendered at.
+  container-type: inline-size;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .icon {
+    width: 36cqw;
+    height: 36cqw;
+  }
+}
+
+.sticker-label {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 10cqw;
+  line-height: 1;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+// BUTTONS AND LINKS
 
 .btn-pill {
   display: inline-flex;
@@ -72,7 +161,7 @@ h1, h2, h3, h4, h5, h6 {
   }
 
   &:focus-visible {
-    outline: 3px solid var(--ctl-orange);
+    outline: var(--focus-ring);
     outline-offset: 3px;
   }
 }
@@ -82,7 +171,7 @@ h1, h2, h3, h4, h5, h6 {
   color: white;
 
   &:hover {
-    background: #e55400;
+    background: var(--ctl-orange-dark);
     color: white;
   }
 }
@@ -107,8 +196,56 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 
-// Activity pages: description followed by columns of bullet points.
-// Shared by ctl-section-content and the creche page.
+// Underlined text button, for secondary actions next to a heading.
+.link-button {
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  font-weight: 700;
+  color: var(--ctl-blue);
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+  cursor: pointer;
+
+  &:hover {
+    color: var(--ctl-orange);
+  }
+
+  &:focus-visible {
+    outline: var(--focus-ring);
+    outline-offset: 4px;
+    border-radius: 4px;
+  }
+}
+
+// Small lilac chip, for file links and value tags.
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.45rem 0.9rem;
+  border-radius: 999px;
+  background: var(--lilac);
+  color: var(--ctl-blue);
+  font-weight: 700;
+  font-size: 0.95rem;
+  text-decoration: none;
+}
+
+a.chip:hover {
+  background: var(--ctl-blue-25);
+  color: var(--ctl-blue);
+}
+
+a.chip:focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: 2px;
+}
+
+// ACTIVITY PAGES: description followed by columns of bullet points.
+
 .section-content-container {
   width: min(1120px, 100% - 2.5rem);
   margin: 3rem auto var(--section-gap);
@@ -119,11 +256,12 @@ h1, h2, h3, h4, h5, h6 {
   line-height: 1.65;
   max-width: 68ch;
   white-space: pre-line;
+  margin: 0;
 }
 
 .info-columns-container {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
   gap: 2.5rem 3rem;
   margin-top: 3rem;
 }
@@ -135,6 +273,20 @@ h1, h2, h3, h4, h5, h6 {
   line-height: 1.2;
   color: var(--ink);
   margin-bottom: 1rem;
+
+  & + .column-list {
+    margin-top: 0;
+  }
+}
+
+.column-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+
+  & + .column-title {
+    margin-top: 2.5rem;
+  }
 }
 
 .column-item {
@@ -163,123 +315,37 @@ h1, h2, h3, h4, h5, h6 {
   box-shadow: var(--soft-shadow);
 }
 
+// DIALOG CONTENT, shared by the home and footer dialogs.
+
+.dialog-sections {
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+}
+
+.dialog-heading {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 1.2rem;
+  color: var(--ctl-blue);
+  margin: 0 0 0.5rem;
+}
+
+.dialog-text {
+  margin: 0;
+  max-width: 60ch;
+  white-space: pre-line;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .btn-pill {
     transition: none;
   }
 }
 
-* {
-  scrollbar-color: var(--ctl-blue-50) transparent;
-}
-
-// Bootstrap adds padding-right equal to the scrollbar width while a modal is
-// open, which keeps the content still; the navbar compensates on its own
-// (see navbar.component.ts).
-body {
-  overflow-x: hidden;
-}
-
-abbr {
-  cursor: auto !important;
-  text-decoration: none !important;
-}
-
-.truncate {
-  text-overflow: ellipsis;
-  overflow: hidden;
-  width: 100%;
-  white-space: nowrap;
-}
-
-.multi-line-truncate {
-  display: -webkit-box;
-  overflow: hidden;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-}
-
-@keyframes spin {
-  from {
-    translate: 0;
-  }
-  to {
-    translate: -100%;
-  }
-}
-
-$spacings: 5, 10, 15, 20, 40;
-@each $spacing in $spacings {
-  .p-#{$spacing} {
-    padding: #{$spacing}px !important;
-  }
-
-  .p-t-#{$spacing} {
-    padding-top: #{$spacing}px !important;
-  }
-
-  .p-b-#{$spacing} {
-    padding-bottom: #{$spacing}px !important;
-  }
-
-  .p-l-#{$spacing} {
-    padding-left: #{$spacing}px !important;
-  }
-
-  .p-r-#{$spacing} {
-    padding-right: #{$spacing}px !important;
-  }
-
-  .p-v-#{$spacing} {
-    padding: #{$spacing}px 0 !important;
-  }
-
-  .p-h-#{$spacing} {
-    padding: 0 #{$spacing}px !important;
-  }
-
-  .m-#{$spacing} {
-    margin: #{$spacing}px !important;
-  }
-
-  .m-t-#{$spacing} {
-    margin-top: #{$spacing}px !important;
-  }
-
-  .m-b-#{$spacing} {
-    margin-bottom: #{$spacing}px !important;
-  }
-
-  .m-l-#{$spacing} {
-    margin-left: #{$spacing}px !important;
-  }
-
-  .m-r-#{$spacing} {
-    margin-right: #{$spacing}px !important;
-  }
-}
-
+// Legacy wordmark face used by the navbar logo.
 @font-face {
   font-family: starlinerbtnregular;
+  font-display: swap;
   src: url('/assets/Starliner BTN Regular.woff');
-}
-
-@font-face {
-  font-family: favescriptbold;
-  src: url('/assets/fave-script-bold.woff');
-}
-
-.orange-text {
-  color: var(--ctl-orange);
-}
-
-.clickable-label {
-  color: black;
-  text-decoration-color: black;
-  text-decoration: underline;
-
-  &:hover {
-    color: lightblue;
-    text-decoration-color: lightblue;
-  }
 }

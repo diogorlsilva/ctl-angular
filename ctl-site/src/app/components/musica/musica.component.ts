@@ -17,8 +17,7 @@ import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
         CtlSectionContentComponent,
         CtlSectionMessageBoxComponent
     ],
-    templateUrl: './musica.component.html',
-    styleUrl: './musica.component.scss'
+    templateUrl: './musica.component.html'
 })
 export class MusicaComponent implements OnInit {
     section?: SectionItem;
