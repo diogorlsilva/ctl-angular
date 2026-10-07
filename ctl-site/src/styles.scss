@@ -335,8 +335,8 @@ a.chip:focus-visible {
 }
 
 // Long-form text in a dialog: a comfortable measure, roomier leading and
-// spaced paragraphs instead of bare line breaks. Justified, with hyphenation
-// keeping the word gaps even.
+// spaced paragraphs instead of bare line breaks. Justified from tablet width
+// up, with hyphenation keeping the word gaps even where it is supported.
 .dialog-text,
 .dialog-prose {
   max-width: 62ch;
@@ -344,6 +344,15 @@ a.chip:focus-visible {
   text-align: justify;
   text-wrap: pretty;
   hyphens: auto;
+}
+
+// A phone's column is too narrow to justify without wide word gaps, and
+// hyphenation dictionaries are not available on every device.
+@media screen and (max-width: 575.98px) {
+  .dialog-text,
+  .dialog-prose {
+    text-align: start;
+  }
 }
 
 .dialog-text {
