@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1791385985025,
+  "timestamp": 1791387621583,
   "index": "/index.html",
   "assetGroups": [
     {
@@ -14,7 +14,7 @@
         "/231.7fb4a26a40d1b3bd.js",
         "/27.5eb95a7c598365ae.js",
         "/33.46a732fb4e26344b.js",
-        "/335.cbec69f146538e43.js",
+        "/335.830aaba9c0e053e1.js",
         "/383.cefd0ef9176fd26d.js",
         "/485.8b429dde6bf9b326.js",
         "/765.0b6853be5f869a54.js",
@@ -24,10 +24,10 @@
         "/common.8be61ecc8799698e.js",
         "/favicon.ico",
         "/index.html",
-        "/main.9f160f5ba3856cd4.js",
+        "/main.ec5de31314537acd.js",
         "/manifest.webmanifest",
         "/polyfills.f22ca7ec744bb0c7.js",
-        "/runtime.1614392a2efea1ec.js",
+        "/runtime.d791b11f4e2e6afd.js",
         "/styles.e8f295bca78c1681.css"
       ],
       "patterns": []
@@ -98,6 +98,7 @@
         "/assets/images/no-photo.jpg",
         "/assets/images/projetos/projetos_background-960.webp",
         "/assets/images/projetos/projetos_background.webp",
+        "/assets/images/projetos/projetos_logo.webp",
         "/assets/images/refeicoes/refeicoes_background-960.webp",
         "/assets/images/refeicoes/refeicoes_background.webp",
         "/assets/images/refeicoes/refeicoes_logo.webp"
@@ -125,7 +126,7 @@
     "/231.7fb4a26a40d1b3bd.js": "5e8740b2c3e32d9a160ac97d556d0a51c1e22460",
     "/27.5eb95a7c598365ae.js": "be6c01394520379eb9f9014a7143a8136998f12f",
     "/33.46a732fb4e26344b.js": "728b0265c426e50327534a0a9b231c203fe68992",
-    "/335.cbec69f146538e43.js": "240fad3142984b355c3f3903e15ce8b55894a004",
+    "/335.830aaba9c0e053e1.js": "869c4797ed77c1686a34432c759a2656ec844c2e",
     "/383.cefd0ef9176fd26d.js": "ab6e7cfb95f5925b83b87287f948ef4bcb682070",
     "/485.8b429dde6bf9b326.js": "f2cca8a4167cfa579bc408d09546605be5f8be29",
     "/765.0b6853be5f869a54.js": "0cf5d607d2332d06924ae5b9c432020f0dc61f11",
@@ -189,17 +190,18 @@
     "/assets/images/no-photo.jpg": "f3487cd70e38327524c95c0439f0e946511491e3",
     "/assets/images/projetos/projetos_background-960.webp": "b5edf64458b62bdf023fa31c5c3f4cf7a8aec4bc",
     "/assets/images/projetos/projetos_background.webp": "7acc48edace7c48c64b99b0fb1e17d54e943a5fa",
+    "/assets/images/projetos/projetos_logo.webp": "72b1a910e1d53ffa3abce83bc3fb4053f213653a",
     "/assets/images/refeicoes/refeicoes_background-960.webp": "fe46fa1e0ac93357d71ff7ee7ad139ecfb04511d",
     "/assets/images/refeicoes/refeicoes_background.webp": "548dd97db0f03a9cb6faef32eb7c3b7378f94995",
     "/assets/images/refeicoes/refeicoes_logo.webp": "59177ee5899106b022f26fa48da52fa585fdcd02",
     "/bootstrap.bundle.min.js": "ddc6e9ead6d16ae9237399ce41e8c1620cc59c36",
     "/common.8be61ecc8799698e.js": "2863a958816d1581da398da80c407c8c7bd47a15",
     "/favicon.ico": "446255a988c05e264d6701eebb091c32a254fd6e",
-    "/index.html": "bfa24b0fc653272969358ffa4d8092e355c0ca76",
-    "/main.9f160f5ba3856cd4.js": "1f9442c998574e395c3bc7e793ab0defe48e0a98",
+    "/index.html": "f60d80a96f5f00db19f327638c0aa5b55995e896",
+    "/main.ec5de31314537acd.js": "ed43fb0617e7eb30060085003cca2b008a6dab09",
     "/manifest.webmanifest": "9aeabc1703a1bf02dd1f5d6c3d23a54cbbb0d3f5",
     "/polyfills.f22ca7ec744bb0c7.js": "2451eeaf0b7036361b6596d14e2cad2026580fdf",
-    "/runtime.1614392a2efea1ec.js": "566dd1950c43a0323be02ffdac8a5d03aa48357e",
+    "/runtime.d791b11f4e2e6afd.js": "a4b682f2e8634b15fb62fa06c179d989d73176f7",
     "/styles.e8f295bca78c1681.css": "794faf1760d96c96d79986cd591fe707e01cdfd2"
   },
   "navigationUrls": [
