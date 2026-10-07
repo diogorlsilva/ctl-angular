@@ -26,8 +26,16 @@
                              class="carousel-item">
                             <!-- Eager and sync: the photos are in-memory blobs, and a lazy image
                                  in a hidden slide only loads when the slide starts moving. -->
+                            <!-- A blurred, zoomed copy of the photo fills the frame behind a
+                                 photo whose shape does not match it. -->
+                            <img [src]="photo"
+                                 alt=""
+                                 aria-hidden="true"
+                                 class="media-photo-backdrop"
+                                 decoding="sync">
                             <img [alt]="'Fotografia ' + ($index + 1) + ' de ' + photos.length + ' – ' + label"
                                  [src]="photo"
+                                 class="media-photo"
                                  decoding="sync">
                         </div>
                     }

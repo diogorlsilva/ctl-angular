@@ -95,7 +95,7 @@ export class InicioComponent implements OnInit {
                 color: '#6B63D1',
                 tilt: '-3deg',
                 order: 4,
-                icon: 'users'
+                iconSrc: 'assets/images/projetos/projetos_logo.webp'
             },
         ],
         [
