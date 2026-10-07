@@ -1,0 +1,174 @@
+// Text beside the media on wide screens, below it on narrow ones. The photo
+// frame is portrait (4:5) because the club's photos are, and sits on lilac so
+// a photo of another shape still reads as framed rather than floating.
+
+.media-dialog {
+  display: grid;
+  gap: 1.75rem;
+}
+
+.media-text {
+  margin: 0;
+  max-width: 60ch;
+  white-space: pre-line;
+}
+
+.media-frame {
+  position: relative;
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  // The slides are transformed; without a stacking context Chrome on Android
+  // can ignore the rounded clip.
+  isolation: isolate;
+}
+
+.media-frame-photos {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  background: var(--lilac);
+
+  .carousel,
+  .carousel-inner,
+  .carousel-item {
+    height: 100%;
+  }
+
+  .carousel-item img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+}
+
+.media-frame-video {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: black;
+}
+
+.media-video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+// Round white chips for the arrows instead of Bootstrap's 15%-wide hit areas,
+// with a dark glyph; small blue dots for the indicators.
+
+.carousel-control-prev,
+.carousel-control-next {
+  width: auto;
+  padding: 0 0.75rem;
+  opacity: 1;
+
+  &:hover .carousel-control-prev-icon,
+  &:hover .carousel-control-next-icon {
+    background-color: white;
+  }
+
+  &:focus-visible .carousel-control-prev-icon,
+  &:focus-visible .carousel-control-next-icon {
+    outline: var(--focus-ring);
+    outline-offset: 2px;
+  }
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.9);
+  background-size: 45%;
+  box-shadow: var(--soft-shadow);
+  transition: background-color 0.15s ease;
+}
+
+// Bootstrap's chevrons, recoloured to the ink tone (#23245a).
+.carousel-control-prev-icon {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%2323245a'%3e%3cpath d='M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z'/%3e%3c/svg%3e");
+}
+
+.carousel-control-next-icon {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%2323245a'%3e%3cpath d='M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+}
+
+.carousel-indicators {
+  margin-bottom: 0.75rem;
+
+  [data-bs-target] {
+    width: 8px;
+    height: 8px;
+    margin: 0 4px;
+    border: 0;
+    border-radius: 50%;
+    background-color: var(--ctl-blue);
+    opacity: 0.35;
+    transition: opacity 0.15s ease;
+
+    &.active {
+      opacity: 1;
+    }
+
+    &:focus-visible {
+      outline: var(--focus-ring);
+      outline-offset: 2px;
+    }
+  }
+}
+
+// WIDE: media on the left, text on the right scrolling on its own. 13rem
+// covers the dialog margins, header and body padding, so the modal body
+// itself never needs to scroll. A photo dialog is always that tall, so the
+// portrait frame gets the full height; a video dialog only grows with its text.
+
+@media screen and (min-width: 992px) {
+  .media-dialog.has-media {
+    display: flex;
+    gap: 2.5rem;
+    max-height: min(640px, calc(100vh - 13rem));
+
+    .media-text {
+      flex: 1 1 0;
+      min-width: 0;
+      min-height: 0;
+      max-width: none;
+      overflow-y: auto;
+      padding-right: 0.75rem;
+    }
+  }
+
+  .media-dialog.has-photos {
+    height: min(640px, calc(100vh - 13rem));
+  }
+
+  .media-frame-photos {
+    flex: 0 0 auto;
+    width: auto;
+    height: 100%;
+    max-width: 50%;
+  }
+
+  .media-frame-video {
+    flex: 0 0 calc(50% - 1.25rem);
+    width: auto;
+    align-self: flex-start;
+  }
+
+  // Text alone in a wide dialog reads better as a centred column.
+  .media-dialog:not(.has-media) .media-text {
+    margin-inline: auto;
+  }
+}
+
+// NARROW: media on top; the frame is capped so the start of the text is
+// still in view on a phone.
+
+@media screen and (max-width: 991.98px) {
+  .media-frame-photos {
+    max-height: 60vh;
+    max-height: 60dvh;
+  }
+}

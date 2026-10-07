@@ -17,7 +17,9 @@
                         type="button"></button>
             </div>
             <div class="modal-body">
-                <ng-container [ngTemplateOutlet]="contentHtml"></ng-container>
+                @if (isOpen) {
+                    <ng-container [ngTemplateOutlet]="contentHtml"></ng-container>
+                }
             </div>
         </div>
     </div>

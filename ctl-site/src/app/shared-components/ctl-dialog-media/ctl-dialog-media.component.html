@@ -1,0 +1,66 @@
+<div [class.has-media]="hasMedia"
+     [class.has-photos]="!videoUrl && photos.length > 0"
+     class="media-dialog">
+    @if (videoUrl) {
+        <div class="media-frame media-frame-video">
+            <iframe [src]="videoUrl | SafeYouTubeUrl"
+                    [title]="label"
+                    allow="autoplay; encrypted-media"
+                    allowfullscreen
+                    class="media-video">
+            </iframe>
+        </div>
+    } @else if (photos.length) {
+        <div class="media-frame media-frame-photos">
+            <div #carousel
+                 [id]="carouselId"
+                 aria-roledescription="carrossel"
+                 class="carousel slide"
+                 data-bs-interval="5000"
+                 data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    @for (photo of photos; track photo) {
+                        <div [attr.aria-label]="($index + 1) + ' de ' + photos.length"
+                             [class.active]="$index === 0"
+                             aria-roledescription="diapositivo"
+                             class="carousel-item">
+                            <!-- Eager and sync: the photos are in-memory blobs, and a lazy image
+                                 in a hidden slide only loads when the slide starts moving. -->
+                            <img [alt]="'Fotografia ' + ($index + 1) + ' de ' + photos.length + ' – ' + label"
+                                 [src]="photo"
+                                 decoding="sync">
+                        </div>
+                    }
+                </div>
+                @if (photos.length > 1) {
+                    <div class="carousel-indicators">
+                        @for (photo of photos; track photo) {
+                            <button [attr.aria-current]="$index === 0 ? 'true' : null"
+                                    [attr.aria-label]="'Fotografia ' + ($index + 1)"
+                                    [attr.data-bs-slide-to]="$index"
+                                    [attr.data-bs-target]="'#' + carouselId"
+                                    [class.active]="$index === 0"
+                                    type="button"></button>
+                        }
+                    </div>
+                    <button [attr.data-bs-target]="'#' + carouselId"
+                            class="carousel-control-prev"
+                            data-bs-slide="prev"
+                            type="button">
+                        <span aria-hidden="true" class="carousel-control-prev-icon"></span>
+                        <span class="visually-hidden">Anterior</span>
+                    </button>
+                    <button [attr.data-bs-target]="'#' + carouselId"
+                            class="carousel-control-next"
+                            data-bs-slide="next"
+                            type="button">
+                        <span aria-hidden="true" class="carousel-control-next-icon"></span>
+                        <span class="visually-hidden">Seguinte</span>
+                    </button>
+                }
+            </div>
+        </div>
+    }
+    <p [innerText]="text"
+       class="media-text"></p>
+</div>

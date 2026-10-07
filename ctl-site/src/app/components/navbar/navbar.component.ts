@@ -4,18 +4,10 @@ import { NavigationEnd, NavigationStart, Router, RouterLink, RouterLinkActive } 
 import { filter, fromEvent, Observable } from "rxjs";
 import { FetchDataService } from "@services/fetch-data.service";
 import { XLSXUrl } from "../../utils/utils.model";
+import "../../utils/bootstrap.model";
 
 type NavGroup = 'respostasSociais' | 'servicos' | 'projetos';
 
-// Bootstrap is loaded as a plain script (see index.html); only the dropdown
-// API is needed here.
-declare global {
-    interface Window {
-        bootstrap?: {
-            Dropdown: { getOrCreateInstance(element: Element): { show(): void; hide(): void } };
-        };
-    }
-}
 
 // Which accordion group each section page belongs to.
 const ROUTE_GROUPS: Record<string, NavGroup> = {

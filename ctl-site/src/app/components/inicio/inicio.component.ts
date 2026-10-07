@@ -13,6 +13,7 @@ import {
 } from "@models/data.model";
 import { ModalComponent } from "../modal/modal.component";
 import { CtlSkeletonComponent } from "@shared/ctl-skeleton/ctl-skeleton.component";
+import { CtlDialogMediaComponent } from "@shared/ctl-dialog-media/ctl-dialog-media.component";
 
 // One hero tile per service. Colours come from the club's logo and tile artwork;
 // the tilt makes the tiles sit like stickers and straightens on hover.
@@ -32,7 +33,8 @@ type ServiceTile = {
     imports: [
         RouterLink,
         ModalComponent,
-        CtlSkeletonComponent
+        CtlSkeletonComponent,
+        CtlDialogMediaComponent
     ],
     templateUrl: './inicio.component.html',
     styleUrl: './inicio.component.scss'

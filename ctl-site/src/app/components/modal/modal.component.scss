@@ -9,11 +9,11 @@
 .modal-header {
   background-color: var(--ctl-blue-15);
   border: none;
-  padding: 1rem 1.5rem;
+  padding: 1.25rem 2rem;
 }
 
 .modal-body {
-  padding: 1.5rem;
+  padding: 2rem;
 }
 
 .modal-title {
@@ -27,4 +27,15 @@
 
 .btn-close:focus {
   box-shadow: 0 0 0 3px var(--ctl-orange);
+}
+
+// Phones keep a little less so the content width is not eaten by the frame.
+@media screen and (max-width: 575.98px) {
+  .modal-header {
+    padding: 1.125rem 1.5rem;
+  }
+
+  .modal-body {
+    padding: 1.5rem;
+  }
 }

@@ -339,16 +339,6 @@
   object-fit: contain;
 }
 
-// NEWS DIALOG
-
-.news-dialog-photo {
-  max-width: 300px;
-  height: auto;
-  float: left;
-  margin: 0 1.5rem 1rem 0;
-  border-radius: var(--border-radius);
-}
-
 // RESPONSIVE
 
 @media screen and (max-width: 900px) {
@@ -370,14 +360,6 @@
 }
 
 @media screen and (max-width: 520px) {
-  .news-dialog-photo {
-    float: none;
-    display: block;
-    width: 100%;
-    max-width: none;
-    margin: 0 0 1rem;
-  }
-
   .tiles {
     gap: 0.75rem;
     padding: 0.5rem 0;

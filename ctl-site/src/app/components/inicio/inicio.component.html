@@ -190,19 +190,14 @@
 
 <ctl-modal [contentHtml]="newsContent"
            [modalId]="'news'"
-           [modalSize]="'lg'"
+           [modalSize]="'xl'"
            [title]="currentItem?.title ?? ''">
     <ng-template #newsContent>
         @if (currentItem) {
-            <div class="news-dialog">
-                @if (currentItem.photoSrc) {
-                    <img [src]="currentItem.photoSrc"
-                         alt=""
-                         class="news-dialog-photo">
-                }
-                <p [innerText]="currentItem.description"
-                   class="dialog-text"></p>
-            </div>
+            <ctl-dialog-media [label]="currentItem.title"
+                              [photos]="currentItem.photoSrc ? [currentItem.photoSrc] : []"
+                              [text]="currentItem.description">
+            </ctl-dialog-media>
         }
     </ng-template>
 </ctl-modal>

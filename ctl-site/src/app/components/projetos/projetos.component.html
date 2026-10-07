@@ -53,57 +53,11 @@
                [modalSize]="'xl'"
                [title]="project.title">
         <ng-template #projectContent>
-            <div class="project-dialog">
-                <div class="project-media">
-                    @if (project.videoURL) {
-                        <iframe [src]="project.videoURL | SafeYouTubeUrl"
-                                [title]="project.title"
-                                allow="autoplay; encrypted-media"
-                                allowfullscreen
-                                class="project-video">
-                        </iframe>
-                    } @else if (project.photoSRCs.length) {
-                        <div [id]="'carousel' + project.modalId"
-                             class="carousel slide"
-                             data-bs-ride="true">
-                            <div class="carousel-inner">
-                                @for (photoSRC of project.photoSRCs; track photoSRC) {
-                                    <div [class.active]="$index === 0"
-                                         class="carousel-item">
-                                        <!-- Eager and sync: the photos are in-memory blobs, and a lazy image
-                                             in a hidden slide only loads when the slide starts moving. -->
-                                        <img [alt]="'Imagem ' + ($index + 1) + ' do projeto ' + project.title"
-                                             [src]="photoSRC"
-                                             decoding="sync">
-                                    </div>
-                                }
-                            </div>
-                            @if (project.photoSRCs.length > 1) {
-                                <button [attr.data-bs-target]="'#carousel' + project.modalId"
-                                        class="carousel-control-prev"
-                                        data-bs-slide="prev"
-                                        type="button">
-                                    <span aria-hidden="true" class="carousel-control-prev-icon"></span>
-                                    <span class="visually-hidden">Anterior</span>
-                                </button>
-                                <button [attr.data-bs-target]="'#carousel' + project.modalId"
-                                        class="carousel-control-next"
-                                        data-bs-slide="next"
-                                        type="button">
-                                    <span aria-hidden="true" class="carousel-control-next-icon"></span>
-                                    <span class="visually-hidden">Seguinte</span>
-                                </button>
-                            }
-                        </div>
-                    } @else {
-                        <img [src]="project.iconSRC"
-                             alt=""
-                             class="project-media-icon">
-                    }
-                </div>
-                <p [innerText]="project.description"
-                   class="project-text"></p>
-            </div>
+            <ctl-dialog-media [label]="project.title"
+                              [photos]="project.photoSRCs"
+                              [text]="project.description"
+                              [videoUrl]="project.videoURL">
+            </ctl-dialog-media>
         </ng-template>
     </ctl-modal>
 }

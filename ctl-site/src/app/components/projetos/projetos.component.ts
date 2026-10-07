@@ -5,7 +5,7 @@ import { FetchDataService } from "@services/fetch-data.service";
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 import { ModalComponent } from "../modal/modal.component";
 import { CtlSectionMessageBoxComponent } from "@shared/ctl-section-message-box/ctl-section-message-box.component";
-import { SanitizeYouTubeUrlPipe } from "../../pipes/url-sanitizer.pipe";
+import { CtlDialogMediaComponent } from "@shared/ctl-dialog-media/ctl-dialog-media.component";
 import { CtlSkeletonComponent } from "@shared/ctl-skeleton/ctl-skeleton.component";
 
 @Component({
@@ -16,7 +16,7 @@ import { CtlSkeletonComponent } from "@shared/ctl-skeleton/ctl-skeleton.componen
         ModalComponent,
         CtlSectionMessageBoxComponent,
         CtlSkeletonComponent,
-        SanitizeYouTubeUrlPipe
+        CtlDialogMediaComponent
     ],
     templateUrl: './projetos.component.html',
     styleUrl: './projetos.component.scss'

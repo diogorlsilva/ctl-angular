@@ -16,8 +16,10 @@
   border-radius: 24px;
   background: var(--lilac);
 
+  // Same lilac shimmer as the home page, one step darker so it shows on the
+  // card's lilac background.
   ctl-skeleton {
-    background-image: linear-gradient(90deg, white 25%, var(--ctl-blue-25) 50%, white 75%);
+    background-image: linear-gradient(90deg, var(--ctl-blue-25) 25%, rgba(100, 104, 204, 0.22) 50%, var(--ctl-blue-25) 75%);
   }
 }
 
@@ -53,70 +55,4 @@
 .projects-empty {
   grid-column: 1 / -1;
   color: var(--ink-soft);
-}
-
-// DIALOG: photos or video on the left, the full text on the right. The media
-// box keeps a 4:3 frame so the dialog does not resize between slides.
-
-.project-dialog {
-  display: grid;
-  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
-  gap: 1.5rem 2rem;
-  align-items: start;
-}
-
-.project-media {
-  position: sticky;
-  top: 0;
-  aspect-ratio: 4 / 3;
-  border-radius: var(--border-radius);
-  overflow: hidden;
-  background: var(--lilac);
-
-  .carousel,
-  .carousel-inner,
-  .carousel-item {
-    height: 100%;
-  }
-
-  .carousel-item img {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-  }
-
-  .carousel-control-prev-icon,
-  .carousel-control-next-icon {
-    // Dark buttons read on light photos; Bootstrap's default is white on white.
-    filter: invert(1) grayscale(1);
-  }
-}
-
-.project-video {
-  display: block;
-  width: 100%;
-  height: 100%;
-  border: 0;
-}
-
-.project-media-icon {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.project-text {
-  margin: 0;
-  white-space: pre-line;
-}
-
-@media screen and (max-width: 900px) {
-  .project-dialog {
-    grid-template-columns: 1fr;
-  }
-
-  .project-media {
-    position: static;
-  }
 }
