@@ -28,6 +28,12 @@ export class CtlDialogMediaComponent implements AfterViewInit, OnDestroy {
     private instance?: BootstrapCarousel;
     private readonly reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+    // The sheets separate paragraphs with line breaks; each non-empty line
+    // becomes its own paragraph so it gets real spacing, not a bare break.
+    get paragraphs(): string[] {
+        return (this.text ?? '').split('\n').map(line => line.trim()).filter(Boolean);
+    }
+
     get hasMedia(): boolean {
         return !!this.videoUrl || this.photos.length > 0;
     }

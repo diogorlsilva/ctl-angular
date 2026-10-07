@@ -334,10 +334,29 @@ a.chip:focus-visible {
   margin: 0 0 0.5rem;
 }
 
+// Long-form text in a dialog: a comfortable measure, roomier leading and
+// spaced paragraphs instead of bare line breaks. Justified, with hyphenation
+// keeping the word gaps even.
+.dialog-text,
+.dialog-prose {
+  max-width: 62ch;
+  line-height: 1.75;
+  text-align: justify;
+  text-wrap: pretty;
+  hyphens: auto;
+}
+
 .dialog-text {
   margin: 0;
-  max-width: 60ch;
   white-space: pre-line;
+}
+
+.dialog-prose p {
+  margin: 0;
+
+  & + p {
+    margin-top: 1em;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
