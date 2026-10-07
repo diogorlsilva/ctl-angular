@@ -1,7 +1,7 @@
-import { Component, inject } from '@angular/core';
+import { Component, HostBinding, inject } from '@angular/core';
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 import { NavigationEnd, Router, RouterLink, RouterLinkActive } from "@angular/router";
-import { filter, Observable } from "rxjs";
+import { filter, fromEvent, Observable } from "rxjs";
 import { FetchDataService } from "@services/fetch-data.service";
 import { XLSXUrl } from "../../utils/utils.model";
 
@@ -19,6 +19,10 @@ export class NavbarComponent {
     isGoingDown = false;
     // The home page gets the gradient bar; every other page a translucent one.
     isHome = true;
+
+    // Width of the page scrollbar while a Bootstrap modal hides it. Bootstrap
+    // pads the body by the same amount; the fixed bar needs its own offset.
+    @HostBinding('style.--scrollbar-comp') scrollbarComp = '0px';
 
     private scrollY = window.scrollY;
 
@@ -55,6 +59,16 @@ export class NavbarComponent {
                 takeUntilDestroyed()
             )
             .subscribe(event => this.isHome = event.urlAfterRedirects.split(/[?#]/)[0] === '/');
+
+        // show.bs.modal fires before Bootstrap hides the scrollbar, so its
+        // width can still be measured; hidden.bs.modal fires after it is back.
+        fromEvent(document, 'show.bs.modal')
+            .pipe(takeUntilDestroyed())
+            .subscribe(() => this.scrollbarComp = `${window.innerWidth - document.documentElement.clientWidth}px`);
+
+        fromEvent(document, 'hidden.bs.modal')
+            .pipe(takeUntilDestroyed())
+            .subscribe(() => this.scrollbarComp = '0px');
 
         window.addEventListener('scroll', (e) => {
             e.stopPropagation()

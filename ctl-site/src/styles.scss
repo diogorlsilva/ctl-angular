@@ -173,8 +173,10 @@ h1, h2, h3, h4, h5, h6 {
   scrollbar-color: var(--ctl-blue-50) transparent;
 }
 
+// Bootstrap adds padding-right equal to the scrollbar width while a modal is
+// open, which keeps the content still; the navbar compensates on its own
+// (see navbar.component.ts).
 body {
-  padding-right: 0 !important;
   overflow-x: hidden;
 }
 
