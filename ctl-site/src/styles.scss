@@ -48,6 +48,9 @@ $dropdown-min-width: 12rem;
   --border-radius: 15px;
   --tile-radius: 22%;
   --section-gap: clamp(4rem, 8vw, 6.5rem);
+  // Side gutter of the page containers: grows with the viewport so tablet
+  // widths do not run the content up to the edges like a phone does.
+  --gutter: clamp(1.25rem, 5vw, 4rem);
   --soft-shadow: 0 14px 28px -14px rgba(35, 36, 90, 0.55);
   --focus-ring: 3px solid var(--ctl-orange);
 }
@@ -89,7 +92,7 @@ h1, h2, h3, h4, h5, h6 {
 // LAYOUT
 
 .wrap {
-  width: min(1120px, 100% - 2.5rem);
+  width: min(1120px, 100% - 2 * var(--gutter));
   margin-inline: auto;
 }
 
@@ -247,7 +250,7 @@ a.chip:focus-visible {
 // ACTIVITY PAGES: description followed by columns of bullet points.
 
 .section-content-container {
-  width: min(1120px, 100% - 2.5rem);
+  width: min(1120px, 100% - 2 * var(--gutter));
   margin: 3rem auto var(--section-gap);
 }
 

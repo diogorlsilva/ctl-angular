@@ -3,7 +3,7 @@
 :host {
   display: block;
   margin-top: 2.5rem;
-  --gallery-gutter: max(1.25rem, calc((100% - 1120px) / 2));
+  --gallery-gutter: max(var(--gutter), calc((100% - 1120px) / 2));
 }
 
 .gallery-row {

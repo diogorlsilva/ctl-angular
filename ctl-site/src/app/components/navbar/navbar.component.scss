@@ -1,7 +1,6 @@
 .navbar-container {
   display: flex;
   align-items: center;
-  gap: 1rem;
   height: var(--nav-height);
   // Extra left padding keeps the logo text clear of the curved pill end.
   padding: 0 1rem 0 1.5rem;
@@ -192,6 +191,13 @@ nav {
 }
 
 @media screen and (max-width: 1024px) {
+  // The panel below is absolutely positioned, so the <nav> is an empty flex
+  // item here. Its auto margin would otherwise share the free space with the
+  // toggle's and leave the hamburger in the middle of the bar.
+  nav {
+    margin-left: 0;
+  }
+
   .nav {
     display: none;
     position: absolute;
