@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
-import { RouterLink, RouterLinkActive } from "@angular/router";
-import { Observable } from "rxjs";
+import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
+import { NavigationEnd, Router, RouterLink, RouterLinkActive } from "@angular/router";
+import { filter, Observable } from "rxjs";
 import { FetchDataService } from "@services/fetch-data.service";
 import { XLSXUrl } from "../../utils/utils.model";
 
@@ -16,9 +17,12 @@ type NavGroup = 'respostasSociais' | 'servicos' | 'projetos';
 export class NavbarComponent {
     isToggled = false;
     isGoingDown = false;
+    // The home page gets the gradient bar; every other page a translucent one.
+    isHome = true;
 
     private scrollY = window.scrollY;
 
+    private readonly router = inject(Router);
     private readonly fetchDataService = inject(FetchDataService);
     private readonly prefetched = new Set<NavGroup>();
 
@@ -44,6 +48,13 @@ export class NavbarComponent {
     constructor() {
 
         this.scrollY = window.scrollY;
+
+        this.router.events
+            .pipe(
+                filter((event): event is NavigationEnd => event instanceof NavigationEnd),
+                takeUntilDestroyed()
+            )
+            .subscribe(event => this.isHome = event.urlAfterRedirects.split(/[?#]/)[0] === '/');
 
         window.addEventListener('scroll', (e) => {
             e.stopPropagation()

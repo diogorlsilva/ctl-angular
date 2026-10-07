@@ -13,7 +13,7 @@
   grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
   gap: clamp(2rem, 6vw, 5rem);
   align-items: center;
-  padding-top: calc(var(--nav-height) + clamp(2rem, 6vw, 4.5rem));
+  padding-top: calc(var(--nav-height) + var(--nav-gap) + clamp(2rem, 6vw, 4.5rem));
   padding-bottom: var(--section-gap);
 }
 
@@ -24,16 +24,9 @@
   line-height: 1.02;
   letter-spacing: -0.015em;
   color: var(--ctl-blue);
-  margin: 0 0 1.25rem;
+  // Generous gap: nothing sits between the title and the buttons.
+  margin: 0 0 clamp(4.5rem, 8vw, 7rem);
   text-wrap: balance;
-}
-
-.hero-lede {
-  font-size: clamp(1.1rem, 1.6vw, 1.3rem);
-  line-height: 1.5;
-  color: var(--ink-soft);
-  max-width: 40ch;
-  margin: 0 0 2rem;
 }
 
 .hero-actions {
@@ -611,6 +604,8 @@
   .hero {
     grid-template-columns: 1fr;
     gap: 3rem;
+    // Stacked layout: the title sits right under the navbar, so give it room to breathe.
+    padding-top: calc(var(--nav-height) + var(--nav-gap) + 4rem);
   }
 
   .tiles {

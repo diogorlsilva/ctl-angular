@@ -3,29 +3,39 @@
   align-items: center;
   gap: 1rem;
   height: var(--nav-height);
-  padding: 0 1.25rem;
+  // Extra left padding keeps the logo text clear of the curved pill end.
+  padding: 0 1rem 0 1.5rem;
   z-index: 2;
+  // Floats inside the viewport with the same gap on every side.
   position: fixed;
-  top: 0;
-  width: 100%;
+  top: var(--nav-gap);
+  left: var(--nav-gap);
+  right: var(--nav-gap);
   transition: top 0.3s ease-in-out;
   font-family: var(--font-display);
-  border-radius: 0 0 var(--border-radius) var(--border-radius);
-  // Light lilac, opaque enough that the links stay readable over the page photos.
-  background: rgba(232, 232, 247, 0.88);
-  box-shadow: 0 8px 24px -16px rgba(35, 36, 90, 0.4);
+  border-radius: 999px;
+  // Translucent lilac over the section photos; the .glass blur keeps the links
+  // readable through it.
+  background: rgba(232, 232, 247, 0.5);
+  box-shadow: var(--soft-shadow);
 }
 
+// Home sits on a white page, so the bar gets a subtle ramp around the
+// secondary-button lilac: lighter at the logo end, deeper under the pills.
+.navbar-home {
+  background: linear-gradient(100deg, #ededf9 0%, var(--lilac) 45%, var(--ctl-blue-25) 100%);
+}
+
+// Far enough up that the shadow leaves the viewport too.
 .navbar-hide-on-scroll-down {
-  top: calc(0px - var(--nav-height));
+  top: calc(-1 * (var(--nav-height) + var(--nav-gap) + 2rem));
 }
 
-// Sits low on the bar, as on the original site (text in the bottom half).
 .logo-container {
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   height: 100%;
-  padding: 0 0.5rem 6px;
+  padding-top: 4px;
   border-radius: 8px;
   text-decoration: none;
   font-family: "starlinerbtnregular", "Century Gothic", sans-serif;
@@ -104,8 +114,9 @@
   border: 0;
   // Item pills are ~21px radius; adding the 8px padding keeps the corners concentric.
   border-radius: 29px;
-  background: white;
-  box-shadow: var(--soft-shadow), 0 0 0 1px var(--lilac);
+  // Light purple panel; the lilac hover/selected pills still read against it.
+  background: #f3f3fb;
+  box-shadow: var(--soft-shadow), 0 0 0 1px var(--ctl-blue-25);
   font-family: var(--font-body);
   min-width: 12rem;
 }
@@ -145,15 +156,15 @@
     display: none;
     position: absolute;
     top: calc(var(--nav-height) + 0.5rem);
-    right: 1rem;
+    right: 0;
     flex-direction: column;
     align-items: stretch;
     gap: 0.25rem;
     min-width: 15rem;
     padding: 0.75rem;
     border-radius: 32px;
-    background: white;
-    box-shadow: var(--soft-shadow), 0 0 0 1px var(--lilac);
+    background: #f3f3fb;
+    box-shadow: var(--soft-shadow), 0 0 0 1px var(--ctl-blue-25);
   }
 
   .show-nav {
