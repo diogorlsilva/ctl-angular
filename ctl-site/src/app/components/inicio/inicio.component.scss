@@ -302,37 +302,10 @@
   gap: 2rem 1.5rem;
 }
 
-// Each logo shows its partner's name in a small bubble on hover or focus.
+// Each logo shows its partner's name in a tooltip (data-tooltip, styles.scss).
 .partner {
-  position: relative;
   display: block;
   border-radius: 8px;
-
-  // Rendered only while shown: a hidden-but-present bubble would still widen
-  // the page on phones and make the browser zoom out.
-  &::after {
-    content: attr(data-name);
-    display: none;
-    position: absolute;
-    left: 50%;
-    bottom: calc(100% + 10px);
-    transform: translateX(-50%);
-    padding: 0.4rem 0.8rem;
-    border-radius: 10px;
-    background: var(--ink);
-    color: white;
-    font-size: 0.85rem;
-    font-weight: 700;
-    line-height: 1.3;
-    white-space: nowrap;
-    pointer-events: none;
-    z-index: 1;
-  }
-
-  &:hover::after,
-  &:focus-visible::after {
-    display: block;
-  }
 
   &:focus-visible {
     outline: var(--focus-ring);

@@ -167,7 +167,7 @@
         <div [attr.aria-busy]="partnersLoading()"
              class="partners-row">
             @for (partner of partners(); track $index) {
-                <span [attr.data-name]="partner.alt"
+                <span [attr.data-tooltip]="partner.alt"
                       class="partner"
                       tabindex="0">
                     <img [alt]="partner.alt"

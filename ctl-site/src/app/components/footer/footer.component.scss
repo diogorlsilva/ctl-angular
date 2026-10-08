@@ -97,16 +97,26 @@
 
 .footer-credit {
   display: inline-flex;
+  // Stays at the right edge even when it wraps under the copyright on phones.
+  margin-left: auto;
   font-size: 1rem;
   color: rgba(255, 255, 255, 0.45);
   transition: color 0.2s;
 
-  &:hover {
+  // The icon sits at the right edge, so the tooltip lines up with its right
+  // side instead of centring and running off the screen on phones.
+  &::after {
+    left: auto;
+    right: 0;
+    transform: none;
+  }
+
+  &:hover,
+  &:focus-visible {
     color: white;
   }
 
   &:focus-visible {
-    color: white;
     outline: 3px solid white;
     outline-offset: 4px;
     border-radius: 4px;
