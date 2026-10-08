@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component } from '@angular/core';
 import { NavbarComponent } from "./components/navbar/navbar.component";
 import { FooterComponent } from "./components/footer/footer.component";
 import { RouterOutlet } from "@angular/router";
@@ -7,7 +7,6 @@ import { RouterOutlet } from "@angular/router";
     selector: 'ctl-root',
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss'],
-    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [NavbarComponent, FooterComponent, RouterOutlet]
 })
 export class AppComponent {

@@ -1,4 +1,4 @@
-import { Component, ElementRef, inject, Input, TemplateRef, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ElementRef, inject, Input, signal, TemplateRef } from '@angular/core';
 import { NgTemplateOutlet } from "@angular/common";
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 import { fromEvent } from "rxjs";
@@ -10,7 +10,6 @@ import { fromEvent } from "rxjs";
     selector: 'ctl-modal',
     imports: [NgTemplateOutlet],
     templateUrl: './modal.component.html',
-    changeDetection: ChangeDetectionStrategy.Eager,
     styleUrl: './modal.component.scss'
 })
 export class ModalComponent {
@@ -20,7 +19,7 @@ export class ModalComponent {
     @Input() title = '';
     @Input() isScrollable = true;
 
-    isOpen = false;
+    readonly isOpen = signal(false);
 
     private readonly host = inject<ElementRef<HTMLElement>>(ElementRef);
 
@@ -30,10 +29,10 @@ export class ModalComponent {
         // fade-out, so the content stays visible through the exit animation.
         fromEvent(this.host.nativeElement, 'show.bs.modal')
             .pipe(takeUntilDestroyed())
-            .subscribe(() => this.isOpen = true);
+            .subscribe(() => this.isOpen.set(true));
 
         fromEvent(this.host.nativeElement, 'hidden.bs.modal')
             .pipe(takeUntilDestroyed())
-            .subscribe(() => this.isOpen = false);
+            .subscribe(() => this.isOpen.set(false));
     }
 }

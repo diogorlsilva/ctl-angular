@@ -1,4 +1,4 @@
-import { Component, DestroyRef, inject, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
 import { CtlGalleryComponent } from "@shared/ctl-gallery/ctl-gallery.component";
 import { CtlSectionBackgroundComponent } from "@shared/ctl-section-background/ctl-section-background.component";
 import { CtlSectionContentComponent } from "@shared/ctl-section-content/ctl-section-content.component";
@@ -16,12 +16,11 @@ import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
         CtlSectionContentComponent,
         CtlSectionMessageBoxComponent
     ],
-    changeDetection: ChangeDetectionStrategy.Eager,
     templateUrl: './musica.component.html'
 })
 export class MusicaComponent implements OnInit {
-    section?: SectionItem;
-    loading = true;
+    readonly section = signal<SectionItem | undefined>(undefined);
+    readonly loading = signal(true);
 
     private readonly fetchDataService = inject(FetchDataService);
     private readonly destroyRef = inject(DestroyRef);
@@ -30,8 +29,8 @@ export class MusicaComponent implements OnInit {
         this.fetchDataService.getSectionDataByUrl(XLSXUrl.MUSICA)
             .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe({
-                next: (section) => this.section = section,
-                complete: () => this.loading = false
+                next: (section) => this.section.set(section),
+                complete: () => this.loading.set(false)
             });
     }
 }

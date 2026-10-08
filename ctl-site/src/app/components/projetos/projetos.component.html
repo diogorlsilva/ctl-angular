@@ -4,9 +4,9 @@
                          [title]="'Projetos'">
 </ctl-section-message-box>
 
-<div [attr.aria-busy]="loading"
+<div [attr.aria-busy]="loading()"
      class="projects wrap">
-    @for (project of projectItems; track project.modalId) {
+    @for (project of projectItems(); track project.modalId) {
         <article class="project-card">
             <img [src]="project.iconSRC"
                  alt=""
@@ -27,7 +27,7 @@
             </button>
         </article>
     } @empty {
-        @if (loading) {
+        @if (loading()) {
             <span class="visually-hidden">A carregar projetos</span>
             @for (_ of skeletons; track $index) {
                 <div class="project-card">
@@ -45,7 +45,7 @@
     }
 </div>
 
-@for (project of projectItems; track project.modalId) {
+@for (project of projectItems(); track project.modalId) {
     <ctl-modal [contentHtml]="projectContent"
                [modalId]="project.modalId"
                [modalSize]="'xl'"

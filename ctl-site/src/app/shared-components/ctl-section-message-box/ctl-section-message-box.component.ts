@@ -1,4 +1,4 @@
-import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { CtlSkeletonComponent } from "@shared/ctl-skeleton/ctl-skeleton.component";
 
 // Page title block for the activity pages: the service's sticker tile
@@ -9,7 +9,6 @@ import { CtlSkeletonComponent } from "@shared/ctl-skeleton/ctl-skeleton.componen
     selector: 'ctl-section-message-box',
     imports: [CtlSkeletonComponent],
     templateUrl: './ctl-section-message-box.component.html',
-    changeDetection: ChangeDetectionStrategy.Eager,
     styleUrl: './ctl-section-message-box.component.scss'
 })
 export class CtlSectionMessageBoxComponent {

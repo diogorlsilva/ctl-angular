@@ -1,4 +1,4 @@
-import { Component, DestroyRef, inject, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
 import { CtlSectionBackgroundComponent } from "@shared/ctl-section-background/ctl-section-background.component";
 import { ProjectItem } from "@models/data.model";
 import { FetchDataService } from "@services/fetch-data.service";
@@ -18,13 +18,12 @@ import { CtlSkeletonComponent } from "@shared/ctl-skeleton/ctl-skeleton.componen
         CtlDialogMediaComponent
     ],
     templateUrl: './projetos.component.html',
-    changeDetection: ChangeDetectionStrategy.Eager,
     styleUrl: './projetos.component.scss'
 })
 export class ProjetosComponent implements OnInit {
     readonly messageBoxText = 'Quando o destino nos inspira, cada passo da jornada ganha sentido, sobretudo quando caminhamos juntos.';
-    projectItems: ProjectItem[] = [];
-    loading = true;
+    readonly projectItems = signal<ProjectItem[]>([]);
+    readonly loading = signal(true);
     readonly skeletons = Array(4);
 
     private readonly fetchDataService = inject(FetchDataService);
@@ -34,8 +33,8 @@ export class ProjetosComponent implements OnInit {
         this.fetchDataService.getProjectsData()
             .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe({
-                next: (projectItems) => this.projectItems = projectItems,
-                complete: () => this.loading = false
+                next: (projectItems) => this.projectItems.set(projectItems),
+                complete: () => this.loading.set(false)
             });
     }
 }

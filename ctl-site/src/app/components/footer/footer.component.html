@@ -103,7 +103,7 @@
            [modalId]="'organisation'"
            [title]="'Órgãos sociais'">
     <ng-template #organisationContent>
-        @if (organisation) {
+        @if (organisation(); as organisation) {
             <div class="dialog-sections">
                 @for (group of [
                     { title: 'Assembleia Geral', members: organisation.generalAssembly },
@@ -133,9 +133,9 @@
            [modalSize]="'lg'"
            [title]="'Relatórios de contas'">
     <ng-template #reportsContent>
-        @if (reports.length) {
+        @if (reports().length) {
             <div class="reports">
-                @for (report of reports; track report.year) {
+                @for (report of reports(); track report.year) {
                     <div class="report-row">
                         <span [innerText]="report.year"
                               class="report-year"></span>

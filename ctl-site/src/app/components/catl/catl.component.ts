@@ -1,4 +1,4 @@
-import { Component, DestroyRef, inject, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
 import { CtlGalleryComponent } from "@shared/ctl-gallery/ctl-gallery.component";
 import { SectionItem } from "@models/data.model";
 import { FetchDataService } from "@services/fetch-data.service";
@@ -11,12 +11,11 @@ import { CtlSectionMessageBoxComponent } from "@shared/ctl-section-message-box/c
 @Component({
     selector: 'ctl-catl',
     imports: [CtlGalleryComponent, CtlSectionBackgroundComponent, CtlSectionContentComponent, CtlSectionMessageBoxComponent],
-    changeDetection: ChangeDetectionStrategy.Eager,
     templateUrl: './catl.component.html'
 })
 export class CatlComponent implements OnInit {
-    section?: SectionItem;
-    loading = true;
+    readonly section = signal<SectionItem | undefined>(undefined);
+    readonly loading = signal(true);
 
     private readonly fetchDataService = inject(FetchDataService);
     private readonly destroyRef = inject(DestroyRef);
@@ -25,8 +24,8 @@ export class CatlComponent implements OnInit {
         this.fetchDataService.getSectionDataByUrl(XLSXUrl.CATL)
             .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe({
-                next: (section) => this.section = section,
-                complete: () => this.loading = false
+                next: (section) => this.section.set(section),
+                complete: () => this.loading.set(false)
             });
     }
 }

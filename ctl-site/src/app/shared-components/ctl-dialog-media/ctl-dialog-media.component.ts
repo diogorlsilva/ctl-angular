@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, HostListener, Input, OnDestroy, ViewChild, ChangeDetectionStrategy } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, HostListener, Input, OnDestroy, ViewChild } from '@angular/core';
 import { SanitizeYouTubeUrlPipe } from "../../pipes/url-sanitizer.pipe";
 import { BootstrapCarousel } from "../../utils/bootstrap.model";
 
@@ -12,7 +12,6 @@ let nextId = 0;
     selector: 'ctl-dialog-media',
     imports: [SanitizeYouTubeUrlPipe],
     templateUrl: './ctl-dialog-media.component.html',
-    changeDetection: ChangeDetectionStrategy.Eager,
     styleUrl: './ctl-dialog-media.component.scss'
 })
 export class CtlDialogMediaComponent implements AfterViewInit, OnDestroy {

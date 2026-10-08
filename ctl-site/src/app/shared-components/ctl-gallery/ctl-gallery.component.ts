@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, ElementRef, inject, Input, OnDestroy, ViewChild, ChangeDetectionStrategy } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, inject, Input, OnDestroy, ViewChild } from '@angular/core';
 import { CtlSkeletonComponent } from "@shared/ctl-skeleton/ctl-skeleton.component";
 import { BootstrapCarousel } from "../../utils/bootstrap.model";
 
@@ -11,7 +11,6 @@ let nextId = 0;
     selector: 'ctl-gallery',
     imports: [CtlSkeletonComponent],
     templateUrl: './ctl-gallery.component.html',
-    changeDetection: ChangeDetectionStrategy.Eager,
     styleUrl: './ctl-gallery.component.scss'
 })
 export class CtlGalleryComponent implements OnDestroy {

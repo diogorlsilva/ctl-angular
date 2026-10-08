@@ -1,4 +1,4 @@
-import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 // Full-width photo at the top of an activity page. Pass the 1920px WebP from
 // src/assets/images; the 960px variant generated next to it (see
@@ -7,7 +7,6 @@ import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
     selector: 'ctl-section-background',
     standalone: true,
     templateUrl: './ctl-section-background.component.html',
-    changeDetection: ChangeDetectionStrategy.Eager,
     styleUrl: './ctl-section-background.component.scss'
 })
 export class CtlSectionBackgroundComponent {
