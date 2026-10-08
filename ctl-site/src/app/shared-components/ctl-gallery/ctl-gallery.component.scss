@@ -3,7 +3,10 @@
 :host {
   display: block;
   margin-top: 2.25rem;
-  --gallery-gutter: max(var(--gutter), calc((100% - 1120px) / 2));
+  // A container, so the gutter is measured in cqi: the scrollbar track's
+  // margin can't resolve a percentage.
+  container-type: inline-size;
+  --gallery-gutter: max(var(--gutter), (100cqi - 1120px) / 2);
 }
 
 .gallery-row {
@@ -14,8 +17,36 @@
   scroll-padding-inline: var(--gallery-gutter);
   // The top padding leaves room for a hovered photo to grow without clipping.
   padding: 0.5rem var(--gallery-gutter) 1rem;
-  scrollbar-width: thin;
-  scrollbar-color: var(--ctl-blue-25) transparent;
+
+  // The track is inset to the content column so it doesn't span the whole
+  // screen. Chrome ignores ::-webkit-scrollbar once scrollbar-width or
+  // scrollbar-color is set (the page's colour is inherited, hence the reset),
+  // so the standard properties are only the fallback for Firefox.
+  scrollbar-color: auto;
+
+  @supports not selector(::-webkit-scrollbar) {
+    scrollbar-width: thin;
+    scrollbar-color: var(--ctl-blue-25) transparent;
+  }
+
+  &::-webkit-scrollbar {
+    height: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    margin-inline: var(--gallery-gutter);
+    border-radius: 4px;
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-button {
+    display: none;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background: var(--ctl-blue-25);
+  }
 
   img,
   ctl-skeleton {
