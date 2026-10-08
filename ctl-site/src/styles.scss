@@ -286,6 +286,11 @@ a.chip:focus-visible {
   margin: 3rem auto var(--section-gap);
 }
 
+// With no content below it, the gallery keeps the same space above the footer.
+ctl-gallery:not(:has(+ ctl-section-content .section-content-container)) {
+  margin-bottom: var(--section-gap);
+}
+
 .section-description {
   font-size: 1.15rem;
   line-height: 1.65;
