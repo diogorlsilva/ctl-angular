@@ -2,7 +2,7 @@
 // scroll-padding keeps the first photo from snapping under that padding.
 :host {
   display: block;
-  margin-top: 2.5rem;
+  margin-top: 2.25rem;
   --gallery-gutter: max(var(--gutter), calc((100% - 1120px) / 2));
 }
 
@@ -12,7 +12,8 @@
   overflow-x: auto;
   scroll-snap-type: x mandatory;
   scroll-padding-inline: var(--gallery-gutter);
-  padding: 0.25rem var(--gallery-gutter) 1rem;
+  // The top padding leaves room for a hovered photo to grow without clipping.
+  padding: 0.5rem var(--gallery-gutter) 1rem;
   scrollbar-width: thin;
   scrollbar-color: var(--ctl-blue-25) transparent;
 
@@ -21,14 +22,52 @@
     flex: 0 0 auto;
     height: 220px;
     border-radius: var(--border-radius);
+  }
+
+  ctl-skeleton {
     scroll-snap-align: start;
   }
 
   img {
+    display: block;
     width: auto;
     max-width: 85vw;
     object-fit: cover;
     background: var(--lilac);
+  }
+}
+
+// Each photo is a button that opens the full-screen viewer.
+.gallery-photo {
+  flex: 0 0 auto;
+  padding: 0;
+  border: 0;
+  border-radius: var(--border-radius);
+  background: none;
+  scroll-snap-align: start;
+
+  // .focus-returned: focus came back here from the viewer, so no ring until
+  // the visitor moves on (see CtlGalleryComponent.onViewerClose).
+  &:focus-visible:not(.focus-returned) {
+    outline: var(--focus-ring);
+    outline-offset: 2px;
+  }
+
+  &.focus-returned {
+    outline: none;
+  }
+}
+
+// The photo under the pointer grows a little; it fits inside the 12px gap.
+@media (hover: hover) and (pointer: fine) {
+  .gallery-photo {
+    transition: scale 0.2s ease;
+
+    &:hover {
+      position: relative;
+      z-index: 1;
+      scale: 1.05;
+    }
   }
 }
 
@@ -38,5 +77,129 @@
     ctl-skeleton {
       height: 180px;
     }
+  }
+}
+
+// FULL-SCREEN VIEWER: one photo at a time on a dimmed backdrop. The
+// photo keeps its natural shape, so the rounded corners sit on its own edges.
+
+.photo-viewer {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  overflow: hidden;
+
+  // Same as the Bootstrap dialogs' backdrop ($modal-backdrop-opacity).
+  &::backdrop {
+    background: rgba(0, 0, 0, 0.55);
+  }
+
+  &[open],
+  &[open]::backdrop {
+    animation: viewer-fade-in 0.2s ease;
+  }
+
+  .carousel,
+  .carousel-inner,
+  .carousel-item {
+    height: 100%;
+  }
+}
+
+@keyframes viewer-fade-in {
+  from {
+    opacity: 0;
+  }
+}
+
+// Centred in its slide by auto margins; the bottom leaves room for the dots.
+.photo-viewer-img {
+  position: absolute;
+  inset: 4rem 1rem 3.5rem;
+  margin: auto;
+  width: auto;
+  height: auto;
+  max-width: calc(100% - 2rem);
+  max-height: calc(100% - 7.5rem);
+  border-radius: var(--border-radius);
+}
+
+// Wide screens keep the arrows beside the photo rather than over it.
+@media screen and (min-width: 768px) {
+  .photo-viewer-img {
+    inset-inline: 5.5rem;
+    max-width: calc(100% - 11rem);
+  }
+}
+
+.photo-viewer-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  z-index: 3;
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.9);
+  background-size: 0.9rem;
+  box-shadow: var(--soft-shadow);
+  opacity: 1;
+
+  &:hover {
+    background-color: white;
+    opacity: 1;
+  }
+
+  &:focus {
+    box-shadow: var(--soft-shadow);
+  }
+
+  &:focus-visible {
+    outline: var(--focus-ring);
+    outline-offset: 2px;
+  }
+}
+
+// White dots on the dark backdrop.
+.photo-viewer .carousel-indicators {
+  margin-bottom: 1.25rem;
+
+  [data-bs-target] {
+    width: 8px;
+    height: 8px;
+    margin: 0 4px;
+    border: 0;
+    border-radius: 50%;
+    background-color: white;
+    opacity: 0.4;
+    transition: opacity 0.15s ease;
+
+    &.active {
+      opacity: 1;
+    }
+
+    &:focus-visible {
+      outline: var(--focus-ring);
+      outline-offset: 2px;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gallery-photo {
+    transition: none;
+  }
+
+  .photo-viewer[open],
+  .photo-viewer[open]::backdrop {
+    animation: none;
   }
 }

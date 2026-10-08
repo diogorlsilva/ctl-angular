@@ -9,10 +9,74 @@
 } @else if (images.length) {
     <div class="gallery-row">
         @for (src of images; track src) {
-            <img [src]="src"
-                 alt=""
-                 decoding="async"
-                 loading="lazy">
+            <button (click)="openViewer($index)"
+                    [attr.aria-label]="'Ver fotografia ' + ($index + 1) + ' em ecrã inteiro'"
+                    class="gallery-photo"
+                    type="button">
+                <img [src]="src"
+                     alt=""
+                     decoding="async"
+                     loading="lazy">
+            </button>
         }
     </div>
+
+    <dialog #viewer
+            (click)="onViewerClick($event)"
+            (close)="onViewerClose()"
+            (keydown)="onViewerKeydown($event)"
+            aria-label="Fotografias"
+            class="photo-viewer">
+        <button (click)="closeViewer()"
+                aria-label="Fechar"
+                autofocus
+                class="btn-close photo-viewer-close"
+                type="button"></button>
+        @if (viewerIndex !== null) {
+            <div #viewerCarousel
+                 [id]="viewerId"
+                 aria-roledescription="carrossel"
+                 class="carousel slide">
+                <div class="carousel-inner">
+                    @for (src of images; track src) {
+                        <div [attr.aria-label]="($index + 1) + ' de ' + images.length"
+                             [class.active]="$index === viewerIndex"
+                             aria-roledescription="diapositivo"
+                             class="carousel-item">
+                            <img [alt]="'Fotografia ' + ($index + 1) + ' de ' + images.length"
+                                 [src]="src"
+                                 class="photo-viewer-img"
+                                 decoding="async">
+                        </div>
+                    }
+                </div>
+                @if (images.length > 1) {
+                    <div class="carousel-indicators">
+                        @for (src of images; track src) {
+                            <button [attr.aria-current]="$index === viewerIndex ? 'true' : null"
+                                    [attr.aria-label]="'Fotografia ' + ($index + 1)"
+                                    [attr.data-bs-slide-to]="$index"
+                                    [attr.data-bs-target]="'#' + viewerId"
+                                    [class.active]="$index === viewerIndex"
+                                    type="button"></button>
+                        }
+                    </div>
+                    <button [attr.data-bs-target]="'#' + viewerId"
+                            class="carousel-control-prev"
+                            data-bs-slide="prev"
+                            type="button">
+                        <span aria-hidden="true" class="carousel-control-prev-icon"></span>
+                        <span class="visually-hidden">Anterior</span>
+                    </button>
+                    <button [attr.data-bs-target]="'#' + viewerId"
+                            class="carousel-control-next"
+                            data-bs-slide="next"
+                            type="button">
+                        <span aria-hidden="true" class="carousel-control-next-icon"></span>
+                        <span class="visually-hidden">Seguinte</span>
+                    </button>
+                }
+            </div>
+        }
+    </dialog>
 }

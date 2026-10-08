@@ -3,7 +3,7 @@
 // Import this file for its side effect wherever window.bootstrap is used.
 
 export type BootstrapCarouselConfig = {
-    interval?: number;
+    interval?: number | false;
     ride?: 'carousel' | boolean;
     touch?: boolean;
     pause?: 'hover' | false;
@@ -13,6 +13,8 @@ export type BootstrapCarouselConfig = {
 export type BootstrapCarousel = {
     cycle(): void;
     pause(): void;
+    prev(): void;
+    next(): void;
     dispose(): void;
 };
 
