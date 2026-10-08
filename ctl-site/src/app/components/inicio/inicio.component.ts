@@ -134,12 +134,6 @@ export class InicioComponent implements OnInit {
     private readonly destroyRef = inject(DestroyRef);
 
     ngOnInit(): void {
-        // Routes live after the hash; a path before it means the host served
-        // index.html for an old-style link, so go back to the root.
-        if (location.pathname !== "/") {
-            location.pathname = "";
-        }
-
         // Each block renders as soon as its own sheet arrives. `complete` also
         // fires when the request fails, so no skeleton sticks around.
         this.fetchDataService.getNewsData()

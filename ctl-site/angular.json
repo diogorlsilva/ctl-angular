@@ -30,6 +30,7 @@
               "src/assets",
               "src/index.css",
               "src/manifest.webmanifest",
+              "src/.htaccess",
               {
                 "glob": "bootstrap.bundle.min.js",
                 "input": "node_modules/bootstrap/dist/js",
