@@ -256,7 +256,8 @@
 
 .numbers {
   background: var(--lilac);
-  padding: clamp(2.5rem, 5vw, 4rem) 0;
+  padding: clamp(2.5rem, 5vw, 4rem) clamp(1.5rem, 4vw, 3rem);
+  border-radius: var(--border-radius);
   margin-bottom: var(--section-gap);
 }
 

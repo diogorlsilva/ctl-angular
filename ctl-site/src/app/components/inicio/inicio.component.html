@@ -153,8 +153,8 @@
 @if (numbersItems().length) {
     <section #numbersSection
              [class.counted]="numbersCounted()"
-             class="numbers">
-        <div class="numbers-grid wrap">
+             class="numbers wrap">
+        <div class="numbers-grid">
             @for (number of numbers(); track $index) {
                 <div class="number">
                     @if (number.count !== null) {
