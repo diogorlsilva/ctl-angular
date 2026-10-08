@@ -83,7 +83,7 @@ export class InicioComponent implements OnInit {
             {
                 name: 'Refeições',
                 route: 'refeicoes',
-                color: '#4B2177',
+                color: '#F1D045',
                 tilt: '-2deg',
                 order: 6,
                 iconSrc: 'assets/images/refeicoes/refeicoes_logo.webp'
