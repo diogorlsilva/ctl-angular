@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostBinding, inject, QueryList, ViewChildren } from '@angular/core';
+import { Component, ElementRef, inject, QueryList, signal, ViewChildren } from '@angular/core';
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 import { NavigationEnd, NavigationStart, Router, RouterLink, RouterLinkActive } from "@angular/router";
 import { filter, fromEvent, Observable } from "rxjs";
@@ -22,22 +22,22 @@ const ROUTE_GROUPS: Record<string, NavGroup> = {
 
 @Component({
     selector: 'ctl-navbar',
-    standalone: true,
     imports: [RouterLink, RouterLinkActive],
     templateUrl: './navbar.component.html',
-    styleUrl: './navbar.component.scss'
+    styleUrl: './navbar.component.scss',
+    host: { '[style.--scrollbar-comp]': 'scrollbarComp()' }
 })
 export class NavbarComponent {
-    isToggled = false;
+    readonly isToggled = signal(false);
     // True while the hamburger panel fades out after a close.
-    isClosing = false;
-    isGoingDown = false;
+    readonly isClosing = signal(false);
+    readonly isGoingDown = signal(false);
     // The home page gets the gradient bar; every other page a translucent one.
-    isHome = true;
+    readonly isHome = signal(true);
 
     // Width of the page scrollbar while a Bootstrap modal hides it. Bootstrap
     // pads the body by the same amount; the fixed bar needs its own offset.
-    @HostBinding('style.--scrollbar-comp') scrollbarComp = '0px';
+    readonly scrollbarComp = signal('0px');
 
     @ViewChildren('groupToggle') private groupToggles!: QueryList<ElementRef<HTMLElement>>;
 
@@ -78,7 +78,7 @@ export class NavbarComponent {
             )
             .subscribe(event => {
                 this.currentPath = event.urlAfterRedirects.split(/[?#]/)[0].replace(/^\//, '').split('/')[0];
-                this.isHome = this.currentPath === '';
+                this.isHome.set(this.currentPath === '');
             });
 
         // Any navigation (logo, browser back, in-page links) closes the menu.
@@ -93,7 +93,7 @@ export class NavbarComponent {
         // mouse and touch alike, and fires even where iOS skips click.
         fromEvent<PointerEvent>(document, 'pointerdown')
             .pipe(
-                filter(() => this.isToggled),
+                filter(() => this.isToggled()),
                 filter(event => !this.host.nativeElement.contains(event.target as Node)),
                 takeUntilDestroyed()
             )
@@ -103,11 +103,11 @@ export class NavbarComponent {
         // width can still be measured; hidden.bs.modal fires after it is back.
         fromEvent(document, 'show.bs.modal')
             .pipe(takeUntilDestroyed())
-            .subscribe(() => this.scrollbarComp = `${window.innerWidth - document.documentElement.clientWidth}px`);
+            .subscribe(() => this.scrollbarComp.set(`${window.innerWidth - document.documentElement.clientWidth}px`));
 
         fromEvent(document, 'hidden.bs.modal')
             .pipe(takeUntilDestroyed())
-            .subscribe(() => this.scrollbarComp = '0px');
+            .subscribe(() => this.scrollbarComp.set('0px'));
 
         // The bar slides away while scrolling down and returns on the way up.
         // Scrolling also dismisses every open menu, desktop dropdowns included.
@@ -124,8 +124,8 @@ export class NavbarComponent {
                 const goingDown = window.scrollY > this.scrollY;
 
                 // Ignore the small jitter near the top so the bar does not flicker.
-                if (goingDown !== this.isGoingDown && (window.scrollY > 80 || !goingDown)) {
-                    this.isGoingDown = goingDown;
+                if (goingDown !== this.isGoingDown() && (window.scrollY > 80 || !goingDown)) {
+                    this.isGoingDown.set(goingDown);
                 }
 
                 this.scrollY = window.scrollY;
@@ -135,12 +135,12 @@ export class NavbarComponent {
     // Opens the hamburger panel with the current page's group already
     // expanded, or closes it.
     toggleMenu(): void {
-        if (this.isToggled) {
+        if (this.isToggled()) {
             this.closeMenu();
             return;
         }
 
-        this.isToggled = true;
+        this.isToggled.set(true);
         const group = ROUTE_GROUPS[this.currentPath];
         // Bootstrap closes every open dropdown when a click reaches the
         // document, so the group is expanded only after this click has bubbled.
@@ -157,14 +157,14 @@ export class NavbarComponent {
     // Closes the panel and collapses every group, so nothing stays open
     // behind the hidden panel or in the desktop dropdowns.
     closeMenu(): void {
-        if (this.isToggled) {
+        if (this.isToggled()) {
             // Matches the 0.15s fade-out in the stylesheet.
-            this.isClosing = true;
+            this.isClosing.set(true);
             clearTimeout(this.closingTimer);
-            this.closingTimer = setTimeout(() => this.isClosing = false, 150);
+            this.closingTimer = setTimeout(() => this.isClosing.set(false), 150);
         }
 
-        this.isToggled = false;
+        this.isToggled.set(false);
         this.groupToggles?.forEach(toggle => window.bootstrap?.Dropdown.getOrCreateInstance(toggle.nativeElement).hide());
     }
 

@@ -10,7 +10,6 @@ let nextId = 0;
 // cleared when this component is destroyed on close.
 @Component({
     selector: 'ctl-dialog-media',
-    standalone: true,
     imports: [SanitizeYouTubeUrlPipe],
     templateUrl: './ctl-dialog-media.component.html',
     styleUrl: './ctl-dialog-media.component.scss'

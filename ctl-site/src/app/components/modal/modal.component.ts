@@ -1,4 +1,4 @@
-import { Component, ElementRef, inject, Input, TemplateRef } from '@angular/core';
+import { Component, ElementRef, inject, Input, signal, TemplateRef } from '@angular/core';
 import { NgTemplateOutlet } from "@angular/common";
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 import { fromEvent } from "rxjs";
@@ -8,10 +8,9 @@ import { fromEvent } from "rxjs";
 // not play hidden behind the page and a photo carousel restarts on every open.
 @Component({
     selector: 'ctl-modal',
-    standalone: true,
     imports: [NgTemplateOutlet],
     templateUrl: './modal.component.html',
-    styleUrl: './modal.component.scss',
+    styleUrl: './modal.component.scss'
 })
 export class ModalComponent {
     @Input({ required: true }) modalId: string;
@@ -20,7 +19,7 @@ export class ModalComponent {
     @Input() title = '';
     @Input() isScrollable = true;
 
-    isOpen = false;
+    readonly isOpen = signal(false);
 
     private readonly host = inject<ElementRef<HTMLElement>>(ElementRef);
 
@@ -30,10 +29,10 @@ export class ModalComponent {
         // fade-out, so the content stays visible through the exit animation.
         fromEvent(this.host.nativeElement, 'show.bs.modal')
             .pipe(takeUntilDestroyed())
-            .subscribe(() => this.isOpen = true);
+            .subscribe(() => this.isOpen.set(true));
 
         fromEvent(this.host.nativeElement, 'hidden.bs.modal')
             .pipe(takeUntilDestroyed())
-            .subscribe(() => this.isOpen = false);
+            .subscribe(() => this.isOpen.set(false));
     }
 }

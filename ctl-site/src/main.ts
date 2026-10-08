@@ -1,10 +1,10 @@
 import { bootstrapApplication } from '@angular/platform-browser';
 import { AppComponent } from './app/app.component';
-import { provideHttpClient } from "@angular/common/http";
+import { provideHttpClient, withXhr } from "@angular/common/http";
 import { PreloadAllModules, provideRouter, withInMemoryScrolling, withPreloading } from "@angular/router";
 import { routes } from "./app/utils/routes.model";
 import { provideServiceWorker } from '@angular/service-worker';
-import { isDevMode } from '@angular/core';
+import { isDevMode, provideZonelessChangeDetection } from '@angular/core';
 
 // Old links used hash routes (/#/creche); move them to the plain path.
 if (location.hash.startsWith('#/')) {
@@ -13,7 +13,8 @@ if (location.hash.startsWith('#/')) {
 
 bootstrapApplication(AppComponent, {
     providers: [
-        provideHttpClient(),
+        provideZonelessChangeDetection(),
+        provideHttpClient(withXhr()),
         provideRouter(
             routes,
             withPreloading(PreloadAllModules),

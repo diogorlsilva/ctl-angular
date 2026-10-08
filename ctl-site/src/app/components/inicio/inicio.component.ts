@@ -1,4 +1,4 @@
-import { Component, DestroyRef, inject, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
 import { RouterLink } from "@angular/router";
 import { FetchDataService } from "@services/fetch-data.service";
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
@@ -29,7 +29,6 @@ type ServiceTile = {
 
 @Component({
     selector: 'ctl-inicio',
-    standalone: true,
     imports: [
         RouterLink,
         ModalComponent,
@@ -40,16 +39,16 @@ type ServiceTile = {
     styleUrl: './inicio.component.scss'
 })
 export class InicioComponent implements OnInit {
-    newsItems: NewsItem[] = [];
-    peopleItems: PersonItem[] = [];
-    numbersItems: NumberItem[] = [];
-    partners: PartnerItem[] = [];
+    readonly newsItems = signal<NewsItem[]>([]);
+    readonly peopleItems = signal<PersonItem[]>([]);
+    readonly numbersItems = signal<NumberItem[]>([]);
+    readonly partners = signal<PartnerItem[]>([]);
     currentItem?: NewsItem;
-    newsLoading = true;
+    readonly newsLoading = signal(true);
     readonly newsSkeletons = Array(3);
-    peopleLoading = true;
+    readonly peopleLoading = signal(true);
     readonly peopleSkeletons = Array(5);
-    partnersLoading = true;
+    readonly partnersLoading = signal(true);
     readonly partnersSkeletons = Array(5);
 
     // Three columns, the middle one shorter so it sits half a tile lower.
@@ -139,26 +138,26 @@ export class InicioComponent implements OnInit {
         this.fetchDataService.getNewsData()
             .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe({
-                next: (newsItems) => this.newsItems = newsItems,
-                complete: () => this.newsLoading = false
+                next: (newsItems) => this.newsItems.set(newsItems),
+                complete: () => this.newsLoading.set(false)
             });
 
         this.fetchDataService.getPeopleData()
             .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe({
-                next: (peopleItems) => this.peopleItems = peopleItems,
-                complete: () => this.peopleLoading = false
+                next: (peopleItems) => this.peopleItems.set(peopleItems),
+                complete: () => this.peopleLoading.set(false)
             });
 
         this.fetchDataService.getNumbersData()
             .pipe(takeUntilDestroyed(this.destroyRef))
-            .subscribe((numbersItems) => this.numbersItems = numbersItems);
+            .subscribe((numbersItems) => this.numbersItems.set(numbersItems));
 
         this.fetchDataService.getPartnersPhotosURLs()
             .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe({
-                next: (partners) => this.partners = partners,
-                complete: () => this.partnersLoading = false
+                next: (partners) => this.partners.set(partners),
+                complete: () => this.partnersLoading.set(false)
             });
     }
 }

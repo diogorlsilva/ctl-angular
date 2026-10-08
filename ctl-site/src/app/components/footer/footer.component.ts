@@ -1,4 +1,4 @@
-import { Component, DestroyRef, inject, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 import { FetchDataService } from "@services/fetch-data.service";
 import { AccountReport, address, ctlEmail, mission, OrganisationItem, telephoneNumber } from "@models/data.model";
@@ -8,14 +8,13 @@ import { ModalComponent } from "../modal/modal.component";
 // institution" dialogs, which are opened from here and from the home page.
 @Component({
     selector: 'ctl-footer',
-    standalone: true,
     imports: [ModalComponent],
     templateUrl: './footer.component.html',
     styleUrl: './footer.component.scss'
 })
 export class FooterComponent implements OnInit {
-    reports: AccountReport[] = [];
-    organisation?: OrganisationItem;
+    readonly reports = signal<AccountReport[]>([]);
+    readonly organisation = signal<OrganisationItem | undefined>(undefined);
 
     readonly mission = mission;
     readonly telephoneNumber = telephoneNumber;
@@ -29,10 +28,10 @@ export class FooterComponent implements OnInit {
     ngOnInit(): void {
         this.fetchDataService.getReportsData()
             .pipe(takeUntilDestroyed(this.destroyRef))
-            .subscribe((reports) => this.reports = reports);
+            .subscribe((reports) => this.reports.set(reports));
 
         this.fetchDataService.getOrganisationData()
             .pipe(takeUntilDestroyed(this.destroyRef))
-            .subscribe((organisation) => this.organisation = organisation);
+            .subscribe((organisation) => this.organisation.set(organisation));
     }
 }

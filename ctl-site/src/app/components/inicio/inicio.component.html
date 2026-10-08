@@ -51,12 +51,12 @@
 
 <!-- NEWS -->
 
-@if (newsItems.length || newsLoading) {
+@if (newsItems().length || newsLoading()) {
     <section class="news wrap">
         <h2 class="section-title">Notícias</h2>
-        <div [attr.aria-busy]="newsLoading"
+        <div [attr.aria-busy]="newsLoading()"
              class="news-row">
-            @for (item of newsItems; track $index) {
+            @for (item of newsItems(); track $index) {
                 <button (click)="currentItem = item"
                         class="news-card"
                         data-bs-target="#news"
@@ -109,12 +109,12 @@
 
 <!-- TEAM -->
 
-@if (peopleItems.length || peopleLoading) {
+@if (peopleItems().length || peopleLoading()) {
     <section class="team wrap">
         <h2 class="section-title">Equipa</h2>
-        <div [attr.aria-busy]="peopleLoading"
+        <div [attr.aria-busy]="peopleLoading()"
              class="team-row">
-            @for (person of peopleItems; track $index) {
+            @for (person of peopleItems(); track $index) {
                 <div class="person">
                     <img [alt]="person.name"
                          [src]="person.photoSrc"
@@ -144,10 +144,10 @@
 
 <!-- NUMBERS -->
 
-@if (numbersItems.length) {
+@if (numbersItems().length) {
     <section class="numbers">
         <div class="numbers-grid wrap">
-            @for (number of numbersItems; track $index) {
+            @for (number of numbersItems(); track $index) {
                 <div class="number">
                     <span [innerText]="number.value"
                           class="number-value"></span>
@@ -161,12 +161,12 @@
 
 <!-- PARTNERS -->
 
-@if (partners.length || partnersLoading) {
+@if (partners().length || partnersLoading()) {
     <section class="partners wrap">
         <h2 class="section-title">Parcerias</h2>
-        <div [attr.aria-busy]="partnersLoading"
+        <div [attr.aria-busy]="partnersLoading()"
              class="partners-row">
-            @for (partner of partners; track $index) {
+            @for (partner of partners(); track $index) {
                 <span [attr.data-name]="partner.alt"
                       class="partner"
                       tabindex="0">

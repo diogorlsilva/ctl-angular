@@ -1,11 +1,11 @@
 <ctl-section-background [backgroundUrl]="'assets/images/musica/musica_background.webp'"></ctl-section-background>
 <ctl-section-message-box [iconSrc]="'assets/images/musica/musica_logo.webp'"
-                         [loading]="loading"
-                         [messageBoxText]="section?.smallDescription ?? ''"
+                         [loading]="loading()"
+                         [messageBoxText]="section()?.smallDescription ?? ''"
                          [title]="'Oficina de Música'">
 </ctl-section-message-box>
-<ctl-gallery [images]="section?.photoSRCs ?? []"
-             [loading]="loading"></ctl-gallery>
-@if (section) {
+<ctl-gallery [images]="section()?.photoSRCs ?? []"
+             [loading]="loading()"></ctl-gallery>
+@if (section(); as section) {
     <ctl-section-content [section]="section"></ctl-section-content>
 }

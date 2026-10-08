@@ -8,7 +8,6 @@ import { SanitizeYouTubeUrlPipe } from "../../pipes/url-sanitizer.pipe";
 // column and the video takes the other. Empty parts are left out.
 @Component({
     selector: 'ctl-section-content',
-    standalone: true,
     imports: [NgTemplateOutlet, SanitizeYouTubeUrlPipe],
     templateUrl: './ctl-section-content.component.html'
 })

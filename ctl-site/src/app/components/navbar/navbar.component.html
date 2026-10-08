@@ -1,5 +1,5 @@
-<div [class.navbar-hide-on-scroll-down]="isGoingDown"
-     [class.navbar-home]="isHome"
+<div [class.navbar-hide-on-scroll-down]="isGoingDown()"
+     [class.navbar-home]="isHome()"
      class="navbar-container">
     <a [routerLink]="''"
        aria-label="Página inicial"
@@ -8,18 +8,18 @@
         <span class="abbrev-text">CTL</span>
     </a>
     <button (click)="toggleMenu()"
-            [attr.aria-expanded]="isToggled"
+            [attr.aria-expanded]="isToggled()"
             aria-controls="main-menu"
             aria-label="Menu"
             class="toggle"
             type="button">
         <svg aria-hidden="true" class="icon">
-            <use [attr.href]="isToggled ? '#i-close' : '#i-menu'"/>
+            <use [attr.href]="isToggled() ? '#i-close' : '#i-menu'"/>
         </svg>
     </button>
     <nav aria-label="Principal">
-        <ul [class.nav-closing]="isClosing"
-            [class.show-nav]="isToggled"
+        <ul [class.nav-closing]="isClosing()"
+            [class.show-nav]="isToggled()"
             class="nav"
             id="main-menu">
             <!-- RESPOSTAS SOCIAIS -->
