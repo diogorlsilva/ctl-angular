@@ -96,9 +96,9 @@
   background: transparent;
   overflow: hidden;
 
-  // Same as the Bootstrap dialogs' backdrop ($modal-backdrop-opacity).
+  // The dialogs' black, a little darker than their 0.55 so the photo stands out.
   &::backdrop {
-    background: rgba(0, 0, 0, 0.55);
+    background: rgba(0, 0, 0, 0.7);
   }
 
   &[open],
