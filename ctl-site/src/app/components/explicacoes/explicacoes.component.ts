@@ -10,7 +10,6 @@ import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 
 @Component({
     selector: 'ctl-explicacoes',
-    standalone: true,
     imports: [
         CtlSectionBackgroundComponent,
         CtlSectionMessageBoxComponent,

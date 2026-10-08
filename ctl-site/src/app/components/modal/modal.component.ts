@@ -8,10 +8,9 @@ import { fromEvent } from "rxjs";
 // not play hidden behind the page and a photo carousel restarts on every open.
 @Component({
     selector: 'ctl-modal',
-    standalone: true,
     imports: [NgTemplateOutlet],
     templateUrl: './modal.component.html',
-    styleUrl: './modal.component.scss',
+    styleUrl: './modal.component.scss'
 })
 export class ModalComponent {
     @Input({ required: true }) modalId: string;

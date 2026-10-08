@@ -22,7 +22,6 @@ const ROUTE_GROUPS: Record<string, NavGroup> = {
 
 @Component({
     selector: 'ctl-navbar',
-    standalone: true,
     imports: [RouterLink, RouterLinkActive],
     templateUrl: './navbar.component.html',
     styleUrl: './navbar.component.scss'

@@ -10,7 +10,6 @@ import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 
 @Component({
     selector: 'ctl-aec',
-    standalone: true,
     imports: [
         CtlGalleryComponent,
         CtlSectionBackgroundComponent,

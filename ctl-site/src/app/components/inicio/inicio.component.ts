@@ -29,7 +29,6 @@ type ServiceTile = {
 
 @Component({
     selector: 'ctl-inicio',
-    standalone: true,
     imports: [
         RouterLink,
         ModalComponent,

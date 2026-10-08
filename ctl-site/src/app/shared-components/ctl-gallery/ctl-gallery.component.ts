@@ -9,7 +9,6 @@ let nextId = 0;
 // The viewer's slides are only rendered while it is open.
 @Component({
     selector: 'ctl-gallery',
-    standalone: true,
     imports: [CtlSkeletonComponent],
     templateUrl: './ctl-gallery.component.html',
     styleUrl: './ctl-gallery.component.scss'

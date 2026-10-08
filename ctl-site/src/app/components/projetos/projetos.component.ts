@@ -10,7 +10,6 @@ import { CtlSkeletonComponent } from "@shared/ctl-skeleton/ctl-skeleton.componen
 
 @Component({
     selector: 'ctl-projects',
-    standalone: true,
     imports: [
         CtlSectionBackgroundComponent,
         ModalComponent,

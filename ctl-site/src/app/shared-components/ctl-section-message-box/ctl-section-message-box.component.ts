@@ -7,7 +7,6 @@ import { CtlSkeletonComponent } from "@shared/ctl-skeleton/ctl-skeleton.componen
 // icon from the sprite in index.html (tileIcon + tileColor + tileLabel).
 @Component({
     selector: 'ctl-section-message-box',
-    standalone: true,
     imports: [CtlSkeletonComponent],
     templateUrl: './ctl-section-message-box.component.html',
     styleUrl: './ctl-section-message-box.component.scss'

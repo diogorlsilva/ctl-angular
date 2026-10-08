@@ -10,7 +10,6 @@ import { CtlSectionMessageBoxComponent } from "@shared/ctl-section-message-box/c
 
 @Component({
     selector: 'ctl-catl',
-    standalone: true,
     imports: [CtlGalleryComponent, CtlSectionBackgroundComponent, CtlSectionContentComponent, CtlSectionMessageBoxComponent],
     templateUrl: './catl.component.html'
 })

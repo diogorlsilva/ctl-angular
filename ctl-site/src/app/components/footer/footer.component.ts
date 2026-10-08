@@ -8,7 +8,6 @@ import { ModalComponent } from "../modal/modal.component";
 // institution" dialogs, which are opened from here and from the home page.
 @Component({
     selector: 'ctl-footer',
-    standalone: true,
     imports: [ModalComponent],
     templateUrl: './footer.component.html',
     styleUrl: './footer.component.scss'
