@@ -81,9 +81,15 @@
                 @for (_ of newsSkeletons; track $index) {
                     <div class="news-card">
                         <ctl-skeleton class="news-photo" height="" width=""></ctl-skeleton>
-                        <ctl-skeleton height="1.4em" width="70%"></ctl-skeleton>
-                        <ctl-skeleton></ctl-skeleton>
-                        <ctl-skeleton width="80%"></ctl-skeleton>
+                        <div class="news-title news-skeleton-lines">
+                            <ctl-skeleton height="0.8em"></ctl-skeleton>
+                            <ctl-skeleton height="0.8em" width="60%"></ctl-skeleton>
+                        </div>
+                        <div class="news-excerpt news-skeleton-lines">
+                            <ctl-skeleton height="0.8em"></ctl-skeleton>
+                            <ctl-skeleton height="0.8em"></ctl-skeleton>
+                            <ctl-skeleton height="0.8em" width="80%"></ctl-skeleton>
+                        </div>
                     </div>
                 }
             }

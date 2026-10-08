@@ -144,10 +144,6 @@
     outline: var(--focus-ring);
     outline-offset: 4px;
   }
-
-  ctl-skeleton {
-    margin-bottom: 0.25rem;
-  }
 }
 
 .news-photo {
@@ -185,6 +181,13 @@
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
+}
+
+// Skeleton text takes the real block's fixed height, with one bar centred on each line.
+.news-skeleton-lines {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
 }
 
 // ABOUT
