@@ -14,19 +14,24 @@
         <!-- The photos run twice so the strip can loop without a seam; the
              copy is hidden from screen readers. -->
         <div [style.--loop-duration]="images.length * secondsPerPhoto + 's'"
-             class="gallery-track gallery-track--loop">
+             [class.gallery-track--loop]="ready()"
+             class="gallery-track">
             @for (src of images; track $index) {
                 <img [src]="src"
                      [alt]="'Fotografia ' + ($index + 1) + ' de ' + images.length"
                      draggable="false"
-                     decoding="async">
+                     decoding="async"
+                     (load)="onSettled()"
+                     (error)="onSettled()">
             }
             @for (src of images; track $index) {
                 <img [src]="src"
                      alt=""
                      aria-hidden="true"
                      draggable="false"
-                     decoding="async">
+                     decoding="async"
+                     (load)="onSettled()"
+                     (error)="onSettled()">
             }
         </div>
     </div>
