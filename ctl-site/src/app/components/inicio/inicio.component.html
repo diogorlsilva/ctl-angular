@@ -145,12 +145,22 @@
 <!-- NUMBERS -->
 
 @if (numbersItems().length) {
-    <section class="numbers">
+    <section #numbersSection
+             [class.counted]="numbersCounted()"
+             class="numbers">
         <div class="numbers-grid wrap">
-            @for (number of numbersItems(); track $index) {
+            @for (number of numbers(); track $index) {
                 <div class="number">
-                    <span [innerText]="number.value"
-                          class="number-value"></span>
+                    @if (number.count !== null) {
+                        <span class="number-value">
+                            <span class="visually-hidden">{{ number.value }}</span>
+                            <span aria-hidden="true">{{ number.prefix }}<span [style.--count-to]="number.count"
+                                                                              class="count-up"></span>{{ number.suffix }}</span>
+                        </span>
+                    } @else {
+                        <span [innerText]="number.value"
+                              class="number-value"></span>
+                    }
                     <span [innerText]="number.description"
                           class="number-label"></span>
                 </div>

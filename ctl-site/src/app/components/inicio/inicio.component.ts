@@ -1,4 +1,4 @@
-import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
+import { Component, computed, DestroyRef, effect, ElementRef, inject, OnInit, signal, viewChild } from '@angular/core';
 import { RouterLink } from "@angular/router";
 import { FetchDataService } from "@services/fetch-data.service";
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
@@ -43,6 +43,16 @@ export class InicioComponent implements OnInit {
     readonly peopleItems = signal<PersonItem[]>([]);
     readonly numbersItems = signal<NumberItem[]>([]);
     readonly partners = signal<PartnerItem[]>([]);
+
+    // A value such as "+300" or "25%" counts up to its number; anything else
+    // (e.g. "1.200") is shown as typed.
+    readonly numbers = computed(() => this.numbersItems().map(item => {
+        const [, prefix = '', count, suffix = ''] = item.value.match(/^(\D*)(\d+)(\D*)$/) ?? [];
+
+        return { ...item, prefix, count: count ? +count : null, suffix };
+    }));
+    readonly numbersCounted = signal(false);
+    private readonly numbersSection = viewChild<ElementRef<HTMLElement>>('numbersSection');
     currentItem?: NewsItem;
     readonly newsLoading = signal(true);
     readonly newsSkeletons = Array(3);
@@ -131,6 +141,26 @@ export class InicioComponent implements OnInit {
 
     private readonly fetchDataService = inject(FetchDataService);
     private readonly destroyRef = inject(DestroyRef);
+
+    constructor() {
+        // Starts the count-up the first time the section scrolls into view.
+        effect((onCleanup) => {
+            const section = this.numbersSection()?.nativeElement;
+
+            if (!section || this.numbersCounted()) {
+                return;
+            }
+
+            const observer = new IntersectionObserver(([entry]) => {
+                if (entry.isIntersecting) {
+                    this.numbersCounted.set(true);
+                }
+            }, { threshold: 0.5 });
+
+            observer.observe(section);
+            onCleanup(() => observer.disconnect());
+        });
+    }
 
     ngOnInit(): void {
         // Each block renders as soon as its own sheet arrives. `complete` also

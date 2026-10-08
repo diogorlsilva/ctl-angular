@@ -448,6 +448,30 @@ html:has(.photo-viewer[open]) {
   white-space: pre-line;
 }
 
+// Number count-up (css-tricks.com/animating-number-counters). The home
+// "Números" section adds .counted once it scrolls into view, and --num
+// animates from 0 to --count-to. Kept global because emulated component
+// styles rename the custom property everywhere except inside `transition`.
+@property --num {
+  syntax: '<integer>';
+  initial-value: 0;
+  inherits: false;
+}
+
+.count-up {
+  transition: --num 1.2s ease-out;
+  counter-reset: num var(--num);
+  font-variant-numeric: tabular-nums;
+
+  &::after {
+    content: counter(num);
+  }
+
+  .counted & {
+    --num: var(--count-to);
+  }
+}
+
 .dialog-prose p {
   margin: 0;
 
@@ -457,7 +481,8 @@ html:has(.photo-viewer[open]) {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .btn-pill {
+  .btn-pill,
+  .count-up {
     transition: none;
   }
 }
