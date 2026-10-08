@@ -32,10 +32,15 @@
             @for (_ of skeletons; track $index) {
                 <div class="project-card">
                     <ctl-skeleton class="project-icon" height="" radius="22%" width=""></ctl-skeleton>
-                    <ctl-skeleton height="1.6em" width="70%"></ctl-skeleton>
-                    <ctl-skeleton></ctl-skeleton>
-                    <ctl-skeleton></ctl-skeleton>
-                    <ctl-skeleton width="85%"></ctl-skeleton>
+                    <div class="project-title project-skeleton-lines">
+                        <ctl-skeleton height="0.8em" width="70%"></ctl-skeleton>
+                    </div>
+                    <div class="project-excerpt project-skeleton-lines">
+                        <ctl-skeleton height="0.8em"></ctl-skeleton>
+                        <ctl-skeleton height="0.8em"></ctl-skeleton>
+                        <ctl-skeleton height="0.8em"></ctl-skeleton>
+                        <ctl-skeleton height="0.8em" width="85%"></ctl-skeleton>
+                    </div>
                     <ctl-skeleton class="project-more" height="44px" radius="999px" width="110px"></ctl-skeleton>
                 </div>
             }

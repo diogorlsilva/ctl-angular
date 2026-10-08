@@ -47,6 +47,22 @@
   overflow: hidden;
 }
 
+// Skeleton text takes the height of a typical card's text (a one-line title and
+// a full four-line excerpt), with one bar centred on each line.
+.project-skeleton-lines {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+
+  &.project-title {
+    height: 1lh;
+  }
+
+  &.project-excerpt {
+    height: 4lh;
+  }
+}
+
 .project-more {
   margin-top: 0.75rem;
   align-self: flex-start;
