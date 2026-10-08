@@ -1,7 +1,3 @@
-import type * as ExcelJS from 'exceljs';
-
-export type Workbook = ExcelJS.Workbook
-
 export type NewsItem = {
     title: string;
     description: string;
