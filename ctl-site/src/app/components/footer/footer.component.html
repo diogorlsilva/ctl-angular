@@ -28,19 +28,25 @@
             <h2 class="footer-title">Contactos</h2>
             <a [href]="'tel:' + telephoneNumber"
                class="footer-link">
-                <svg aria-hidden="true" class="icon"><use href="#i-phone"/></svg>
+                <svg aria-hidden="true" class="icon">
+                    <use href="#i-phone"/>
+                </svg>
                 <span [innerText]="telephoneNumber"></span>
             </a>
             <a class="footer-link"
                href="https://maps.app.goo.gl/g8QyPuTkq2U12ceP7"
                rel="noopener"
                target="_blank">
-                <svg aria-hidden="true" class="icon"><use href="#i-map-pin"/></svg>
+                <svg aria-hidden="true" class="icon">
+                    <use href="#i-map-pin"/>
+                </svg>
                 <span [innerText]="address"></span>
             </a>
             <a [href]="'mailto:' + ctlEmail"
                class="footer-link">
-                <svg aria-hidden="true" class="icon"><use href="#i-mail"/></svg>
+                <svg aria-hidden="true" class="icon">
+                    <use href="#i-mail"/>
+                </svg>
                 <span [innerText]="ctlEmail"></span>
             </a>
         </div>
@@ -51,26 +57,44 @@
                href="https://www.facebook.com/ctlsantaclara"
                rel="noopener"
                target="_blank">
-                <svg aria-hidden="true" class="icon"><use href="#i-facebook"/></svg>
+                <svg aria-hidden="true" class="icon">
+                    <use href="#i-facebook"/>
+                </svg>
                 <span>Facebook</span>
             </a>
             <a class="footer-link"
                href="https://www.instagram.com/ctlsantaclara"
                rel="noopener"
                target="_blank">
-                <svg aria-hidden="true" class="icon"><use href="#i-instagram"/></svg>
+                <svg aria-hidden="true" class="icon">
+                    <use href="#i-instagram"/>
+                </svg>
                 <span>Instagram</span>
             </a>
             <a class="footer-link"
                href="https://pt.linkedin.com/company/clube-de-tempos-livres-de-santa-clara"
                rel="noopener"
                target="_blank">
-                <svg aria-hidden="true" class="icon"><use href="#i-linkedin"/></svg>
+                <svg aria-hidden="true" class="icon">
+                    <use href="#i-linkedin"/>
+                </svg>
                 <span>LinkedIn</span>
             </a>
         </div>
     </div>
-    <p class="footer-copyright wrap">© {{ year }} Clube de Tempos Livres de Santa Clara</p>
+    <div class="footer-bottom wrap">
+        <p class="footer-copyright">© {{ year }} Clube de Tempos Livres de Santa Clara</p>
+        <a aria-label="Site desenvolvido por Diogo Silva"
+           class="footer-credit"
+           href="https://github.com/diogorlsilva"
+           rel="noopener"
+           target="_blank"
+           title="Desenvolvido por Diogo Silva">
+            <svg aria-hidden="true" class="icon">
+                <use href="#i-code"/>
+            </svg>
+        </a>
+    </div>
 </footer>
 
 <ctl-modal [contentHtml]="missionContent"
@@ -144,14 +168,18 @@
                                class="chip"
                                rel="noopener noreferrer"
                                target="_blank">
-                                <svg aria-hidden="true" class="icon"><use href="#i-file"/></svg>
+                                <svg aria-hidden="true" class="icon">
+                                    <use href="#i-file"/>
+                                </svg>
                                 <span [innerText]="report.balanceSheetName"></span>
                             </a>
                             <a [href]="'assets/RELATORIOS_CONTAS/' + report.profitAndLossFile"
                                class="chip"
                                rel="noopener noreferrer"
                                target="_blank">
-                                <svg aria-hidden="true" class="icon"><use href="#i-file"/></svg>
+                                <svg aria-hidden="true" class="icon">
+                                    <use href="#i-file"/>
+                                </svg>
                                 <span [innerText]="report.profitAndLossName"></span>
                             </a>
                         </div>

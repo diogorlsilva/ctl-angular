@@ -80,10 +80,37 @@
   }
 }
 
-.footer-copyright {
+.footer-bottom {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem 2rem;
   margin: 3rem auto 0;
+}
+
+.footer-copyright {
+  margin: 0;
   font-size: 0.9rem;
   color: rgba(255, 255, 255, 0.7);
+}
+
+.footer-credit {
+  display: inline-flex;
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.45);
+  transition: color 0.2s;
+
+  &:hover {
+    color: white;
+  }
+
+  &:focus-visible {
+    color: white;
+    outline: 3px solid white;
+    outline-offset: 4px;
+    border-radius: 4px;
+  }
 }
 
 // DIALOGS
