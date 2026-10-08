@@ -1,4 +1,4 @@
-import { Component, DestroyRef, inject, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 import { FetchDataService } from "@services/fetch-data.service";
 import { AccountReport, address, ctlEmail, mission, OrganisationItem, telephoneNumber } from "@models/data.model";
@@ -10,6 +10,7 @@ import { ModalComponent } from "../modal/modal.component";
     selector: 'ctl-footer',
     imports: [ModalComponent],
     templateUrl: './footer.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
     styleUrl: './footer.component.scss'
 })
 export class FooterComponent implements OnInit {

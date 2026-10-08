@@ -1,4 +1,4 @@
-import { Component, HostBinding, Input } from '@angular/core';
+import { Component, HostBinding, Input, ChangeDetectionStrategy } from '@angular/core';
 
 // Loading placeholder block. Layout is up to the caller: compose these inside
 // the real block's containers so the skeleton takes the same space.
@@ -7,6 +7,7 @@ import { Component, HostBinding, Input } from '@angular/core';
     imports: [],
     template: '',
     styleUrl: './ctl-skeleton.component.scss',
+    changeDetection: ChangeDetectionStrategy.Eager,
     host: { 'aria-hidden': 'true' }
 })
 export class CtlSkeletonComponent {

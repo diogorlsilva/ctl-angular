@@ -1,4 +1,4 @@
-import { Component, DestroyRef, inject, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { CtlGalleryComponent } from "@shared/ctl-gallery/ctl-gallery.component";
 import { SectionItem } from "@models/data.model";
 import { FetchDataService } from "@services/fetch-data.service";
@@ -11,6 +11,7 @@ import { CtlSectionMessageBoxComponent } from "@shared/ctl-section-message-box/c
 @Component({
     selector: 'ctl-catl',
     imports: [CtlGalleryComponent, CtlSectionBackgroundComponent, CtlSectionContentComponent, CtlSectionMessageBoxComponent],
+    changeDetection: ChangeDetectionStrategy.Eager,
     templateUrl: './catl.component.html'
 })
 export class CatlComponent implements OnInit {

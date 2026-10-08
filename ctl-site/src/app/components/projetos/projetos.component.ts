@@ -1,4 +1,4 @@
-import { Component, DestroyRef, inject, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { CtlSectionBackgroundComponent } from "@shared/ctl-section-background/ctl-section-background.component";
 import { ProjectItem } from "@models/data.model";
 import { FetchDataService } from "@services/fetch-data.service";
@@ -18,6 +18,7 @@ import { CtlSkeletonComponent } from "@shared/ctl-skeleton/ctl-skeleton.componen
         CtlDialogMediaComponent
     ],
     templateUrl: './projetos.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
     styleUrl: './projetos.component.scss'
 })
 export class ProjetosComponent implements OnInit {

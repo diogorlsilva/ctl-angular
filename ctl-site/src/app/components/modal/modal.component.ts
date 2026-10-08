@@ -1,4 +1,4 @@
-import { Component, ElementRef, inject, Input, TemplateRef } from '@angular/core';
+import { Component, ElementRef, inject, Input, TemplateRef, ChangeDetectionStrategy } from '@angular/core';
 import { NgTemplateOutlet } from "@angular/common";
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 import { fromEvent } from "rxjs";
@@ -10,6 +10,7 @@ import { fromEvent } from "rxjs";
     selector: 'ctl-modal',
     imports: [NgTemplateOutlet],
     templateUrl: './modal.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
     styleUrl: './modal.component.scss'
 })
 export class ModalComponent {

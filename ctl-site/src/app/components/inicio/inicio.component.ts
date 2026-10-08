@@ -1,4 +1,4 @@
-import { Component, DestroyRef, inject, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { RouterLink } from "@angular/router";
 import { FetchDataService } from "@services/fetch-data.service";
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
@@ -36,6 +36,7 @@ type ServiceTile = {
         CtlDialogMediaComponent
     ],
     templateUrl: './inicio.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
     styleUrl: './inicio.component.scss'
 })
 export class InicioComponent implements OnInit {

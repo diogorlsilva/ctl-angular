@@ -1,4 +1,4 @@
-import { Component, DestroyRef, inject, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { CtlSectionBackgroundComponent } from "@shared/ctl-section-background/ctl-section-background.component";
 import { CtlSectionMessageBoxComponent } from "@shared/ctl-section-message-box/ctl-section-message-box.component";
 import { CtlGalleryComponent } from "@shared/ctl-gallery/ctl-gallery.component";
@@ -16,6 +16,7 @@ import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
         CtlGalleryComponent,
         CtlSectionContentComponent
     ],
+    changeDetection: ChangeDetectionStrategy.Eager,
     templateUrl: './explicacoes.component.html'
 })
 export class ExplicacoesComponent implements OnInit {

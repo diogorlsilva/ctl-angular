@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostBinding, inject, QueryList, ViewChildren } from '@angular/core';
+import { Component, ElementRef, HostBinding, inject, QueryList, ViewChildren, ChangeDetectionStrategy } from '@angular/core';
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 import { NavigationEnd, NavigationStart, Router, RouterLink, RouterLinkActive } from "@angular/router";
 import { filter, fromEvent, Observable } from "rxjs";
@@ -24,6 +24,7 @@ const ROUTE_GROUPS: Record<string, NavGroup> = {
     selector: 'ctl-navbar',
     imports: [RouterLink, RouterLinkActive],
     templateUrl: './navbar.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
     styleUrl: './navbar.component.scss'
 })
 export class NavbarComponent {

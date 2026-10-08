@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { SectionItem } from "@models/data.model";
 import { NgTemplateOutlet } from "@angular/common";
 import { SanitizeYouTubeUrlPipe } from "../../pipes/url-sanitizer.pipe";
@@ -9,6 +9,7 @@ import { SanitizeYouTubeUrlPipe } from "../../pipes/url-sanitizer.pipe";
 @Component({
     selector: 'ctl-section-content',
     imports: [NgTemplateOutlet, SanitizeYouTubeUrlPipe],
+    changeDetection: ChangeDetectionStrategy.Eager,
     templateUrl: './ctl-section-content.component.html'
 })
 export class CtlSectionContentComponent {

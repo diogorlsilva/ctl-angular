@@ -1,9 +1,9 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "baseUrl": "./",
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true,
     "esModuleInterop": true,
     "strict": true,
     "noImplicitOverride": true,
@@ -21,16 +21,16 @@
     "strictPropertyInitialization": false,
     "paths": {
       "@assets/*": [
-        "assets/*"
+        "./assets/*"
       ],
       "@models/*": [
-        "src/app/models/*"
+        "./src/app/models/*"
       ],
       "@shared/*": [
-        "src/app/shared-components/*"
+        "./src/app/shared-components/*"
       ],
       "@services/*": [
-        "src/app/services/*"
+        "./src/app/services/*"
       ]
     }
   },
