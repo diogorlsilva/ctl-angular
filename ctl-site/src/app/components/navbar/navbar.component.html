@@ -18,7 +18,8 @@
         </svg>
     </button>
     <nav aria-label="Principal">
-        <ul [class.show-nav]="isToggled"
+        <ul [class.nav-closing]="isClosing"
+            [class.show-nav]="isToggled"
             class="nav"
             id="main-menu">
             <!-- RESPOSTAS SOCIAIS -->
@@ -27,6 +28,7 @@
                         (pointerenter)="prefetch('respostasSociais')"
                         aria-expanded="false"
                         class="nav-link dropdown-toggle"
+                        data-bs-display="static"
                         data-bs-toggle="dropdown"
                         data-group="respostasSociais"
                         type="button">Respostas Sociais
@@ -53,6 +55,7 @@
                         (pointerenter)="prefetch('servicos')"
                         aria-expanded="false"
                         class="nav-link dropdown-toggle"
+                        data-bs-display="static"
                         data-bs-toggle="dropdown"
                         data-group="servicos"
                         type="button">Serviços

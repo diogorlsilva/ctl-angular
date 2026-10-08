@@ -29,6 +29,8 @@ const ROUTE_GROUPS: Record<string, NavGroup> = {
 })
 export class NavbarComponent {
     isToggled = false;
+    // True while the hamburger panel fades out after a close.
+    isClosing = false;
     isGoingDown = false;
     // The home page gets the gradient bar; every other page a translucent one.
     isHome = true;
@@ -40,6 +42,7 @@ export class NavbarComponent {
     @ViewChildren('groupToggle') private groupToggles!: QueryList<ElementRef<HTMLElement>>;
 
     private scrollY = window.scrollY;
+    private closingTimer?: ReturnType<typeof setTimeout>;
     // First URL segment of the current page ('' on home).
     private currentPath = '';
 
@@ -154,6 +157,13 @@ export class NavbarComponent {
     // Closes the panel and collapses every group, so nothing stays open
     // behind the hidden panel or in the desktop dropdowns.
     closeMenu(): void {
+        if (this.isToggled) {
+            // Matches the 0.15s fade-out in the stylesheet.
+            this.isClosing = true;
+            clearTimeout(this.closingTimer);
+            this.closingTimer = setTimeout(() => this.isClosing = false, 150);
+        }
+
         this.isToggled = false;
         this.groupToggles?.forEach(toggle => window.bootstrap?.Dropdown.getOrCreateInstance(toggle.nativeElement).hide());
     }

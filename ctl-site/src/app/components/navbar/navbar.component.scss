@@ -159,6 +159,34 @@ nav {
   }
 }
 
+// Bootstrap only switches the menu between display none and block, which
+// cannot animate. On wide screens the menu stays rendered and drops in from
+// under its button. It is placed by CSS (data-bs-display="static") rather
+// than Popper, which clears its position on hide and would make the closing
+// menu jump.
+@media screen and (min-width: 1025px) {
+  .dropdown-menu {
+    display: block;
+    top: 100%;
+    right: 0;
+    left: auto;
+    visibility: hidden;
+    opacity: 0;
+    translate: 0 -0.5rem;
+    scale: 0.96;
+    transform-origin: top right;
+    transition: opacity 0.15s ease, translate 0.15s ease, scale 0.15s ease, visibility 0s 0.15s;
+
+    &.show {
+      visibility: visible;
+      opacity: 1;
+      translate: 0;
+      scale: 1;
+      transition: opacity 0.2s ease, translate 0.2s ease, scale 0.2s ease, visibility 0s;
+    }
+  }
+}
+
 .dropdown-item {
   padding: 0.5rem 0.9rem;
   border-radius: 999px;
@@ -198,8 +226,9 @@ nav {
     margin-left: 0;
   }
 
+  // The panel stays rendered so it can drop in from the hamburger and fade
+  // out again; visibility keeps the closed panel out of reach and the tab order.
   .nav {
-    display: none;
     position: absolute;
     top: calc(var(--nav-height) + 0.5rem);
     right: 0;
@@ -212,10 +241,26 @@ nav {
     background: var(--nav-glass-panel);
     backdrop-filter: blur(20px);
     box-shadow: var(--soft-shadow), 0 0 0 1px var(--ctl-blue-25);
+    visibility: hidden;
+    opacity: 0;
+    translate: 0 -0.5rem;
+    scale: 0.97;
+    transform-origin: top right;
+  }
+
+  // The fade-out runs only right after a close (class set by the component).
+  // A transition on the closed panel itself would also run when the window
+  // narrows past the breakpoint and flash the desktop links as a panel.
+  .nav-closing {
+    transition: opacity 0.15s ease, translate 0.15s ease, scale 0.15s ease, visibility 0s 0.15s;
   }
 
   .show-nav {
-    display: flex;
+    visibility: visible;
+    opacity: 1;
+    translate: 0;
+    scale: 1;
+    transition: opacity 0.2s ease, translate 0.2s ease, scale 0.2s ease, visibility 0s;
   }
 
   .nav-link {
@@ -323,7 +368,10 @@ nav {
   .nav-link,
   .nav-item.dropdown,
   .dropdown-toggle::after,
-  .dropdown-menu {
+  .dropdown-menu,
+  .dropdown-menu.show,
+  .nav.nav-closing,
+  .nav.show-nav {
     transition: none;
   }
 }
