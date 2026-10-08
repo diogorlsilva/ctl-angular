@@ -1,62 +1,28 @@
-// The strip bleeds to the viewport edges; its side padding lines up with .wrap.
-// scroll-padding keeps the first photo from snapping under that padding.
+// The strip sits in the content column (same width as .wrap) and is clipped
+// to its rounded edges, so photos slide in and out of an invisible frame.
 :host {
   display: block;
-  margin-top: 2.25rem;
-  // A container, so the gutter is measured in cqi: the scrollbar track's
-  // margin can't resolve a percentage.
-  container-type: inline-size;
-  --gallery-gutter: max(var(--gutter), (100cqi - 1120px) / 2);
+  width: min(1120px, 100% - 2 * var(--gutter));
+  margin: 2.25rem auto 0;
 }
 
-.gallery-row {
+.gallery-frame {
+  overflow: hidden;
+  border-radius: var(--border-radius);
+}
+
+.gallery-track {
   display: flex;
-  gap: 12px;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  scroll-padding-inline: var(--gallery-gutter);
-  // The top padding leaves room for a hovered photo to grow without clipping.
-  padding: 0.5rem var(--gallery-gutter) 1rem;
-
-  // The track is inset to the content column so it doesn't span the whole
-  // screen. Chrome ignores ::-webkit-scrollbar once scrollbar-width or
-  // scrollbar-color is set (the page's colour is inherited, hence the reset),
-  // so the standard properties are only the fallback for Firefox.
-  scrollbar-color: auto;
-
-  @supports not selector(::-webkit-scrollbar) {
-    scrollbar-width: thin;
-    scrollbar-color: var(--ctl-blue-25) transparent;
-  }
-
-  &::-webkit-scrollbar {
-    height: 8px;
-  }
-
-  &::-webkit-scrollbar-track {
-    margin-inline: var(--gallery-gutter);
-    border-radius: 4px;
-    background: transparent;
-  }
-
-  &::-webkit-scrollbar-button {
-    display: none;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    border-radius: 4px;
-    background: var(--ctl-blue-25);
-  }
+  width: max-content;
 
   img,
   ctl-skeleton {
     flex: 0 0 auto;
     height: 220px;
+    // A margin rather than a flex gap, so both halves of the looping track
+    // are exactly the same width and -50% lands on the seam.
+    margin-inline-end: 12px;
     border-radius: var(--border-radius);
-  }
-
-  ctl-skeleton {
-    scroll-snap-align: start;
   }
 
   img {
@@ -68,42 +34,20 @@
   }
 }
 
-// Each photo is a button that opens the full-screen viewer.
-.gallery-photo {
-  flex: 0 0 auto;
-  padding: 0;
-  border: 0;
-  border-radius: var(--border-radius);
-  background: none;
-  scroll-snap-align: start;
-
-  // .focus-returned: focus came back here from the viewer, so no ring until
-  // the visitor moves on (see CtlGalleryComponent.onViewerClose).
-  &:focus-visible:not(.focus-returned) {
-    outline: var(--focus-ring);
-    outline-offset: 2px;
-  }
-
-  &.focus-returned {
-    outline: none;
-  }
+// Slides the first copy of the photos out while the second copy takes its
+// place, then starts over: an endless slideshow the visitor only watches.
+.gallery-track--loop {
+  animation: gallery-loop var(--loop-duration, 40s) linear infinite;
 }
 
-// The photo under the pointer grows a little; it fits inside the 12px gap.
-@media (hover: hover) and (pointer: fine) {
-  .gallery-photo {
-    transition: scale 0.2s ease;
-
-    &:hover {
-      position: relative;
-      z-index: 1;
-      scale: 1.05;
-    }
+@keyframes gallery-loop {
+  to {
+    transform: translateX(-50%);
   }
 }
 
 @media screen and (max-width: 640px) {
-  .gallery-row {
+  .gallery-track {
     img,
     ctl-skeleton {
       height: 180px;
@@ -111,131 +55,18 @@
   }
 }
 
-// FULL-SCREEN VIEWER: one photo at a time on a dimmed backdrop. The
-// photo keeps its natural shape, so the rounded corners sit on its own edges.
-
-.photo-viewer {
-  position: fixed;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  max-width: none;
-  max-height: none;
-  margin: 0;
-  padding: 0;
-  border: 0;
-  background: transparent;
-  overflow: hidden;
-
-  // The dialogs' black, a little darker than their 0.55 so the photo stands out.
-  &::backdrop {
-    background: rgba(0, 0, 0, 0.7);
-  }
-
-  &[open],
-  &[open]::backdrop {
-    animation: viewer-fade-in 0.2s ease;
-  }
-
-  .carousel,
-  .carousel-inner,
-  .carousel-item {
-    height: 100%;
-  }
-}
-
-@keyframes viewer-fade-in {
-  from {
-    opacity: 0;
-  }
-}
-
-// Centred in its slide by auto margins; the bottom leaves room for the dots.
-// Once loaded, --ratio (set in onViewerImageLoad) scales the photo up or down
-// to the largest size that fits; until then the width rule is invalid, so
-// the photo shows at its natural size within the limits.
-.photo-viewer-img {
-  --space-x: 2rem;
-  --space-y: 7.5rem;
-  position: absolute;
-  inset: 4rem 1rem 3.5rem;
-  margin: auto;
-  width: min(100vw - var(--space-x), (100dvh - var(--space-y)) * var(--ratio));
-  height: auto;
-  max-width: calc(100% - var(--space-x));
-  max-height: calc(100% - var(--space-y));
-  border-radius: var(--border-radius);
-}
-
-// Wide screens keep the arrows beside the photo rather than over it.
-@media screen and (min-width: 768px) {
-  .photo-viewer-img {
-    --space-x: 11rem;
-    inset-inline: 5.5rem;
-  }
-}
-
-.photo-viewer-close {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  z-index: 3;
-  width: 2.5rem;
-  height: 2.5rem;
-  padding: 0;
-  border-radius: 50%;
-  background-color: rgba(255, 255, 255, 0.9);
-  background-size: 0.9rem;
-  box-shadow: var(--soft-shadow);
-  opacity: 1;
-
-  &:hover {
-    background-color: white;
-    opacity: 1;
-  }
-
-  &:focus {
-    box-shadow: var(--soft-shadow);
-  }
-
-  &:focus-visible {
-    outline: var(--focus-ring);
-    outline-offset: 2px;
-  }
-}
-
-// White dots on the dark backdrop.
-.photo-viewer .carousel-indicators {
-  margin-bottom: 1.25rem;
-
-  [data-bs-target] {
-    width: 8px;
-    height: 8px;
-    margin: 0 4px;
-    border: 0;
-    border-radius: 50%;
-    background-color: white;
-    opacity: 0.4;
-    transition: opacity 0.15s ease;
-
-    &.active {
-      opacity: 1;
-    }
-
-    &:focus-visible {
-      outline: var(--focus-ring);
-      outline-offset: 2px;
-    }
-  }
-}
-
+// No motion: the strip stands still and can be swiped instead.
 @media (prefers-reduced-motion: reduce) {
-  .gallery-photo {
-    transition: none;
+  .gallery-frame {
+    overflow-x: auto;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
   }
 
-  .photo-viewer[open],
-  .photo-viewer[open]::backdrop {
+  .gallery-track--loop {
     animation: none;
   }
 }

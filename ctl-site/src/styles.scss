@@ -350,7 +350,7 @@ a.chip:focus-visible {
   box-shadow: var(--soft-shadow);
 }
 
-// CAROUSEL ARROWS, shared by the dialog carousel and the gallery viewer:
+// CAROUSEL ARROWS, used by the dialog carousel:
 // round white chips instead of Bootstrap's 15%-wide hit areas, dark glyph.
 
 .carousel-control-prev,
@@ -394,16 +394,10 @@ a.chip:focus-visible {
 // Photos: no long-press "Save image" menu on iOS and no selection highlight.
 // With the blocked context menu and draggable="false" in the templates this
 // only deters casual saving; anything shown on screen can still be captured.
-.gallery-row img,
-.photo-viewer img,
+.gallery-track img,
 .media-frame-photos img {
   -webkit-touch-callout: none;
   user-select: none;
-}
-
-// The page behind the full-screen gallery viewer does not scroll.
-html:has(.photo-viewer[open]) {
-  overflow: hidden;
 }
 
 // DIALOG CONTENT, shared by the home and footer dialogs.
