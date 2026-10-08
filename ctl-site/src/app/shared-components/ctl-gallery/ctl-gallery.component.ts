@@ -59,6 +59,13 @@ export class CtlGalleryComponent implements OnDestroy {
         }
     }
 
+    // Some sheets hold small photos; their shape lets CSS scale them up to fill
+    // the screen while the rounded box still matches the photo's own edges.
+    onViewerImageLoad(event: Event): void {
+        const img = event.target as HTMLImageElement;
+        img.style.setProperty('--ratio', String(img.naturalWidth / img.naturalHeight));
+    }
+
     // A click on the backdrop, outside the photo and the controls, closes it.
     onViewerClick(event: MouseEvent): void {
         if (!(event.target as Element).closest('img, button')) {

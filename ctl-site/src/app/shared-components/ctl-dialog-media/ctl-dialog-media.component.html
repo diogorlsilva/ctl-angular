@@ -11,7 +11,8 @@
             </iframe>
         </div>
     } @else if (photos.length) {
-        <div class="media-frame media-frame-photos">
+        <div (contextmenu)="$event.preventDefault()"
+             class="media-frame media-frame-photos">
             <div #carousel
                  [id]="carouselId"
                  aria-roledescription="carrossel"
@@ -29,11 +30,13 @@
                             <!-- A blurred, zoomed copy of the photo fills the frame behind a
                                  photo whose shape does not match it. -->
                             <img [src]="photo"
+                                 draggable="false"
                                  alt=""
                                  aria-hidden="true"
                                  class="media-photo-backdrop"
                                  decoding="sync">
                             <img [alt]="'Fotografia ' + ($index + 1) + ' de ' + photos.length + ' – ' + label"
+                                 draggable="false"
                                  [src]="photo"
                                  class="media-photo"
                                  decoding="sync">

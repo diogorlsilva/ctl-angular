@@ -7,13 +7,15 @@
         }
     </div>
 } @else if (images.length) {
-    <div class="gallery-row">
+    <div (contextmenu)="$event.preventDefault()"
+         class="gallery-row">
         @for (src of images; track src) {
             <button (click)="openViewer($index)"
                     [attr.aria-label]="'Ver fotografia ' + ($index + 1) + ' em ecrã inteiro'"
                     class="gallery-photo"
                     type="button">
                 <img [src]="src"
+                     draggable="false"
                      alt=""
                      decoding="async"
                      loading="lazy">
@@ -23,6 +25,7 @@
 
     <dialog #viewer
             (click)="onViewerClick($event)"
+            (contextmenu)="$event.preventDefault()"
             (close)="onViewerClose()"
             (keydown)="onViewerKeydown($event)"
             aria-label="Fotografias"
@@ -43,7 +46,9 @@
                              [class.active]="$index === viewerIndex"
                              aria-roledescription="diapositivo"
                              class="carousel-item">
-                            <img [alt]="'Fotografia ' + ($index + 1) + ' de ' + images.length"
+                            <img (load)="onViewerImageLoad($event)"
+                                 draggable="false"
+                                 [alt]="'Fotografia ' + ($index + 1) + ' de ' + images.length"
                                  [src]="src"
                                  class="photo-viewer-img"
                                  decoding="async">

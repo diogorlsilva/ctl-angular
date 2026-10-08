@@ -120,22 +120,27 @@
 }
 
 // Centred in its slide by auto margins; the bottom leaves room for the dots.
+// Once loaded, --ratio (set in onViewerImageLoad) scales the photo up or down
+// to the largest size that fits; until then the width rule is invalid, so
+// the photo shows at its natural size within the limits.
 .photo-viewer-img {
+  --space-x: 2rem;
+  --space-y: 7.5rem;
   position: absolute;
   inset: 4rem 1rem 3.5rem;
   margin: auto;
-  width: auto;
+  width: min(100vw - var(--space-x), (100dvh - var(--space-y)) * var(--ratio));
   height: auto;
-  max-width: calc(100% - 2rem);
-  max-height: calc(100% - 7.5rem);
+  max-width: calc(100% - var(--space-x));
+  max-height: calc(100% - var(--space-y));
   border-radius: var(--border-radius);
 }
 
 // Wide screens keep the arrows beside the photo rather than over it.
 @media screen and (min-width: 768px) {
   .photo-viewer-img {
+    --space-x: 11rem;
     inset-inline: 5.5rem;
-    max-width: calc(100% - 11rem);
   }
 }
 
