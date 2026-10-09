@@ -1,5 +1,5 @@
 <div [class.navbar-hide-on-scroll-down]="isGoingDown()"
-     [class.navbar-home]="isHome()"
+     [class.navbar-white-page]="isWhitePage()"
      class="navbar-container">
     <a [routerLink]="''"
        aria-label="Página inicial"
@@ -22,6 +22,15 @@
             [class.show-nav]="isToggled()"
             class="nav"
             id="main-menu">
+            <!-- INÍCIO -->
+            <li class="nav-item">
+                <a (click)="closeMenu()"
+                   [routerLinkActiveOptions]="{ exact: true }"
+                   [routerLinkActive]="'nav-item-selected'"
+                   [routerLink]="''"
+                   class="nav-link">Início</a>
+            </li>
+
             <!-- RESPOSTAS SOCIAIS -->
             <li class="nav-item dropdown">
                 <button #groupToggle
@@ -104,6 +113,14 @@
                    [routerLinkActive]="'nav-item-selected'"
                    [routerLink]="'projetos'"
                    class="nav-link">Projetos</a>
+            </li>
+
+            <!-- CONTACTOS -->
+            <li class="nav-item">
+                <a (click)="closeMenu()"
+                   [routerLinkActive]="'nav-item-selected'"
+                   [routerLink]="'contactos'"
+                   class="nav-link">Contactos</a>
             </li>
         </ul>
     </nav>

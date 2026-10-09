@@ -1,0 +1,42 @@
+<div class="plain-page wrap">
+    <h1 class="plain-page-heading">Contactos</h1>
+
+    <div class="contact-cards">
+        <a [href]="'tel:' + telephoneNumber"
+           class="contact-card">
+            <svg aria-hidden="true" class="icon contact-icon">
+                <use href="#i-phone"/>
+            </svg>
+            <h2 class="contact-title">Telefone</h2>
+            <span [innerText]="telephoneNumber"
+                  class="contact-value"></span>
+        </a>
+
+        <a [href]="'mailto:' + ctlEmail"
+           class="contact-card">
+            <svg aria-hidden="true" class="icon contact-icon">
+                <use href="#i-mail"/>
+            </svg>
+            <h2 class="contact-title">Email</h2>
+            <span [innerText]="ctlEmail"
+                  class="contact-value"></span>
+        </a>
+
+        <a [href]="mapsUrl"
+           class="contact-card contact-card-wide"
+           rel="noopener"
+           target="_blank">
+            <svg aria-hidden="true" class="icon contact-icon">
+                <use href="#i-map-pin"/>
+            </svg>
+            <h2 class="contact-title">Morada</h2>
+            <address class="contact-value">
+                <strong [innerText]="address"></strong>
+                @for (line of postalAddress; track line) {
+                    <span [innerText]="line"></span>
+                }
+            </address>
+            <span class="contact-hint">Ver no mapa</span>
+        </a>
+    </div>
+</div>

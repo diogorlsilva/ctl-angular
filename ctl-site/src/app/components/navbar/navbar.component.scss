@@ -43,10 +43,10 @@
   }
 }
 
-// Home sits on a white page, so the bar gets a subtle ramp around the
-// secondary-button lilac: lighter at the logo end, deeper under the pills.
-// Slightly translucent so the blur shows what scrolls under it.
-.navbar-home {
+// Home and Contactos sit on a white page, so the bar gets a subtle ramp
+// around the secondary-button lilac: lighter at the logo end, deeper under
+// the pills. Slightly translucent so the blur shows what scrolls under it.
+.navbar-white-page {
   background: linear-gradient(100deg,
     rgba(232, 232, 247, 0.8) 0%,
     rgba(216, 217, 242, 0.8) 45%,
@@ -168,7 +168,7 @@ nav {
 // under its button. It is placed by CSS (data-bs-display="static") rather
 // than Popper, which clears its position on hide and would make the closing
 // menu jump.
-@media screen and (min-width: 1025px) {
+@media screen and (min-width: 1150px) {
   .dropdown-menu {
     display: block;
     top: 100%;
@@ -222,7 +222,7 @@ nav {
   opacity: 1;
 }
 
-@media screen and (max-width: 1024px) {
+@media screen and (max-width: 1149px) {
   // The panel below is absolutely positioned, so the <nav> is an empty flex
   // item here. Its auto margin would otherwise share the free space with the
   // toggle's and leave the hamburger in the middle of the bar.

@@ -1,14 +1,16 @@
 import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 import { FetchDataService } from "@services/fetch-data.service";
-import { AccountReport, address, ctlEmail, mission, OrganisationItem, telephoneNumber } from "@models/data.model";
+import { AccountReport, address, ctlEmail, mapsUrl, mission, OrganisationItem, telephoneNumber } from "@models/data.model";
+import { RouterLink } from "@angular/router";
 import { ModalComponent } from "../modal/modal.component";
+import { PoliticaPrivacidadeComponent } from "../politica-privacidade/politica-privacidade.component";
 
-// Site footer, rendered on every page. It also owns the three "about the
+// Site footer, rendered on every page. It also owns the "about the
 // institution" dialogs, which are opened from here and from the home page.
 @Component({
     selector: 'ctl-footer',
-    imports: [ModalComponent],
+    imports: [ModalComponent, PoliticaPrivacidadeComponent, RouterLink],
     templateUrl: './footer.component.html',
     styleUrl: './footer.component.scss'
 })
@@ -20,6 +22,7 @@ export class FooterComponent implements OnInit {
     readonly telephoneNumber = telephoneNumber;
     readonly address = address;
     readonly ctlEmail = ctlEmail;
+    readonly mapsUrl = mapsUrl;
     readonly year = new Date().getFullYear();
 
     private readonly fetchDataService = inject(FetchDataService);

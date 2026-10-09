@@ -20,6 +20,9 @@ const ROUTE_GROUPS: Record<string, NavGroup> = {
     explicacoes: 'servicos',
 };
 
+// Pages without a header photo, where the bar sits on white.
+const WHITE_PAGES = ['', 'contactos'];
+
 @Component({
     selector: 'ctl-navbar',
     imports: [RouterLink, RouterLinkActive],
@@ -32,8 +35,8 @@ export class NavbarComponent {
     // True while the hamburger panel fades out after a close.
     readonly isClosing = signal(false);
     readonly isGoingDown = signal(false);
-    // The home page gets the gradient bar; every other page a translucent one.
-    readonly isHome = signal(true);
+    // The white pages get the gradient bar; the photo pages a translucent one.
+    readonly isWhitePage = signal(true);
 
     // Width of the page scrollbar while a Bootstrap modal hides it. Bootstrap
     // pads the body by the same amount; the fixed bar needs its own offset.
@@ -78,7 +81,7 @@ export class NavbarComponent {
             )
             .subscribe(event => {
                 this.currentPath = event.urlAfterRedirects.split(/[?#]/)[0].replace(/^\//, '').split('/')[0];
-                this.isHome.set(this.currentPath === '');
+                this.isWhitePage.set(WHITE_PAGES.includes(this.currentPath));
             });
 
         // Any navigation (logo, browser back, in-page links) closes the menu.

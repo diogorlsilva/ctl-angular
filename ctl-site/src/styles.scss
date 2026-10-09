@@ -405,6 +405,82 @@ ctl-gallery:not(:has(+ ctl-section-content .section-content-container)) {
   user-select: none;
 }
 
+// PLAIN PAGES (Contactos and the legal documents): no photo at the top, so
+// the content clears the fixed navbar itself.
+
+.plain-page {
+  padding-top: calc(var(--nav-height) + var(--nav-gap) + clamp(2rem, 6vw, 4.5rem));
+  margin-bottom: var(--section-gap);
+}
+
+.plain-page-heading {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(2.2rem, 4.5vw, 3.5rem);
+  line-height: 1.05;
+  letter-spacing: -0.015em;
+  color: var(--ctl-blue);
+  margin: 0 0 2rem;
+  text-wrap: balance;
+}
+
+// Long legal text, on a page (Código de Conduta) or in a dialog (Política de
+// Privacidade): headed sections of paragraphs and lettered lists. Headings are
+// styled by class, as their level depends on where the text is shown.
+.legal {
+  max-width: 72ch;
+  line-height: 1.75;
+  text-wrap: pretty;
+  hyphens: auto;
+
+  .legal-heading {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 1.35rem;
+    line-height: 1.25;
+    color: var(--ctl-blue);
+    margin: 2.25rem 0 0.5rem;
+  }
+
+  .legal-subheading {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 1.1rem;
+    color: var(--ink);
+    margin: 1.75rem 0 0.5rem;
+  }
+
+  p,
+  ol,
+  ul {
+    margin: 0 0 1em;
+  }
+
+  ol ol {
+    list-style-type: lower-alpha;
+    margin: 0.5em 0;
+  }
+
+  li + li {
+    margin-top: 0.35em;
+  }
+
+  address {
+    font-style: italic;
+    margin: 0 0 1em;
+  }
+
+  // Last, so it wins over the heading margins above.
+  > :first-child {
+    margin-top: 0;
+  }
+}
+
+.legal-note {
+  font-size: 0.9rem;
+  color: var(--ink-soft);
+}
+
 // DIALOG CONTENT, shared by the home and footer dialogs.
 
 .dialog-sections {

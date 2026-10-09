@@ -89,10 +89,28 @@
   margin: 3rem auto 0;
 }
 
+// Copyright line followed by the legal links, separated by bars. Wraps on
+// phones.
 .footer-copyright {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.25rem 0.6rem;
   margin: 0;
   font-size: 0.9rem;
   color: rgba(255, 255, 255, 0.7);
+}
+
+// The two links wrap as one unit, so a bar never starts a line.
+.footer-legal {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+// Same muted tone as the copyright text, white on hover like the other links.
+.footer-legal-link {
+  color: inherit;
 }
 
 .footer-credit {
@@ -205,5 +223,18 @@
   .report-row {
     grid-template-columns: 1fr;
     gap: 0.5rem;
+  }
+}
+
+// The full line stops fitting below this width, so the legal links move to a
+// line of their own and the bar before them, which would hang at the end of
+// the first line, goes.
+@media screen and (max-width: 699px) {
+  .footer-copyright-sep {
+    display: none;
+  }
+
+  .footer-legal {
+    flex-basis: 100%;
   }
 }

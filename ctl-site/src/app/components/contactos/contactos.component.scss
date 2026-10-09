@@ -1,0 +1,75 @@
+.contact-cards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.5rem;
+}
+
+.contact-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5rem;
+  padding: 1.75rem;
+  border-radius: 24px;
+  background: var(--lilac);
+  color: var(--ink);
+  text-decoration: none;
+  transition: background-color 0.15s ease;
+
+  &:hover {
+    background: var(--ctl-blue-25);
+    color: var(--ink);
+  }
+
+  &:focus-visible {
+    outline: var(--focus-ring);
+    outline-offset: 3px;
+  }
+}
+
+.contact-card-wide {
+  grid-column: 1 / -1;
+}
+
+.contact-icon {
+  font-size: 1.75rem;
+  margin-bottom: 0.25rem;
+  color: var(--ctl-orange);
+}
+
+.contact-title {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 1.4rem;
+  line-height: 1.2;
+  margin: 0;
+}
+
+.contact-value {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  font-size: 1.1rem;
+  font-style: normal;
+  color: var(--ink-soft);
+  overflow-wrap: anywhere;
+
+  strong {
+    color: var(--ink);
+  }
+}
+
+.contact-hint {
+  margin-top: 0.5rem;
+  font-weight: 700;
+  color: var(--ctl-blue);
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+}
+
+@media screen and (max-width: 640px) {
+  .contact-cards {
+    grid-template-columns: 1fr;
+  }
+}

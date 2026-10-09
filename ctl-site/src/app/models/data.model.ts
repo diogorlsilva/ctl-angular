@@ -58,6 +58,13 @@ export type OrganisationItem = {
 export const telephoneNumber = '239 445 810';
 export const address = 'Edifício Arco-Íris';
 export const ctlEmail = 'ctlsc@outlook.com';
+export const mapsUrl = 'https://maps.app.goo.gl/g8QyPuTkq2U12ceP7';
+export const postalAddress = [
+    '(transversal) Rua Augusto Matos',
+    'Alto do Carapito, Santa Clara',
+    '3040-014 Coimbra',
+    'Portugal',
+];
 
 export const mission: {
     title: string;
