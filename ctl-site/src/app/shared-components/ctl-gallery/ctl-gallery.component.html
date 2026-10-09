@@ -10,28 +10,28 @@
     </div>
 } @else if (images.length) {
     <div (contextmenu)="$event.preventDefault()"
-         class="gallery-frame">
+         (pointerdown)="onPointerDown($event)"
+         (pointermove)="onPointerMove($event)"
+         (pointerup)="onPointerUp($event)"
+         (pointercancel)="onPointerUp($event)"
+         [class.is-grabbing]="dragging()"
+         class="gallery-frame gallery-frame--interactive">
         <!-- The photos run twice so the strip can loop without a seam; the
              copy is hidden from screen readers. -->
-        <div [style.--loop-duration]="images.length * secondsPerPhoto + 's'"
-             [class.gallery-track--loop]="ready()"
+        <div #track
              class="gallery-track">
             @for (src of images; track $index) {
                 <img [src]="src"
                      [alt]="'Fotografia ' + ($index + 1) + ' de ' + images.length"
                      draggable="false"
-                     decoding="async"
-                     (load)="onSettled()"
-                     (error)="onSettled()">
+                     decoding="async">
             }
             @for (src of images; track $index) {
                 <img [src]="src"
                      alt=""
                      aria-hidden="true"
                      draggable="false"
-                     decoding="async"
-                     (load)="onSettled()"
-                     (error)="onSettled()">
+                     decoding="async">
             }
         </div>
     </div>

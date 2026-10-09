@@ -11,6 +11,21 @@
   border-radius: var(--border-radius);
 }
 
+// Grab with the mouse or swipe sideways; vertical swipes still scroll the page.
+.gallery-frame--interactive {
+  cursor: grab;
+  touch-action: pan-y;
+  user-select: none;
+
+  &.is-grabbing {
+    cursor: grabbing;
+  }
+
+  .gallery-track {
+    will-change: transform;
+  }
+}
+
 .gallery-track {
   display: flex;
   width: max-content;
@@ -20,7 +35,7 @@
     flex: 0 0 auto;
     height: 220px;
     // A margin rather than a flex gap, so both halves of the looping track
-    // are exactly the same width and -50% lands on the seam.
+    // are exactly the same width and half the strip lands on the seam.
     margin-inline-end: 12px;
     border-radius: var(--border-radius);
   }
@@ -34,39 +49,11 @@
   }
 }
 
-// Slides the first copy of the photos out while the second copy takes its
-// place, then starts over: an endless slideshow the visitor only watches.
-.gallery-track--loop {
-  animation: gallery-loop var(--loop-duration, 40s) linear infinite;
-}
-
-@keyframes gallery-loop {
-  to {
-    transform: translateX(-50%);
-  }
-}
-
 @media screen and (max-width: 640px) {
   .gallery-track {
     img,
     ctl-skeleton {
       height: 180px;
     }
-  }
-}
-
-// No motion: the strip stands still and can be swiped instead.
-@media (prefers-reduced-motion: reduce) {
-  .gallery-frame {
-    overflow-x: auto;
-    scrollbar-width: none;
-
-    &::-webkit-scrollbar {
-      display: none;
-    }
-  }
-
-  .gallery-track--loop {
-    animation: none;
   }
 }
