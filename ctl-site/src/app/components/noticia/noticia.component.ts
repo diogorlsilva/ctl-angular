@@ -15,7 +15,7 @@ import { slugify } from "../../utils/utils.model";
         <ctl-article [photos]="item()?.photoSrc ? [item()!.photoSrc!] : []"
                      [text]="item()?.description ?? ''"
                      [title]="item()?.title"
-                     backLabel="Voltar ao Início"
+                     backLabel="Voltar"
                      backLink="/">
         </ctl-article>
     `
