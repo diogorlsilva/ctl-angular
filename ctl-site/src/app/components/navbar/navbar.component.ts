@@ -20,8 +20,9 @@ const ROUTE_GROUPS: Record<string, NavGroup> = {
     explicacoes: 'servicos',
 };
 
-// Pages without a header photo, where the bar sits on white.
-const WHITE_PAGES = ['', 'contactos'];
+// Pages without a header photo, where the bar sits on white. Matched against
+// the whole path, so a news or project page matches but the Projetos list does not.
+const WHITE_PAGES = [/^$/, /^contactos$/, /^noticias\/[^/]+$/, /^projetos\/[^/]+$/];
 
 @Component({
     selector: 'ctl-navbar',
@@ -80,8 +81,9 @@ export class NavbarComponent {
                 takeUntilDestroyed()
             )
             .subscribe(event => {
-                this.currentPath = event.urlAfterRedirects.split(/[?#]/)[0].replace(/^\//, '').split('/')[0];
-                this.isWhitePage.set(WHITE_PAGES.includes(this.currentPath));
+                const path = event.urlAfterRedirects.split(/[?#]/)[0].replace(/^\//, '');
+                this.currentPath = path.split('/')[0];
+                this.isWhitePage.set(WHITE_PAGES.some(page => page.test(path)));
             });
 
         // Any navigation (logo, browser back, in-page links) closes the menu.
