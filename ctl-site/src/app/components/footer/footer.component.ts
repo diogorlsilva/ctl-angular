@@ -4,12 +4,13 @@ import { FetchDataService } from "@services/fetch-data.service";
 import { AccountReport, address, ctlEmail, mapsUrl, mission, OrganisationItem, telephoneNumber } from "@models/data.model";
 import { ModalComponent } from "../modal/modal.component";
 import { PoliticaPrivacidadeComponent } from "../politica-privacidade/politica-privacidade.component";
+import { CodigoCondutaComponent } from "../codigo-conduta/codigo-conduta.component";
 
 // Site footer, rendered on every page. It also owns the "about the
 // institution" dialogs, which are opened from here and from the home page.
 @Component({
     selector: 'ctl-footer',
-    imports: [ModalComponent, PoliticaPrivacidadeComponent],
+    imports: [ModalComponent, PoliticaPrivacidadeComponent, CodigoCondutaComponent],
     templateUrl: './footer.component.html',
     styleUrl: './footer.component.scss'
 })

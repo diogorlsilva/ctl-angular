@@ -93,10 +93,11 @@
                         type="button">Política de Privacidade
                 </button>
                 <span aria-hidden="true">|</span>
-                <a class="footer-link footer-legal-link"
-                   href="assets/docs/codigo-conduta.pdf"
-                   rel="noopener"
-                   target="_blank">Código de Conduta</a>
+                <button class="footer-link footer-legal-link"
+                        data-bs-target="#conduct"
+                        data-bs-toggle="modal"
+                        type="button">Código de Conduta
+                </button>
             </span>
         </p>
         <a aria-label="Site desenvolvido por Diogo Silva"
@@ -173,6 +174,15 @@
            [title]="'Política de Privacidade'">
     <ng-template #privacyContent>
         <ctl-politica-privacidade></ctl-politica-privacidade>
+    </ng-template>
+</ctl-modal>
+
+<ctl-modal [contentHtml]="conductContent"
+           [modalId]="'conduct'"
+           [modalSize]="'lg'"
+           [title]="'Código de Conduta para Prevenção e Combate ao Assédio no Trabalho'">
+    <ng-template #conductContent>
+        <ctl-codigo-conduta></ctl-codigo-conduta>
     </ng-template>
 </ctl-modal>
 

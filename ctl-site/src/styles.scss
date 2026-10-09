@@ -424,8 +424,8 @@ ctl-gallery:not(:has(+ ctl-section-content .section-content-container)) {
   text-wrap: balance;
 }
 
-// Long legal text (the Política de Privacidade dialog): headed sections of
-// paragraphs and lettered lists.
+// Long legal text (the Política de Privacidade and Código de Conduta dialogs):
+// headed sections of paragraphs and lettered lists.
 .legal {
   max-width: 72ch;
   line-height: 1.75;
@@ -441,10 +441,23 @@ ctl-gallery:not(:has(+ ctl-section-content .section-content-container)) {
     margin: 2.25rem 0 0.5rem;
   }
 
+  .legal-subheading {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 1.1rem;
+    color: var(--ink);
+    margin: 1.75rem 0 0.5rem;
+  }
+
   p,
   ol,
   ul {
     margin: 0 0 1em;
+  }
+
+  ol ol {
+    list-style-type: lower-alpha;
+    margin: 0.5em 0;
   }
 
   li + li {
