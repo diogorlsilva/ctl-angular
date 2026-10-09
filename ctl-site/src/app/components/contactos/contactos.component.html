@@ -22,21 +22,71 @@
                   class="contact-value"></span>
         </a>
 
-        <a [href]="mapsUrl"
-           class="contact-card contact-card-wide"
-           rel="noopener"
-           target="_blank">
-            <svg aria-hidden="true" class="icon contact-icon">
-                <use href="#i-map-pin"/>
-            </svg>
-            <h2 class="contact-title">Morada</h2>
-            <address class="contact-value">
-                <strong [innerText]="address"></strong>
-                @for (line of postalAddress; track line) {
-                    <span [innerText]="line"></span>
-                }
-            </address>
-            <span class="contact-hint">Ver no mapa</span>
-        </a>
+        <!-- The carousel controls are buttons, which cannot sit inside a link,
+             so only the address side of this card links to the map. -->
+        <div class="contact-card contact-card-wide contact-card-address">
+            <a [href]="mapsUrl"
+               class="contact-address-link"
+               rel="noopener"
+               target="_blank">
+                <svg aria-hidden="true" class="icon contact-icon">
+                    <use href="#i-map-pin"/>
+                </svg>
+                <h2 class="contact-title">Morada</h2>
+                <address class="contact-value">
+                    <strong [innerText]="address"></strong>
+                    @for (line of postalAddress; track line) {
+                        <span [innerText]="line"></span>
+                    }
+                </address>
+                <span class="contact-hint">Ver no mapa</span>
+            </a>
+
+            <div #carousel
+                 aria-label="Fotografias do edifício"
+                 aria-roledescription="carrossel"
+                 class="carousel slide contact-photos"
+                 id="carousel-edificio">
+                <div class="carousel-inner">
+                    @for (photo of photos; track photo) {
+                        <div [attr.aria-label]="($index + 1) + ' de ' + photos.length"
+                             [class.active]="$index === 0"
+                             aria-roledescription="diapositivo"
+                             class="carousel-item">
+                            <img [alt]="'Fotografia ' + ($index + 1) + ' de ' + photos.length + ' do edifício'"
+                                 [src]="photo + '-960.webp'"
+                                 [srcset]="photo + '-960.webp 960w, ' + photo + '.webp 1920w'"
+                                 decoding="async"
+                                 draggable="false"
+                                 sizes="(max-width: 640px) 100vw, 50vw">
+                        </div>
+                    }
+                </div>
+                <div class="carousel-indicators">
+                    @for (photo of photos; track photo) {
+                        <button [attr.aria-current]="$index === 0 ? 'true' : null"
+                                [attr.aria-label]="'Fotografia ' + ($index + 1)"
+                                [attr.data-bs-slide-to]="$index"
+                                [class.active]="$index === 0"
+                                data-bs-target="#carousel-edificio"
+                                type="button"></button>
+                    }
+                </div>
+                <button class="carousel-control-prev"
+                        data-bs-slide="prev"
+                        data-bs-target="#carousel-edificio"
+                        type="button">
+                    <span aria-hidden="true" class="carousel-control-prev-icon"></span>
+                    <span class="visually-hidden">Anterior</span>
+                </button>
+                <button class="carousel-control-next"
+                        data-bs-slide="next"
+                        data-bs-target="#carousel-edificio"
+                        type="button">
+                    <span aria-hidden="true" class="carousel-control-next-icon"></span>
+                    <span class="visually-hidden">Seguinte</span>
+                </button>
+            </div>
+        </div>
     </div>
 </div>

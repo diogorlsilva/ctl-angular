@@ -31,6 +31,92 @@
   grid-column: 1 / -1;
 }
 
+// The address on the left, a carousel of the building on the right. The card
+// is not a link itself (see the template), so it only tints while the address
+// link is hovered.
+.contact-card-address {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: stretch;
+  gap: 1.5rem;
+
+  &:hover {
+    background: var(--lilac);
+  }
+
+  &:has(.contact-address-link:hover) {
+    background: var(--ctl-blue-25);
+  }
+}
+
+.contact-address-link {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5rem;
+  color: inherit;
+  text-decoration: none;
+  border-radius: 8px;
+
+  &:hover {
+    color: inherit;
+  }
+
+  &:focus-visible {
+    outline: var(--focus-ring);
+    outline-offset: 6px;
+  }
+}
+
+.contact-photos {
+  min-height: 260px;
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  background: var(--ctl-blue-25);
+  // The slides are transformed; without a stacking context Chrome on Android
+  // can ignore the rounded clip.
+  isolation: isolate;
+
+  .carousel-inner,
+  .carousel-item {
+    height: 100%;
+  }
+
+  img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+// The arrows are the shared white chips in styles.scss; white dots here, as
+// the photos are busy and mostly light.
+.carousel-indicators {
+  margin-bottom: 0.75rem;
+
+  [data-bs-target] {
+    width: 8px;
+    height: 8px;
+    margin: 0 4px;
+    border: 0;
+    border-radius: 50%;
+    background-color: white;
+    box-shadow: 0 0 0 1px rgba(35, 36, 90, 0.25);
+    opacity: 0.6;
+    transition: opacity 0.15s ease;
+
+    &.active {
+      opacity: 1;
+    }
+
+    &:focus-visible {
+      outline: var(--focus-ring);
+      outline-offset: 2px;
+    }
+  }
+}
+
 .contact-icon {
   font-size: 1.75rem;
   margin-bottom: 0.25rem;
@@ -69,7 +155,13 @@
 }
 
 @media screen and (max-width: 640px) {
-  .contact-cards {
+  .contact-cards,
+  .contact-card-address {
     grid-template-columns: 1fr;
+  }
+
+  .contact-photos {
+    min-height: 0;
+    aspect-ratio: 4 / 3;
   }
 }
