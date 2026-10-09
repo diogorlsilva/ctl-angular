@@ -164,7 +164,7 @@
                         <span [innerText]="report.year"
                               class="report-year"></span>
                         <div class="report-files">
-                            <a [href]="'assets/RELATORIOS_CONTAS/' + report.balanceSheetFile"
+                            <a [href]="report.balanceSheetFile"
                                class="chip"
                                rel="noopener noreferrer"
                                target="_blank">
@@ -173,7 +173,7 @@
                                 </svg>
                                 <span [innerText]="report.balanceSheetName"></span>
                             </a>
-                            <a [href]="'assets/RELATORIOS_CONTAS/' + report.profitAndLossFile"
+                            <a [href]="report.profitAndLossFile"
                                class="chip"
                                rel="noopener noreferrer"
                                target="_blank">

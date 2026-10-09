@@ -15,6 +15,7 @@ export enum XLSXHomepageUrl {
   ORGAOS_SOCIAIS = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSTD76NIH6LzAPkI2wJ1YPGJtirefVkTXtVbLLN9-auGXgOvA6jXkeL93uKBRdqIDoaC7yiXvspH66R/pub?output=xlsx',
   PARCERIAS = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vS5g_ruo_mAF7zivsLHA0ozT2arA8L5h4r3GaiBbk_whW21XdQjh_SN4FdKsNLMJVaavQbNyyut7uzc/pub?output=xlsx',
   PESSOAS = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vS9B3H5UYAC9GpCbPP7RxFIVIHxG2kIldXPw9Fq3UdAE0LDYCkisbo7Gb8gsbF4vLwNN2cBz7ixy7zX/pub?output=xlsx',
+  RELATORIOS_CONTAS = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vT4F_AMKFxMJqwcFD0kOrMk1cfgTMyZ3JMCOseh_6xQyb1ikl5jPxyo0qCQeBsbhwPg-EYVE8a5o0Fn/pub?output=xlsx',
  }
 
  export enum XLSXProjectUrl {

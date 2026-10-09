@@ -136,8 +136,9 @@ export class FetchDataService {
     }
 
     getReportsData(): Observable<AccountReport[]> {
-        return this.cached('RELATORIOS_CONTAS', () => this.fetchData('RELATORIOS_CONTAS/INFO_RELATORIOS_CONTAS').pipe(map(({ rows }) => {
-            return rows.slice(1).map((row) => {
+        return this.cached(XLSXHomepageUrl.RELATORIOS_CONTAS, () => this.fetchDataByUrl(XLSXHomepageUrl.RELATORIOS_CONTAS).pipe(map(({ rows }) => {
+            // Row 1 holds the headers and row 2 a note for whoever edits the sheet.
+            return rows.slice(2).map((row) => {
                 return {
                     year: this.parse(row[0]),
                     balanceSheetName: this.parse(row[1]),
@@ -147,7 +148,7 @@ export class FetchDataService {
                 };
             }).filter(item =>
                 Object.values(item).every(value => !!value)
-            );
+            ).sort((a, b) => Number(b.year) - Number(a.year));
         })))
     }
 
@@ -201,10 +202,6 @@ export class FetchDataService {
                 })
             }
         })));
-    }
-
-    private fetchData(fileName: string): Observable<Sheet> {
-        return this.fetchDataByUrl(`assets/${fileName}.xlsx`);
     }
 
     private fetchDataByUrl(url: string, { alwaysFresh = false } = {}): Observable<Sheet> {
