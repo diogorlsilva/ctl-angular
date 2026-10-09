@@ -1,131 +1,381 @@
 .navbar-container {
   display: flex;
-  height: var(--nav-height);
   align-items: center;
+  height: var(--nav-height);
+  // Extra left padding keeps the logo text clear of the curved pill end.
+  padding: 0 1rem 0 1.5rem;
   z-index: 2;
+  // Floats inside the viewport with the same gap on every side. While a modal
+  // hides the page scrollbar, --scrollbar-comp holds its width so the bar does
+  // not slide right (set by the component).
   position: fixed;
-  width: 100%;
+  top: var(--nav-gap);
+  left: var(--nav-gap);
+  right: calc(var(--nav-gap) + var(--scrollbar-comp, 0px));
   transition: top 0.3s ease-in-out;
-  top: 0;
-  font-family: Century Gothic, CenturyGothic, AppleGothic, sans-serif;
-  border-radius: 0 0 var(--border-radius) var(--border-radius);
+  font-family: var(--font-display);
+  border-radius: 999px;
+  // Translucent lilac over the section photos; the blur below keeps the links
+  // readable through it. The dropdown panels use a denser version of the same
+  // lilac so their text stays readable over busy photos.
+  --nav-glass: rgba(232, 232, 247, 0.5);
+  --nav-glass-panel: rgba(232, 232, 247, 0.75);
+  // Hover stays in the blue family: the pills darken a step, the dropdown
+  // items get a light blue tint that still reads over a light page.
+  --nav-hover-pill: #5257bd;
+  --nav-hover-pill-active: #464ba8;
+  --nav-hover-item: rgba(100, 104, 204, 0.8);
+  --nav-hover-item-active: var(--ctl-blue);
+  background: var(--nav-glass);
+  box-shadow: var(--soft-shadow);
+  isolation: isolate;
+
+  // The blur lives on a pseudo-element rather than the bar itself: a
+  // backdrop-filter on the bar would make the dropdown panels (its
+  // descendants) blur only the bar's own box, not the page behind them.
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    backdrop-filter: blur(20px);
+  }
 }
 
+// Home sits on a white page, so the bar gets a subtle ramp around the
+// secondary-button lilac: lighter at the logo end, deeper under the pills.
+// Slightly translucent so the blur shows what scrolls under it.
+.navbar-home {
+  background: linear-gradient(100deg,
+    rgba(232, 232, 247, 0.8) 0%,
+    rgba(216, 217, 242, 0.8) 45%,
+    rgba(200, 202, 237, 0.85) 100%);
+}
+
+// Far enough up that the shadow leaves the viewport too.
 .navbar-hide-on-scroll-down {
-  top: calc(0px - var(--nav-height));
+  top: calc(-1 * (var(--nav-height) + var(--nav-gap) + 2rem));
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  padding-top: 4px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-family: "starlinerbtnregular", "Century Gothic", sans-serif;
+  font-size: 1.2rem;
+  line-height: 1.5;
+  font-weight: bold;
+  color: var(--ctl-blue);
+  user-select: none;
+  white-space: nowrap;
+
+  &:hover {
+    color: var(--ctl-blue);
+  }
+
+  &:focus-visible {
+    outline: var(--focus-ring);
+    outline-offset: 2px;
+  }
+
+  .abbrev-text {
+    display: none;
+  }
+}
+
+nav {
+  margin-left: auto;
 }
 
 .nav {
   display: flex;
-  margin-left: auto;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
 .nav-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.4rem 0.9rem;
+  border: 0;
+  border-radius: 999px;
+  font: inherit;
+  font-weight: 500;
+  font-size: 1.05rem;
+  line-height: 1.5;
   color: white;
-  border-radius: var(--border-radius);
-  margin: 0 8px;
-  font-weight: bold;
-  backdrop-filter: blur(10px);
   background: var(--ctl-blue);
+  cursor: pointer;
   user-select: none;
+  text-decoration: none;
+  transition: background-color 0.15s ease;
 
-  &:hover {
-    background: var(--ctl-orange);
-    cursor: pointer;
+  // Hover only where a pointer can hover: on touch screens a tap would leave
+  // the group header stuck dark after it opens.
+  @media (hover: hover) {
+    &:hover {
+      background: var(--nav-hover-pill);
+      color: white;
+    }
   }
-}
 
-.nav-item-selected {
-  background: #9295db;
-  border-radius: var(--border-radius);
+  &:active {
+    background: var(--nav-hover-pill-active);
+  }
+
+  &:focus-visible {
+    outline: var(--focus-ring);
+    outline-offset: 2px;
+  }
+
+  &.nav-item-selected {
+    background: #9295db;
+    color: white;
+  }
 }
 
 .toggle {
   display: none;
 }
 
-.logo-container {
-  background: linear-gradient(
-                  to right, rgba(255, 255, 255, 0.35) 0%,
-                  rgba(255, 255, 255, 0.35) 80%,
-                  transparent);
-  border-radius: 0 0 0 var(--border-radius);
-  padding: 35px 50px 0 10px;
-  height: 100%;
-
-  .abbrev-text {
-    display: none;
-  }
-
-  .full-text {
-    display: block;
-  }
-
-  span {
-    font-family: "starlinerbtnregular", "Century Gothic", serif !important;
-    font-size: 1.2em;
-    font-weight: bold;
-    color: var(--ctl-blue);
-    cursor: pointer;
-    user-select: none;
-  }
-}
-
 .dropdown-menu {
-  background-color: var(--ctl-blue-25);
-  border-radius: var(--border-radius);
-}
+  margin-top: 0.5rem !important;
+  padding: 0.5rem;
+  border: 0;
+  // Item pills are ~21px radius; adding the 8px padding keeps the corners concentric.
+  border-radius: 29px;
+  // Same glass as the bar, a little denser, on every page.
+  background: var(--nav-glass-panel);
+  backdrop-filter: blur(20px);
+  box-shadow: var(--soft-shadow), 0 0 0 1px var(--ctl-blue-25);
+  font-family: var(--font-body);
 
-.dropdown-item:hover {
-  background-color: var(--ctl-blue-15);
-  border-radius: var(--border-radius);
-
-  &:active {
-    color: black !important;
+  > li + li {
+    margin-top: 0.25rem;
   }
 }
 
-@media screen and (max-width: 1024px) {
-  .nav {
-    display: none;
-    position: absolute;
-    top: var(--nav-height);
+// Bootstrap only switches the menu between display none and block, which
+// cannot animate. On wide screens the menu stays rendered and drops in from
+// under its button. It is placed by CSS (data-bs-display="static") rather
+// than Popper, which clears its position on hide and would make the closing
+// menu jump.
+@media screen and (min-width: 1025px) {
+  .dropdown-menu {
+    display: block;
+    top: 100%;
     right: 0;
-    background: transparent;
-  }
+    left: auto;
+    visibility: hidden;
+    opacity: 0;
+    translate: 0 -0.5rem;
+    scale: 0.96;
+    transform-origin: top right;
+    transition: opacity 0.15s ease, translate 0.15s ease, scale 0.15s ease, visibility 0s 0.15s;
 
-  .show-nav {
-    display: block;
-  }
-
-  .toggle {
-    display: block;
-    background-color: transparent;
-    border: transparent;
-    margin: 0 5px 0 auto;
-    color: var(--ctl-blue);
-    font-size: 1.5em;
-  }
-
-  .nav-link {
-    margin: 4px 8px;
-  }
-
-  .logo-container {
-
-    span {
-      font-size: 1em;
+    &.show {
+      visibility: visible;
+      opacity: 1;
+      translate: 0;
+      scale: 1;
+      transition: opacity 0.2s ease, translate 0.2s ease, scale 0.2s ease, visibility 0s;
     }
   }
 }
 
+.dropdown-item {
+  padding: 0.5rem 0.9rem;
+  border-radius: 999px;
+  font-weight: 600;
+  color: var(--ink);
+  cursor: pointer;
 
-@media screen and (max-width: 768px) {
-  .abbrev-text {
-    display: block !important;
+  &:hover,
+  &:focus-visible {
+    background: var(--nav-hover-item);
+    color: white;
   }
 
-  .full-text {
-    display: none !important;
+  &:active {
+    background: var(--nav-hover-item-active);
+    color: white;
+  }
+
+  &.nav-item-selected {
+    color: var(--ctl-blue);
+    background: var(--lilac);
+  }
+}
+
+.dropdown-divider {
+  margin: 0.4rem 0.5rem;
+  // Blue tint rather than lilac, which matches the glass fill and vanishes.
+  border-color: rgba(100, 104, 204, 0.4);
+  opacity: 1;
+}
+
+@media screen and (max-width: 1024px) {
+  // The panel below is absolutely positioned, so the <nav> is an empty flex
+  // item here. Its auto margin would otherwise share the free space with the
+  // toggle's and leave the hamburger in the middle of the bar.
+  nav {
+    margin-left: 0;
+  }
+
+  // The panel stays rendered so it can drop in from the hamburger and fade
+  // out again; visibility keeps the closed panel out of reach and the tab order.
+  .nav {
+    position: absolute;
+    top: calc(var(--nav-height) + 0.5rem);
+    right: 0;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.25rem;
+    min-width: 15rem;
+    padding: 0.75rem;
+    border-radius: 32px;
+    background: var(--nav-glass-panel);
+    backdrop-filter: blur(20px);
+    box-shadow: var(--soft-shadow), 0 0 0 1px var(--ctl-blue-25);
+    visibility: hidden;
+    opacity: 0;
+    translate: 0 -0.5rem;
+    scale: 0.97;
+    transform-origin: top right;
+  }
+
+  // The fade-out runs only right after a close (class set by the component).
+  // A transition on the closed panel itself would also run when the window
+  // narrows past the breakpoint and flash the desktop links as a panel.
+  .nav-closing {
+    transition: opacity 0.15s ease, translate 0.15s ease, scale 0.15s ease, visibility 0s 0.15s;
+  }
+
+  .show-nav {
+    visibility: visible;
+    opacity: 1;
+    translate: 0;
+    scale: 1;
+    transition: opacity 0.2s ease, translate 0.2s ease, scale 0.2s ease, visibility 0s;
+  }
+
+  .nav-link {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  // Each group is an accordion row: the button, then a sub-list that grows
+  // from 0 to its natural height when Bootstrap adds .show to the menu.
+  .nav-item.dropdown {
+    display: grid;
+    grid-template-rows: auto 0fr;
+    // Without this the auto row stretches mid-transition and the button jumps.
+    align-content: start;
+    transition: grid-template-rows 0.3s ease;
+
+    &:has(> .dropdown-menu.show) {
+      grid-template-rows: auto 1fr;
+    }
+  }
+
+  // The open group's chevron flips; the button itself keeps its colour.
+  .dropdown-toggle {
+    &::after {
+      transition: transform 0.3s ease;
+    }
+
+    &[aria-expanded="true"]::after {
+      transform: rotate(180deg);
+    }
+  }
+
+  // Sub-menus open in place inside the panel instead of floating. The list is
+  // always rendered so the grid row can animate; overflow hides the collapsed
+  // content and visibility keeps the hidden links out of the tab order.
+  .dropdown-menu {
+    display: block !important;
+    position: static !important;
+    transform: none !important;
+    min-height: 0;
+    overflow: hidden;
+    margin: 0 0 0 1.1rem !important;
+    padding: 0 0 0 0.75rem;
+    border-left: 2px solid rgba(100, 104, 204, 0.4);
+    border-radius: 0;
+    box-shadow: none;
+    background: transparent;
+    // The panel already blurs the page; a second blur here would render the
+    // sub-list as a lighter patch inside it.
+    backdrop-filter: none;
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s 0.3s, opacity 0.2s ease;
+
+    &.show {
+      visibility: visible;
+      opacity: 1;
+      transition: visibility 0s, opacity 0.2s ease 0.1s;
+    }
+
+    > li:first-child {
+      padding-top: 0.35rem;
+    }
+
+    > li:last-child {
+      padding-bottom: 0.5rem;
+    }
+  }
+
+  .toggle {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    margin: 0 0 0 auto;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: transparent;
+    color: var(--ctl-blue);
+    font-size: 1.6rem;
+
+    &:focus-visible {
+      outline: var(--focus-ring);
+      outline-offset: 2px;
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .logo-container {
+    .full-text {
+      display: none;
+    }
+
+    .abbrev-text {
+      display: inline;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .navbar-container,
+  .nav-link,
+  .nav-item.dropdown,
+  .dropdown-toggle::after,
+  .dropdown-menu,
+  .dropdown-menu.show,
+  .nav.nav-closing,
+  .nav.show-nav {
+    transition: none;
   }
 }

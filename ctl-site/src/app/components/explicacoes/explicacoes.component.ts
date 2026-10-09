@@ -1,4 +1,4 @@
-import { Component, DestroyRef, inject, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
 import { CtlSectionBackgroundComponent } from "@shared/ctl-section-background/ctl-section-background.component";
 import { CtlSectionMessageBoxComponent } from "@shared/ctl-section-message-box/ctl-section-message-box.component";
 import { CtlGalleryComponent } from "@shared/ctl-gallery/ctl-gallery.component";
@@ -10,19 +10,17 @@ import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 
 @Component({
     selector: 'ctl-explicacoes',
-    standalone: true,
     imports: [
         CtlSectionBackgroundComponent,
         CtlSectionMessageBoxComponent,
         CtlGalleryComponent,
         CtlSectionContentComponent
     ],
-    templateUrl: './explicacoes.component.html',
-    styleUrl: './explicacoes.component.scss'
+    templateUrl: './explicacoes.component.html'
 })
 export class ExplicacoesComponent implements OnInit {
-    section?: SectionItem;
-    loading = true;
+    readonly section = signal<SectionItem | undefined>(undefined);
+    readonly loading = signal(true);
 
     private readonly fetchDataService = inject(FetchDataService);
     private readonly destroyRef = inject(DestroyRef);
@@ -31,8 +29,8 @@ export class ExplicacoesComponent implements OnInit {
         this.fetchDataService.getSectionDataByUrl(XLSXUrl.EXPLICACOES)
             .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe({
-                next: (section) => this.section = section,
-                complete: () => this.loading = false
+                next: (section) => this.section.set(section),
+                complete: () => this.loading.set(false)
             });
     }
 }

@@ -1,39 +1,37 @@
-import { Component, DestroyRef, inject, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
 import { CtlGalleryComponent } from "@shared/ctl-gallery/ctl-gallery.component";
 import { CtlSectionBackgroundComponent } from "@shared/ctl-section-background/ctl-section-background.component";
+import { CtlSectionContentComponent } from "@shared/ctl-section-content/ctl-section-content.component";
+import { CtlSectionMessageBoxComponent } from "@shared/ctl-section-message-box/ctl-section-message-box.component";
 import { SectionItem } from "@models/data.model";
 import { FetchDataService } from "@services/fetch-data.service";
 import { XLSXUrl } from "../../utils/utils.model";
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
-import { CtlSectionMessageBoxComponent } from "@shared/ctl-section-message-box/ctl-section-message-box.component";
-import { SanitizeYouTubeUrlPipe } from "../../pipes/url-sanitizer.pipe";
 
 @Component({
     selector: 'ctl-creche',
-    standalone: true,
     imports: [
         CtlGalleryComponent,
         CtlSectionBackgroundComponent,
-        CtlSectionMessageBoxComponent,
-        SanitizeYouTubeUrlPipe,
+        CtlSectionContentComponent,
+        CtlSectionMessageBoxComponent
     ],
-    templateUrl: './creche.component.html',
-    styleUrl: './creche.component.scss'
+    templateUrl: './creche.component.html'
 })
 export class CrecheComponent implements OnInit {
-    section?: SectionItem;
-    loading = true;
+    readonly section = signal<SectionItem | undefined>(undefined);
+    readonly loading = signal(true);
 
     private readonly fetchDataService = inject(FetchDataService);
     private readonly destroyRef = inject(DestroyRef);
 
-
     ngOnInit(): void {
+        // The creche sheet also carries a video (rows 7 and 8).
         this.fetchDataService.getSectionDataByUrl(XLSXUrl.CRECHE, true)
             .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe({
-                next: (section) => this.section = section,
-                complete: () => this.loading = false
+                next: (section) => this.section.set(section),
+                complete: () => this.loading.set(false)
             });
     }
 }

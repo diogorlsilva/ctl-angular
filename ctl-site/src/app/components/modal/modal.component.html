@@ -1,32 +1,26 @@
-<div [id]="modalId"
-     class="modal" tabindex="-1">
-    <div [class.modal-lg]="modalSize === 'lg'"
+<div [attr.aria-labelledby]="modalId + '-title'"
+     [id]="modalId"
+     class="modal fade"
+     tabindex="-1">
+    <div [class.modal-dialog-scrollable]="isScrollable"
+         [class.modal-lg]="modalSize === 'lg'"
          [class.modal-xl]="modalSize === 'xl'"
-         [class.modal-dialog-scrollable]="isScrollable"
          class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 [innerText]="title"
-                    class="modal-title">
-                </h5>
-                <button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"></button>
+                <h2 [id]="modalId + '-title'"
+                    [innerText]="title"
+                    class="modal-title"></h2>
+                <button aria-label="Fechar"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        type="button"></button>
             </div>
             <div class="modal-body">
-                @if (contentText) {
-                    <p [innerText]="contentText" class="content"></p>
+                @if (isOpen()) {
+                    <ng-container [ngTemplateOutlet]="contentHtml"></ng-container>
                 }
-
-                @if (contentHtml) {
-                    <ng-template [ngTemplateOutlet]="contentHtml"></ng-template>
-                }
-
             </div>
-            @if (hasFooter) {
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" data-bs-dismiss="modal" type="button">Close</button>
-                    <button class="btn btn-primary" type="button">Save changes</button>
-                </div>
-            }
         </div>
     </div>
 </div>

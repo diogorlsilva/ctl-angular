@@ -1,44 +1,11 @@
-<ctl-section-background [backgroundUrl]="'/assets/images/creche/creche_background.webp'"></ctl-section-background>
-<ctl-section-message-box [iconSrc]="'assets/images/creche/creche_logo.png'"
-                         [loading]="loading"
-                         [messageBoxText]="section?.smallDescription ?? ''"
+<ctl-section-background [backgroundUrl]="'assets/images/creche/creche_background.webp'"></ctl-section-background>
+<ctl-section-message-box [iconSrc]="'assets/images/creche/creche_logo.webp'"
+                         [loading]="loading()"
+                         [messageBoxText]="section()?.smallDescription ?? ''"
                          [title]="'Creche Arco-Íris'">
 </ctl-section-message-box>
-<ctl-gallery [imagesSRCs]="section?.photoSRCs ?? []"
-             [loading]="loading"></ctl-gallery>
-@if (section) {
-    <div class="creche-section-content-container">
-        <div [innerText]="section.description"></div>
-    </div>
-
-    <div class="creche-info-columns-container">
-        <div>
-            <div [innerText]="section.videoTitle"
-                 class="creche-column-title">
-            </div>
-            <iframe
-                    [src]="section.videoURL | SafeYouTubeUrl"
-                    [title]='section.videoTitle'
-                    allow='autoplay; encrypted-media'
-                    allowfullscreen
-                    class="iframe-video"
-            >
-            </iframe>
-        </div>
-
-        <div class="creche-column m-b-40">
-            <div [innerText]="section.leftTitle"
-                 class="creche-column-title"></div>
-            @for (item of section.leftBullets; track $index) {
-                <div [innerText]="item" class="creche-column-item"></div>
-            }
-            <div [innerText]="section.rightTitle"
-                 class="creche-column-title m-t-40"></div>
-            @for (item of section.rightBullets; track $index) {
-                <div [innerText]="item" class="creche-column-item"></div>
-            }
-        </div>
-    </div>
+<ctl-gallery [images]="section()?.photoSRCs ?? []"
+             [loading]="loading()"></ctl-gallery>
+@if (section(); as section) {
+    <ctl-section-content [section]="section"></ctl-section-content>
 }
-
-

@@ -1,39 +1,37 @@
 @if (loading) {
-    @for (direction of ['', 'to-right']; track direction) {
-        <div [class.gap-margin-top]="direction"
-             aria-busy="true"
-             class="gallery-container">
-            @for (group of [0, 1]; track group) {
-                <div class="photo-group {{ direction }}">
-                    @for (_ of skeletons; track $index) {
-                        <ctl-skeleton height="200px" width="267px"></ctl-skeleton>
-                    }
-                </div>
-            }
-        </div>
-    }
-} @else if (arrayToRight.length) {
-    <div class="gallery-container">
-        <div class="photo-group">
-            @for (src of arrayToRight; track $index) {
-                <img [src]="src" alt="" decoding="async">
-            }
-        </div>
-        <div aria-hidden="true" class="photo-group">
-            @for (src of arrayToRight; track $index) {
-                <img [src]="src" alt="" decoding="async">
+    <div aria-busy="true"
+         class="gallery-frame">
+        <span class="visually-hidden">A carregar fotografias</span>
+        <div class="gallery-track">
+            @for (_ of skeletons; track $index) {
+                <ctl-skeleton height="220px" width="293px"></ctl-skeleton>
             }
         </div>
     </div>
-    <div class="gallery-container gap-margin-top">
-        <div class="photo-group to-right">
-            @for (src of arrayToLeft; track $index) {
-                <img [src]="src" alt="" decoding="async">
+} @else if (images.length) {
+    <div (contextmenu)="$event.preventDefault()"
+         class="gallery-frame">
+        <!-- The photos run twice so the strip can loop without a seam; the
+             copy is hidden from screen readers. -->
+        <div [style.--loop-duration]="images.length * secondsPerPhoto + 's'"
+             [class.gallery-track--loop]="ready()"
+             class="gallery-track">
+            @for (src of images; track $index) {
+                <img [src]="src"
+                     [alt]="'Fotografia ' + ($index + 1) + ' de ' + images.length"
+                     draggable="false"
+                     decoding="async"
+                     (load)="onSettled()"
+                     (error)="onSettled()">
             }
-        </div>
-        <div aria-hidden="true" class="photo-group to-right">
-            @for (src of arrayToLeft; track $index) {
-                <img [src]="src" alt="" decoding="async">
+            @for (src of images; track $index) {
+                <img [src]="src"
+                     alt=""
+                     aria-hidden="true"
+                     draggable="false"
+                     decoding="async"
+                     (load)="onSettled()"
+                     (error)="onSettled()">
             }
         </div>
     </div>

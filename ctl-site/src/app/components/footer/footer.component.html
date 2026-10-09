@@ -1,0 +1,193 @@
+<footer class="footer">
+    <div class="footer-grid wrap">
+        <div class="footer-brand">
+            <span class="footer-wordmark">Clube de Tempos Livres de Santa Clara</span>
+            <span class="footer-tagline">Instituição Particular de Solidariedade Social</span>
+        </div>
+
+        <div class="footer-col">
+            <h2 class="footer-title">Sobre nós</h2>
+            <button class="footer-link"
+                    data-bs-target="#mission"
+                    data-bs-toggle="modal"
+                    type="button">Missão, visão e valores
+            </button>
+            <button class="footer-link"
+                    data-bs-target="#organisation"
+                    data-bs-toggle="modal"
+                    type="button">Órgãos sociais
+            </button>
+            <button class="footer-link"
+                    data-bs-target="#reports"
+                    data-bs-toggle="modal"
+                    type="button">Relatórios de contas
+            </button>
+        </div>
+
+        <div class="footer-col">
+            <h2 class="footer-title">Contactos</h2>
+            <a [href]="'tel:' + telephoneNumber"
+               class="footer-link">
+                <svg aria-hidden="true" class="icon">
+                    <use href="#i-phone"/>
+                </svg>
+                <span [innerText]="telephoneNumber"></span>
+            </a>
+            <a class="footer-link"
+               href="https://maps.app.goo.gl/g8QyPuTkq2U12ceP7"
+               rel="noopener"
+               target="_blank">
+                <svg aria-hidden="true" class="icon">
+                    <use href="#i-map-pin"/>
+                </svg>
+                <span [innerText]="address"></span>
+            </a>
+            <a [href]="'mailto:' + ctlEmail"
+               class="footer-link">
+                <svg aria-hidden="true" class="icon">
+                    <use href="#i-mail"/>
+                </svg>
+                <span [innerText]="ctlEmail"></span>
+            </a>
+        </div>
+
+        <div class="footer-col">
+            <h2 class="footer-title">Redes</h2>
+            <a class="footer-link"
+               href="https://www.facebook.com/ctlsantaclara"
+               rel="noopener"
+               target="_blank">
+                <svg aria-hidden="true" class="icon">
+                    <use href="#i-facebook"/>
+                </svg>
+                <span>Facebook</span>
+            </a>
+            <a class="footer-link"
+               href="https://www.instagram.com/ctlsantaclara"
+               rel="noopener"
+               target="_blank">
+                <svg aria-hidden="true" class="icon">
+                    <use href="#i-instagram"/>
+                </svg>
+                <span>Instagram</span>
+            </a>
+            <a class="footer-link"
+               href="https://pt.linkedin.com/company/clube-de-tempos-livres-de-santa-clara"
+               rel="noopener"
+               target="_blank">
+                <svg aria-hidden="true" class="icon">
+                    <use href="#i-linkedin"/>
+                </svg>
+                <span>LinkedIn</span>
+            </a>
+        </div>
+    </div>
+    <div class="footer-bottom wrap">
+        <p class="footer-copyright">© {{ year }} Clube de Tempos Livres de Santa Clara</p>
+        <a aria-label="Site desenvolvido por Diogo Silva"
+           class="footer-credit"
+           href="https://github.com/diogorlsilva"
+           rel="noopener"
+           target="_blank"
+           data-tooltip="Desenvolvido por Diogo Silva">
+            <svg aria-hidden="true" class="icon">
+                <use href="#i-code"/>
+            </svg>
+        </a>
+    </div>
+</footer>
+
+<ctl-modal [contentHtml]="missionContent"
+           [modalId]="'mission'"
+           [title]="mission.title">
+    <ng-template #missionContent>
+        <div class="dialog-sections">
+            @for (section of mission.sections; track section.title) {
+                <section>
+                    <h3 [innerText]="section.title"
+                        class="dialog-heading"></h3>
+                    @if (section.values) {
+                        <ul class="value-pills">
+                            @for (value of section.values; track value) {
+                                <li [innerText]="value"
+                                    class="chip"></li>
+                            }
+                        </ul>
+                    } @else {
+                        <p [innerText]="section.message"
+                           class="dialog-text"></p>
+                    }
+                </section>
+            }
+        </div>
+    </ng-template>
+</ctl-modal>
+
+<ctl-modal [contentHtml]="organisationContent"
+           [modalId]="'organisation'"
+           [title]="'Órgãos sociais'">
+    <ng-template #organisationContent>
+        @if (organisation(); as organisation) {
+            <div class="dialog-sections">
+                @for (group of [
+                    { title: 'Assembleia Geral', members: organisation.generalAssembly },
+                    { title: 'Direção', members: organisation.direction },
+                    { title: 'Conselho Fiscal', members: organisation.fiscalCouncil }
+                ]; track group.title) {
+                    <section>
+                        <h3 [innerText]="group.title"
+                            class="dialog-heading"></h3>
+                        <dl class="members">
+                            @for (member of group.members; track $index) {
+                                <dt [innerText]="member.title"></dt>
+                                <dd [innerText]="member.name"></dd>
+                            }
+                        </dl>
+                    </section>
+                }
+            </div>
+        } @else {
+            <p class="dialog-text">Não foi possível carregar os órgãos sociais. Tente novamente mais tarde.</p>
+        }
+    </ng-template>
+</ctl-modal>
+
+<ctl-modal [contentHtml]="reportsContent"
+           [modalId]="'reports'"
+           [modalSize]="'lg'"
+           [title]="'Relatórios de contas'">
+    <ng-template #reportsContent>
+        @if (reports().length) {
+            <div class="reports">
+                @for (report of reports(); track report.year) {
+                    <div class="report-row">
+                        <span [innerText]="report.year"
+                              class="report-year"></span>
+                        <div class="report-files">
+                            <a [href]="report.balanceSheetFile"
+                               class="chip"
+                               rel="noopener noreferrer"
+                               target="_blank">
+                                <svg aria-hidden="true" class="icon">
+                                    <use href="#i-file"/>
+                                </svg>
+                                <span [innerText]="report.balanceSheetName"></span>
+                            </a>
+                            <a [href]="report.profitAndLossFile"
+                               class="chip"
+                               rel="noopener noreferrer"
+                               target="_blank">
+                                <svg aria-hidden="true" class="icon">
+                                    <use href="#i-file"/>
+                                </svg>
+                                <span [innerText]="report.profitAndLossName"></span>
+                            </a>
+                        </div>
+                    </div>
+                }
+            </div>
+        } @else {
+            <p class="dialog-text">Não foi possível carregar os relatórios. Tente novamente mais tarde.</p>
+        }
+    </ng-template>
+</ctl-modal>

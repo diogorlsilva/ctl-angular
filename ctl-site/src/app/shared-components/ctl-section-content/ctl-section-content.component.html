@@ -1,24 +1,56 @@
-<div class="section-content-container">
-    <div [innerText]="section.description"></div>
-    <div class="info-columns-container">
+@if (section.description || hasColumns) {
+    <div class="section-content-container">
+        @if (section.description) {
+            <p [innerText]="section.description"
+               class="section-description"></p>
+        }
 
-
-        <div class="column column-left">
-            <div [innerText]="section.leftTitle"
-                 class="column-title"></div>
-            @for (item of section.leftBullets; track $index) {
-                <div [innerText]="item" class="column-item"></div>
-            }
-
-        </div>
-
-
-        <div class="column column-right">
-            <div [innerText]="section.rightTitle"
-                 class="column-title"></div>
-            @for (item of section.rightBullets; track $index) {
-                <div [innerText]="item" class="column-item"></div>
-            }
-        </div>
+        @if (hasColumns) {
+            <div class="info-columns-container">
+                @if (section.videoURL) {
+                    <div class="column">
+                        <ng-container *ngTemplateOutlet="bullets; context: { title: section.leftTitle, items: section.leftBullets }"></ng-container>
+                        <ng-container *ngTemplateOutlet="bullets; context: { title: section.rightTitle, items: section.rightBullets }"></ng-container>
+                    </div>
+                    <div class="column">
+                        @if (section.videoTitle) {
+                            <h2 [innerText]="section.videoTitle"
+                                class="column-title"></h2>
+                        }
+                        <iframe [src]="section.videoURL | SafeYouTubeUrl"
+                                [title]="section.videoTitle || 'Vídeo'"
+                                allow="autoplay; encrypted-media"
+                                allowfullscreen
+                                class="section-video"
+                                loading="lazy">
+                        </iframe>
+                    </div>
+                } @else {
+                    <div class="column">
+                        <ng-container *ngTemplateOutlet="bullets; context: { title: section.leftTitle, items: section.leftBullets }"></ng-container>
+                    </div>
+                    <div class="column">
+                        <ng-container *ngTemplateOutlet="bullets; context: { title: section.rightTitle, items: section.rightBullets }"></ng-container>
+                    </div>
+                }
+            </div>
+        }
     </div>
-</div>
+}
+
+<ng-template #bullets
+             let-items="items"
+             let-title="title">
+    @if (title) {
+        <h2 [innerText]="title"
+            class="column-title"></h2>
+    }
+    @if (items.length) {
+        <ul class="column-list">
+            @for (item of items; track $index) {
+                <li [innerText]="item"
+                    class="column-item"></li>
+            }
+        </ul>
+    }
+</ng-template>

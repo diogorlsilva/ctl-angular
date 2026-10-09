@@ -1,17 +1,41 @@
-.modal-body .content {
-  margin-top: 20px;
-}
-
+// No backdrop-filter: on Android it makes animated children (the photo
+// carousel) composite in the wrong order, and the dimmed backdrop already
+// separates the dialog from the page.
 .modal-content {
-  backdrop-filter: blur(20px);
-  background-color: rgba(255, 255, 255, 0.75);
-  border: none;
-  box-shadow: 0 2px 15px 0 rgba(0, 0, 0, 0.3);
-  border-radius: var(--border-radius);
+  background-color: white;
+  box-shadow: 0 24px 48px -24px rgba(35, 36, 90, 0.5);
 }
 
 .modal-header {
-  background-color: rgba(100, 104, 204, 0.10);
+  background-color: var(--ctl-blue-15);
   border: none;
-  border-radius: var(--border-radius);
+  padding: 1.25rem 2rem;
+}
+
+.modal-body {
+  padding: 2rem;
+}
+
+.modal-title {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 1.4rem;
+  line-height: 1.2;
+  color: var(--ink);
+  margin: 0;
+}
+
+.btn-close:focus {
+  box-shadow: 0 0 0 3px var(--ctl-orange);
+}
+
+// Phones keep a little less so the content width is not eaten by the frame.
+@media screen and (max-width: 575.98px) {
+  .modal-header {
+    padding: 1.125rem 1.5rem;
+  }
+
+  .modal-body {
+    padding: 1.5rem;
+  }
 }

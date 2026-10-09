@@ -1,131 +1,494 @@
+@use 'fonts';
+
+// Only the Bootstrap pieces the site uses (its JS bundle is loaded in index.html):
+// the reset, dropdowns for the navbar, modals, the project photo carousel and
+// the close button. Everything else is written here or in the components.
+$enable-dark-mode: false;
+$enable-shadows: false;
+$enable-gradients: false;
+$modal-content-border-radius: 24px;
+$modal-content-border-width: 0;
+$modal-backdrop-opacity: 0.55;
+$dropdown-min-width: 12rem;
+
+@import 'bootstrap/scss/functions';
+@import 'bootstrap/scss/variables';
+@import 'bootstrap/scss/variables-dark';
+@import 'bootstrap/scss/maps';
+@import 'bootstrap/scss/mixins';
+@import 'bootstrap/scss/root';
+@import 'bootstrap/scss/reboot';
+@import 'bootstrap/scss/transitions';
+@import 'bootstrap/scss/dropdown';
+@import 'bootstrap/scss/modal';
+@import 'bootstrap/scss/carousel';
+@import 'bootstrap/scss/close';
+@import 'bootstrap/scss/helpers/visually-hidden';
+
 :root {
-  --nav-height: 70px;
+  --nav-height: 60px;
+  --nav-gap: clamp(0.375rem, 1vw, 0.625rem);
+
+  // Brand
   --ctl-blue: #6468CC;
   --ctl-blue-25: #d8d9f2;
   --ctl-blue-15: #e8e8f7;
   --ctl-blue-50: rgba(100, 104, 204, 0.5);
-  --ctl-blue-70: rgba(100, 104, 204, 0.70);
   --ctl-orange: #FD620D;
+  --ctl-orange-dark: #e55400;
+  --ink: #23245a;
+  --ink-soft: #5b5c86;
+  --lilac: var(--ctl-blue-15);
+
+  // Type
+  --font-display: "Fredoka", "Century Gothic", sans-serif;
+  --font-body: "Nunito", "Segoe UI", sans-serif;
+
+  // Shape and rhythm
   --border-radius: 15px;
-  --box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  --tile-radius: 22%;
+  --section-gap: clamp(4rem, 8vw, 6.5rem);
+  // Side gutter of the page containers: grows with the viewport so tablet
+  // widths do not run the content up to the edges like a phone does.
+  --gutter: clamp(1.25rem, 5vw, 4rem);
+  --soft-shadow: 0 14px 28px -14px rgba(35, 36, 90, 0.55);
+  --focus-ring: 3px solid var(--ctl-orange);
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  color: var(--ink);
+  background: white;
+  // Bootstrap pads the body by the scrollbar width while a modal is open so
+  // the content stays still; the navbar compensates on its own.
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  color: var(--ink);
 }
 
 * {
   scrollbar-color: var(--ctl-blue-50) transparent;
 }
 
-body {
-  scrollbar-gutter: stable both-edges;
-  padding-right: 0 !important;
-  overflow-x: hidden;
+// Inline icons: symbols live in the sprite at the top of index.html.
+.icon {
+  width: 1em;
+  height: 1em;
+  flex: none;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vertical-align: -0.125em;
 }
 
-abbr {
-  cursor: auto !important;
-  text-decoration: none !important;
+// LAYOUT
+
+.wrap {
+  width: min(1120px, 100% - 2 * var(--gutter));
+  margin-inline: auto;
 }
 
-.truncate {
-  text-overflow: ellipsis;
+.section-title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(1.75rem, 3vw, 2.25rem);
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  margin: 0 0 1.5rem;
+}
+
+// Service tile: square sticker with the activity's artwork, tilted a little.
+// Used by the home mosaic, the page headers and the project cards.
+.sticker {
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 4cqw;
   overflow: hidden;
-  width: 100%;
-  white-space: nowrap;
-}
+  border-radius: var(--tile-radius);
+  color: white;
+  box-shadow: var(--soft-shadow);
+  transform: rotate(var(--tilt, -3deg));
+  // Icon and label scale with the tile, whatever size it is rendered at.
+  container-type: inline-size;
 
-.multi-line-truncate {
-  display: -webkit-box;
-  overflow: hidden;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-}
-
-.glass {
-  backdrop-filter: blur(20px);
-  background: rgba(255, 255, 255, 0.4);
-  box-shadow: 0 2px 15px 0 rgba(0, 0, 0, 0.3);
-}
-
-@keyframes spin {
-  from {
-    translate: 0;
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
-  to {
-    translate: -100%;
+
+  .icon {
+    width: 36cqw;
+    height: 36cqw;
   }
 }
 
-$spacings: 5, 10, 15, 20, 40;
-@each $spacing in $spacings {
-  .p-#{$spacing} {
-    padding: #{$spacing}px !important;
-  }
-
-  .p-t-#{$spacing} {
-    padding-top: #{$spacing}px !important;
-  }
-
-  .p-b-#{$spacing} {
-    padding-bottom: #{$spacing}px !important;
-  }
-
-  .p-l-#{$spacing} {
-    padding-left: #{$spacing}px !important;
-  }
-
-  .p-r-#{$spacing} {
-    padding-right: #{$spacing}px !important;
-  }
-
-  .p-v-#{$spacing} {
-    padding: #{$spacing}px 0 !important;
-  }
-
-  .p-h-#{$spacing} {
-    padding: 0 #{$spacing}px !important;
-  }
-
-  .m-#{$spacing} {
-    margin: #{$spacing}px !important;
-  }
-
-  .m-t-#{$spacing} {
-    margin-top: #{$spacing}px !important;
-  }
-
-  .m-b-#{$spacing} {
-    margin-bottom: #{$spacing}px !important;
-  }
-
-  .m-l-#{$spacing} {
-    margin-left: #{$spacing}px !important;
-  }
-
-  .m-r-#{$spacing} {
-    margin-right: #{$spacing}px !important;
-  }
+.sticker-label {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 10cqw;
+  line-height: 1;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
 }
 
-@font-face {
-  font-family: starlinerbtnregular;
-  src: url('/assets/Starliner BTN Regular.woff');
-}
+// BUTTONS AND LINKS
 
-@font-face {
-  font-family: favescriptbold;
-  src: url('/assets/fave-script-bold.woff');
-}
-
-.orange-text {
-  color: var(--ctl-orange);
-}
-
-.clickable-label {
-  color: black;
-  text-decoration-color: black;
-  text-decoration: underline;
+.btn-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.85rem 1.5rem;
+  border: 0;
+  border-radius: 999px;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 1.05rem;
+  line-height: 1;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 0.15s ease, background-color 0.15s ease;
 
   &:hover {
-    color: lightblue;
-    text-decoration-color: lightblue;
+    transform: translateY(-2px);
   }
+
+  &:focus-visible {
+    outline: var(--focus-ring);
+    outline-offset: 3px;
+  }
+}
+
+.btn-pill-primary {
+  background: var(--ctl-orange);
+  color: white;
+
+  &:hover {
+    background: var(--ctl-orange-dark);
+    color: white;
+  }
+}
+
+.btn-pill-secondary {
+  background: var(--lilac);
+  color: var(--ctl-blue);
+
+  &:hover {
+    background: var(--ctl-blue-25);
+    color: var(--ctl-blue);
+  }
+}
+
+.btn-pill-white {
+  background: white;
+  color: var(--ctl-blue);
+
+  &:hover {
+    background: var(--ctl-blue-25);
+    color: var(--ctl-blue);
+  }
+}
+
+// Underlined text button, for secondary actions next to a heading.
+.link-button {
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  font-weight: 700;
+  color: var(--ctl-blue);
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+  cursor: pointer;
+
+  &:hover {
+    color: var(--ctl-orange);
+  }
+
+  &:focus-visible {
+    outline: var(--focus-ring);
+    outline-offset: 4px;
+    border-radius: 4px;
+  }
+}
+
+// Small lilac chip, for file links and value tags.
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.45rem 0.9rem;
+  border-radius: 999px;
+  background: var(--lilac);
+  color: var(--ctl-blue);
+  font-weight: 700;
+  font-size: 0.95rem;
+  text-decoration: none;
+}
+
+a.chip:hover {
+  background: var(--ctl-blue-25);
+  color: var(--ctl-blue);
+}
+
+a.chip:focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: 2px;
+}
+
+// Small bubble above an element on hover or focus, with the text of its
+// data-tooltip attribute. Used by the partner logos and the footer credit.
+[data-tooltip] {
+  position: relative;
+
+  // Rendered only while shown: a hidden-but-present bubble would still widen
+  // the page on phones and make the browser zoom out.
+  &::after {
+    content: attr(data-tooltip);
+    display: none;
+    position: absolute;
+    left: 50%;
+    bottom: calc(100% + 10px);
+    transform: translateX(-50%);
+    padding: 0.4rem 0.8rem;
+    border-radius: 10px;
+    background: var(--ink);
+    color: white;
+    font-size: 0.85rem;
+    font-weight: 700;
+    line-height: 1.3;
+    white-space: nowrap;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  &:hover::after,
+  &:focus-visible::after {
+    display: block;
+  }
+}
+
+// ACTIVITY PAGES: description followed by columns of bullet points.
+
+.section-content-container {
+  width: min(1120px, 100% - 2 * var(--gutter));
+  margin: 3rem auto var(--section-gap);
+}
+
+// With no content below it, the gallery keeps the same space above the footer.
+ctl-gallery:not(:has(+ ctl-section-content .section-content-container)) {
+  margin-bottom: var(--section-gap);
+}
+
+.section-description {
+  font-size: 1.15rem;
+  line-height: 1.65;
+  max-width: 68ch;
+  white-space: pre-line;
+  margin: 0;
+}
+
+.info-columns-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+  gap: 2.5rem 3rem;
+  margin-top: 3rem;
+}
+
+.column-title {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 1.35rem;
+  line-height: 1.2;
+  color: var(--ink);
+  margin-bottom: 1rem;
+
+  & + .column-list {
+    margin-top: 0;
+  }
+}
+
+.column-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+
+  & + .column-title {
+    margin-top: 2.5rem;
+  }
+}
+
+.column-item {
+  position: relative;
+  padding: 0.35rem 0 0.35rem 1.4rem;
+
+  &::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.95em;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--ctl-blue);
+  }
+}
+
+.section-video {
+  display: block;
+  width: 100%;
+  max-width: 560px;
+  aspect-ratio: 16 / 9;
+  border: 0;
+  border-radius: var(--border-radius);
+  box-shadow: var(--soft-shadow);
+}
+
+// CAROUSEL ARROWS, used by the dialog carousel:
+// round white chips instead of Bootstrap's 15%-wide hit areas, dark glyph.
+
+.carousel-control-prev,
+.carousel-control-next {
+  width: auto;
+  padding: 0 0.75rem;
+  opacity: 1;
+
+  &:hover .carousel-control-prev-icon,
+  &:hover .carousel-control-next-icon {
+    background-color: white;
+  }
+
+  &:focus-visible .carousel-control-prev-icon,
+  &:focus-visible .carousel-control-next-icon {
+    outline: var(--focus-ring);
+    outline-offset: 2px;
+  }
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.9);
+  background-size: 45%;
+  box-shadow: var(--soft-shadow);
+  transition: background-color 0.15s ease;
+}
+
+// Bootstrap's chevrons, recoloured to the ink tone (#23245a).
+.carousel-control-prev-icon {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%2323245a'%3e%3cpath d='M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z'/%3e%3c/svg%3e");
+}
+
+.carousel-control-next-icon {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%2323245a'%3e%3cpath d='M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+}
+
+// Photos: no long-press "Save image" menu on iOS and no selection highlight.
+// With the blocked context menu and draggable="false" in the templates this
+// only deters casual saving; anything shown on screen can still be captured.
+.gallery-track img,
+.media-frame-photos img {
+  -webkit-touch-callout: none;
+  user-select: none;
+}
+
+// DIALOG CONTENT, shared by the home and footer dialogs.
+
+.dialog-sections {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.dialog-heading {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 1.2rem;
+  color: var(--ctl-blue);
+  margin: 0 0 0.5rem;
+}
+
+// Long-form text in a dialog: a comfortable measure, roomier leading and
+// spaced paragraphs instead of bare line breaks. Justified from tablet width
+// up, with hyphenation keeping the word gaps even where it is supported.
+.dialog-text,
+.dialog-prose {
+  max-width: 62ch;
+  line-height: 1.75;
+  text-align: justify;
+  text-wrap: pretty;
+  hyphens: auto;
+}
+
+// A phone's column is too narrow to justify without wide word gaps, and
+// hyphenation dictionaries are not available on every device.
+@media screen and (max-width: 575.98px) {
+  .dialog-text,
+  .dialog-prose {
+    text-align: start;
+  }
+}
+
+.dialog-text {
+  margin: 0;
+  white-space: pre-line;
+}
+
+// Number count-up (css-tricks.com/animating-number-counters). The home
+// "Números" section adds .counted once it scrolls into view, and --num
+// animates from 0 to --count-to. Kept global because emulated component
+// styles rename the custom property everywhere except inside `transition`.
+@property --num {
+  syntax: '<integer>';
+  initial-value: 0;
+  inherits: false;
+}
+
+.count-up {
+  transition: --num 1.2s ease-out;
+  counter-reset: num var(--num);
+  font-variant-numeric: tabular-nums;
+
+  &::after {
+    content: counter(num);
+  }
+
+  .counted & {
+    --num: var(--count-to);
+  }
+}
+
+.dialog-prose p {
+  margin: 0;
+
+  & + p {
+    margin-top: 1em;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn-pill,
+  .count-up {
+    transition: none;
+  }
+}
+
+// Legacy wordmark face used by the navbar logo.
+@font-face {
+  font-family: starlinerbtnregular;
+  font-display: swap;
+  src: url('/assets/Starliner BTN Regular.woff');
 }

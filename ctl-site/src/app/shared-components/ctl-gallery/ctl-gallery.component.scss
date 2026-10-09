@@ -1,37 +1,72 @@
-$gap: 10px;
-
-ctl-gallery {
-  padding: $gap 0;
+// The strip sits in the content column (same width as .wrap) and is clipped
+// to its rounded edges, so photos slide in and out of an invisible frame.
+:host {
   display: block;
-  position: relative;
+  width: min(1120px, 100% - 2 * var(--gutter));
+  margin: 2.25rem auto 0;
 }
 
-.gap-margin-top {
-  margin-top: $gap;
-}
-
-.gallery-container {
-  height: 200px;
-  display: flex;
+.gallery-frame {
   overflow: hidden;
-  width: 100%;
-  opacity: 0.7;
+  border-radius: var(--border-radius);
+}
 
-  .photo-group {
-    padding-right: $gap;
-    display: flex;
-    gap: $gap;
-    animation: spin 150s linear infinite;
-    animation-delay: 500ms;
+.gallery-track {
+  display: flex;
+  width: max-content;
 
-    &.to-right {
-      animation-direction: reverse;
-    }
+  img,
+  ctl-skeleton {
+    flex: 0 0 auto;
+    height: 220px;
+    // A margin rather than a flex gap, so both halves of the looping track
+    // are exactly the same width and -50% lands on the seam.
+    margin-inline-end: 12px;
+    border-radius: var(--border-radius);
   }
 
   img {
-    height: 200px;
-    border-radius: var(--border-radius);
+    display: block;
+    width: auto;
+    max-width: 85vw;
+    object-fit: cover;
+    background: var(--lilac);
   }
 }
 
+// Slides the first copy of the photos out while the second copy takes its
+// place, then starts over: an endless slideshow the visitor only watches.
+.gallery-track--loop {
+  animation: gallery-loop var(--loop-duration, 40s) linear infinite;
+}
+
+@keyframes gallery-loop {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .gallery-track {
+    img,
+    ctl-skeleton {
+      height: 180px;
+    }
+  }
+}
+
+// No motion: the strip stands still and can be swiped instead.
+@media (prefers-reduced-motion: reduce) {
+  .gallery-frame {
+    overflow-x: auto;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  .gallery-track--loop {
+    animation: none;
+  }
+}

@@ -30,5 +30,5 @@ export const routes: Routes = [
         path: 'projetos',
         loadComponent: () => import('../components/projetos/projetos.component').then(m => m.ProjetosComponent)
     },
-    { path: '**', component: InicioComponent },
+    { path: '**', redirectTo: '' },
 ]

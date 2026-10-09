@@ -1,103 +1,66 @@
-<ctl-section-background [backgroundUrl]="'/assets/images/projetos/projetos_background.webp'"></ctl-section-background>
-<ctl-section-message-box [messageBoxText]="messageBoxText"
+<ctl-section-background [backgroundUrl]="'assets/images/projetos/projetos_background.webp'"></ctl-section-background>
+<ctl-section-message-box [iconSrc]="'assets/images/projetos/projetos_logo.webp'"
+                         [messageBoxText]="messageBoxText"
                          [title]="'Projetos'">
 </ctl-section-message-box>
 
-<div class="cards-container">
-    @for (project of projectItems; track $index) {
-        <div class="project-card-container">
-            <div class="card-img-container">
-                <img [alt]="project.title"
-                     [src]="project.iconSRC">
-            </div>
-            <div class="info-container">
-                <div [innerText]="project.title" class="title"></div>
-                <div [innerText]="project.description" class="description"></div>
-            </div>
-            <div class="button-container">
-                <button [attr.data-bs-target]="'#' + project.modalId"
-                        class="btn btn-outline-dark btn-sm"
-                        data-bs-toggle="modal">Ver mais
-                </button>
-            </div>
-        </div>
-        <ctl-modal [contentHtml]="photos"
-                   [modalId]="project.modalId"
-                   [modalSize]="'xl'"
-                   [title]="project.title"
-                   [isScrollable]="false">
-            <ng-template #photos>
-
-              @if (project.videoURL) {
-                <div class="iframe-container">
-                <iframe
-                  class="iframe-video"
-                  [src]=" project.videoURL | SafeYouTubeUrl"
-                  allow='autoplay; encrypted-media'
-                  allowfullscreen
-                  [title]='project.title'
-                >
-                </iframe>
-                </div>
-              } @else {
-                <div [id]="'carousel' + project.modalId"
-                     class="carousel slide p-20" data-bs-ride="true">
-                    <div class="carousel-inner">
-                        @for (photoSRC of project.photoSRCs; track $index) {
-                            <div [class.active]="$index === 0"
-                                 class="carousel-item">
-                                <img [alt]="'Imagem ' + ($index + 1) + ' do projeto ' + project.title"
-                                     [src]="photoSRC"
-                                     decoding="async"
-                                     loading="lazy"
-                                     class="d-block">
-                            </div>
-                        }
-                    </div>
-                    <button [attr.data-bs-target]="'#carousel' + project.modalId" class="carousel-control-prev"
-                            data-bs-slide="prev"
-                            type="button">
-                        <span aria-hidden="true" class="carousel-control-prev-icon"></span>
-                        <span class="visually-hidden">Anterior</span>
-                    </button>
-                    <button [attr.data-bs-target]="'#carousel' + project.modalId" class="carousel-control-next"
-                            data-bs-slide="next"
-                            type="button">
-                        <span aria-hidden="true" class="carousel-control-next-icon"></span>
-                        <span class="visually-hidden">Próximo</span>
-                    </button>
-                </div>
-              }
-              <div class="description-container">
-                <p [innerText]="project.description"
-                   class="p-20">
-                </p>
-              </div>
-            </ng-template>
-
-        </ctl-modal>
+<div [attr.aria-busy]="loading()"
+     class="projects wrap">
+    @for (project of projectItems(); track project.modalId) {
+        <article class="project-card">
+            <img [src]="project.iconSRC"
+                 alt=""
+                 class="project-icon sticker"
+                 decoding="async"
+                 height="120"
+                 loading="lazy"
+                 width="120">
+            <h2 [innerText]="project.title"
+                class="project-title"></h2>
+            <p [innerText]="project.description"
+               class="project-excerpt"></p>
+            <button [attr.aria-label]="'Ver mais sobre ' + project.title"
+                    [attr.data-bs-target]="'#' + project.modalId"
+                    class="btn-pill btn-pill-white project-more"
+                    data-bs-toggle="modal"
+                    type="button">Ver mais
+            </button>
+        </article>
     } @empty {
-        @if (loading) {
+        @if (loading()) {
+            <span class="visually-hidden">A carregar projetos</span>
             @for (_ of skeletons; track $index) {
-                <div class="project-card-container"
-                     aria-busy="true"
-                     aria-label="A carregar projetos">
-                    <div class="card-img-container">
-                        <ctl-skeleton width="150px" height="150px"></ctl-skeleton>
+                <div class="project-card">
+                    <ctl-skeleton class="project-icon" height="" radius="22%" width=""></ctl-skeleton>
+                    <div class="project-title project-skeleton-lines">
+                        <ctl-skeleton height="0.8em" width="70%"></ctl-skeleton>
                     </div>
-                    <div class="info-container">
-                        <ctl-skeleton width="min(220px, 50vw)" height="24px"></ctl-skeleton>
-                        @for (width of ['350px', '350px', '350px', '250px']; track $index) {
-                            <ctl-skeleton [width]="'min(' + width + ', 55vw)'"></ctl-skeleton>
-                        }
+                    <div class="project-excerpt project-skeleton-lines">
+                        <ctl-skeleton height="0.8em"></ctl-skeleton>
+                        <ctl-skeleton height="0.8em"></ctl-skeleton>
+                        <ctl-skeleton height="0.8em"></ctl-skeleton>
+                        <ctl-skeleton height="0.8em" width="85%"></ctl-skeleton>
                     </div>
-                    <div class="button-container">
-                        <ctl-skeleton width="70px" height="31px"></ctl-skeleton>
-                    </div>
+                    <ctl-skeleton class="project-more" height="44px" radius="999px" width="110px"></ctl-skeleton>
                 </div>
-                <!-- Stands in for the zero-width <ctl-modal>, which takes a flex gap next to each real card. -->
-                <div></div>
             }
+        } @else {
+            <p class="projects-empty">Ainda não há projetos publicados. Volte em breve.</p>
         }
     }
 </div>
+
+@for (project of projectItems(); track project.modalId) {
+    <ctl-modal [contentHtml]="projectContent"
+               [modalId]="project.modalId"
+               [modalSize]="'xl'"
+               [title]="project.title">
+        <ng-template #projectContent>
+            <ctl-dialog-media [label]="project.title"
+                              [photos]="project.photoSRCs"
+                              [text]="project.description"
+                              [videoUrl]="project.videoURL">
+            </ctl-dialog-media>
+        </ng-template>
+    </ctl-modal>
+}

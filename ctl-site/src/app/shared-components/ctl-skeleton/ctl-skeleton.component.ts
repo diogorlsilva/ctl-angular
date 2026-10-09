@@ -4,7 +4,6 @@ import { Component, HostBinding, Input } from '@angular/core';
 // the real block's containers so the skeleton takes the same space.
 @Component({
     selector: 'ctl-skeleton',
-    standalone: true,
     imports: [],
     template: '',
     styleUrl: './ctl-skeleton.component.scss',

@@ -1,11 +1,11 @@
-<ctl-section-background [backgroundUrl]="'/assets/images/catl/catl_background.webp'"></ctl-section-background>
-<ctl-section-message-box [iconSrc]="'assets/images/catl/catl_logo.png'"
-                         [loading]="loading"
-                         [messageBoxText]="section?.smallDescription ?? ''"
+<ctl-section-background [backgroundUrl]="'assets/images/catl/catl_background.webp'"></ctl-section-background>
+<ctl-section-message-box [iconSrc]="'assets/images/catl/catl_logo.webp'"
+                         [loading]="loading()"
+                         [messageBoxText]="section()?.smallDescription ?? ''"
                          [title]="'CATL'">
 </ctl-section-message-box>
-<ctl-gallery [imagesSRCs]="section?.photoSRCs ?? []"
-             [loading]="loading"></ctl-gallery>
-@if (section) {
+<ctl-gallery [images]="section()?.photoSRCs ?? []"
+             [loading]="loading()"></ctl-gallery>
+@if (section(); as section) {
     <ctl-section-content [section]="section"></ctl-section-content>
 }

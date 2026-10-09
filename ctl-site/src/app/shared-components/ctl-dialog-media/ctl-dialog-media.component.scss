@@ -1,0 +1,153 @@
+// Text beside the media on wide screens, below it on narrow ones. The photo
+// frame is portrait (4:5) because the club's photos are; a photo of another
+// shape sits on a blurred copy of itself, with lilac behind while it loads.
+
+.media-dialog {
+  display: grid;
+  gap: 1.75rem;
+}
+
+.media-text {
+  max-width: 62ch;
+}
+
+.media-frame {
+  position: relative;
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  // The slides are transformed; without a stacking context Chrome on Android
+  // can ignore the rounded clip.
+  isolation: isolate;
+}
+
+.media-frame-photos {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  background: var(--lilac);
+
+  .carousel,
+  .carousel-inner,
+  .carousel-item {
+    height: 100%;
+  }
+
+  .carousel-item {
+    overflow: hidden;
+  }
+
+  .carousel-item img {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  // Behind a photo that does not fill the frame: the same photo, cropped to
+  // cover, blurred and zoomed so its softened edges stay outside the frame.
+  .media-photo-backdrop {
+    position: absolute;
+    inset: 0;
+    object-fit: cover;
+    transform: scale(1.2);
+    filter: blur(20px) brightness(0.9);
+    pointer-events: none;
+  }
+
+  .media-photo {
+    position: relative;
+    object-fit: contain;
+  }
+}
+
+.media-frame-video {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: black;
+}
+
+.media-video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+// The arrows are the shared white chips in styles.scss; small blue dots for
+// the indicators.
+
+.carousel-indicators {
+  margin-bottom: 0.75rem;
+
+  [data-bs-target] {
+    width: 8px;
+    height: 8px;
+    margin: 0 4px;
+    border: 0;
+    border-radius: 50%;
+    background-color: var(--ctl-blue);
+    opacity: 0.35;
+    transition: opacity 0.15s ease;
+
+    &.active {
+      opacity: 1;
+    }
+
+    &:focus-visible {
+      outline: var(--focus-ring);
+      outline-offset: 2px;
+    }
+  }
+}
+
+// WIDE: media on the left, text on the right scrolling on its own. 13rem
+// covers the dialog margins, header and body padding, so the modal body
+// itself never needs to scroll. A photo dialog is always that tall, so the
+// portrait frame gets the full height; a video dialog only grows with its text.
+
+@media screen and (min-width: 992px) {
+  .media-dialog.has-media {
+    display: flex;
+    gap: 2.5rem;
+    max-height: min(640px, calc(100vh - 13rem));
+
+    .media-text {
+      flex: 1 1 0;
+      min-width: 0;
+      min-height: 0;
+      max-width: none;
+      overflow-y: auto;
+      padding-right: 0.75rem;
+    }
+  }
+
+  .media-dialog.has-photos {
+    height: min(640px, calc(100vh - 13rem));
+  }
+
+  .media-frame-photos {
+    flex: 0 0 auto;
+    width: auto;
+    height: 100%;
+    max-width: 50%;
+  }
+
+  .media-frame-video {
+    flex: 0 0 calc(50% - 1.25rem);
+    width: auto;
+    align-self: flex-start;
+  }
+
+  // Text alone in a wide dialog reads better as a centred column.
+  .media-dialog:not(.has-media) .media-text {
+    margin-inline: auto;
+  }
+}
+
+// NARROW: media on top; the frame is capped so the start of the text is
+// still in view on a phone.
+
+@media screen and (max-width: 991.98px) {
+  .media-frame-photos {
+    max-height: 60vh;
+    max-height: 60dvh;
+  }
+}
