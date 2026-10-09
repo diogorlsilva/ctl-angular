@@ -34,9 +34,5 @@ export const routes: Routes = [
         path: 'contactos',
         loadComponent: () => import('../components/contactos/contactos.component').then(m => m.ContactosComponent)
     },
-    {
-        path: 'codigo-conduta',
-        loadComponent: () => import('../components/codigo-conduta/codigo-conduta.component').then(m => m.CodigoCondutaComponent)
-    },
     { path: '**', redirectTo: '' },
 ]
