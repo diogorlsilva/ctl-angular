@@ -3,19 +3,18 @@ import { CtlSectionBackgroundComponent } from "@shared/ctl-section-background/ct
 import { ProjectItem } from "@models/data.model";
 import { FetchDataService } from "@services/fetch-data.service";
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
-import { ModalComponent } from "../modal/modal.component";
 import { CtlSectionMessageBoxComponent } from "@shared/ctl-section-message-box/ctl-section-message-box.component";
-import { CtlDialogMediaComponent } from "@shared/ctl-dialog-media/ctl-dialog-media.component";
 import { CtlSkeletonComponent } from "@shared/ctl-skeleton/ctl-skeleton.component";
+import { RouterLink } from "@angular/router";
+import { slugify } from "../../utils/utils.model";
 
 @Component({
     selector: 'ctl-projects',
     imports: [
         CtlSectionBackgroundComponent,
-        ModalComponent,
         CtlSectionMessageBoxComponent,
         CtlSkeletonComponent,
-        CtlDialogMediaComponent
+        RouterLink
     ],
     templateUrl: './projetos.component.html',
     styleUrl: './projetos.component.scss'
@@ -25,6 +24,7 @@ export class ProjetosComponent implements OnInit {
     readonly projectItems = signal<ProjectItem[]>([]);
     readonly loading = signal(true);
     readonly skeletons = Array(4);
+    readonly slugify = slugify;
 
     private readonly fetchDataService = inject(FetchDataService);
     private readonly destroyRef = inject(DestroyRef);

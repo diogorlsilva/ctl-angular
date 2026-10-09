@@ -6,7 +6,7 @@
 
 <div [attr.aria-busy]="loading()"
      class="projects wrap">
-    @for (project of projectItems(); track project.modalId) {
+    @for (project of projectItems(); track project.title) {
         <article class="project-card">
             <img [src]="project.iconSRC"
                  alt=""
@@ -19,12 +19,9 @@
                 class="project-title"></h2>
             <p [innerText]="project.description"
                class="project-excerpt"></p>
-            <button [attr.aria-label]="'Ver mais sobre ' + project.title"
-                    [attr.data-bs-target]="'#' + project.modalId"
-                    class="btn-pill btn-pill-white project-more"
-                    data-bs-toggle="modal"
-                    type="button">Ver mais
-            </button>
+            <a [attr.aria-label]="'Ver mais sobre ' + project.title"
+               [routerLink]="slugify(project.title)"
+               class="btn-pill btn-pill-white project-more">Ver mais</a>
         </article>
     } @empty {
         @if (loading()) {
@@ -49,18 +46,3 @@
         }
     }
 </div>
-
-@for (project of projectItems(); track project.modalId) {
-    <ctl-modal [contentHtml]="projectContent"
-               [modalId]="project.modalId"
-               [modalSize]="'xl'"
-               [title]="project.title">
-        <ng-template #projectContent>
-            <ctl-dialog-media [label]="project.title"
-                              [photos]="project.photoSRCs"
-                              [text]="project.description"
-                              [videoUrl]="project.videoURL">
-            </ctl-dialog-media>
-        </ng-template>
-    </ctl-modal>
-}

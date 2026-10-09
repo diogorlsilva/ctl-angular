@@ -40,3 +40,11 @@ export const arrayShuffle = <T>(array: T[]): T[] => {
 
     return newArray;
 }
+
+// URL-friendly form of a title: "Festa de Natal!" -> "festa-de-natal".
+export const slugify = (text: string): string =>
+    text.normalize('NFD')
+        .replace(/[̀-ͯ]/g, '')
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/^-+|-+$/g, '');

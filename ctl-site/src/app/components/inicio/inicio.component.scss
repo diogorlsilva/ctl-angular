@@ -131,10 +131,13 @@
   border: 0;
   background: none;
   text-align: left;
+  text-decoration: none;
   color: var(--ink);
-  font: inherit;
-  cursor: pointer;
   border-radius: var(--border-radius);
+
+  &:hover {
+    color: var(--ink);
+  }
 
   &:hover .news-photo {
     transform: scale(1.02);

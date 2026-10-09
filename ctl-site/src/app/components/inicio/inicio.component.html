@@ -57,11 +57,8 @@
         <div [attr.aria-busy]="newsLoading()"
              class="news-row">
             @for (item of newsItems(); track $index) {
-                <button (click)="currentItem = item"
-                        class="news-card"
-                        data-bs-target="#news"
-                        data-bs-toggle="modal"
-                        type="button">
+                <a [routerLink]="['/noticias', slugify(item.title)]"
+                   class="news-card">
                     @if (item.photoSrc) {
                         <img [src]="item.photoSrc"
                              alt=""
@@ -75,7 +72,7 @@
                           class="news-title"></span>
                     <span [innerText]="item.description"
                           class="news-excerpt"></span>
-                </button>
+                </a>
             } @empty {
                 <span class="visually-hidden">A carregar notícias</span>
                 @for (_ of newsSkeletons; track $index) {
@@ -201,19 +198,3 @@
         </div>
     </section>
 }
-
-<!-- NEWS DIALOG -->
-
-<ctl-modal [contentHtml]="newsContent"
-           [modalId]="'news'"
-           [modalSize]="'xl'"
-           [title]="currentItem?.title ?? ''">
-    <ng-template #newsContent>
-        @if (currentItem) {
-            <ctl-dialog-media [label]="currentItem.title"
-                              [photos]="currentItem.photoSrc ? [currentItem.photoSrc] : []"
-                              [text]="currentItem.description">
-            </ctl-dialog-media>
-        }
-    </ng-template>
-</ctl-modal>

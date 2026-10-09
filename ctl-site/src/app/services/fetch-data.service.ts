@@ -114,7 +114,7 @@ export class FetchDataService {
         return this.cached('PROJETOS', () => this.fetchProjectsData().pipe(map((sheets) => {
             return sheets.filter(({ rows }) => {
                 return rows[0]?.[1] === 'SIM'
-            }).map((sheet, index) => {
+            }).map((sheet) => {
                 const row = sheet.rows;
 
                 const photoSRCs = [...this.getImagesByRow(sheet).entries()]
@@ -126,7 +126,6 @@ export class FetchDataService {
                 return {
                     iconSRC,
                     photoSRCs: arrayShuffle(photoSRCs),
-                    modalId: `projectModal_${index + 1}`,
                     title: this.parse(row[2]?.[0]),
                     description: this.parse(row[2]?.[1]),
                     videoURL: this.parse(row[2]?.[2]),

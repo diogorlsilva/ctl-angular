@@ -1,0 +1,110 @@
+<article class="plain-page wrap">
+    <a [routerLink]="backLink"
+       class="btn-pill btn-pill-secondary back-link">
+        <svg aria-hidden="true" class="icon"><use href="#i-arrow-left"/></svg>
+        {{ backLabel }}
+    </a>
+
+    @if (title) {
+        <div [class.has-media]="hasMedia"
+             class="article">
+            <div class="article-body">
+                <h1 [innerText]="title"
+                    class="section-title"></h1>
+                <div class="dialog-prose">
+                    @for (paragraph of paragraphs; track $index) {
+                        <p [innerText]="paragraph"></p>
+                    }
+                </div>
+            </div>
+
+            @if (videoUrl) {
+                <div class="media-frame media-frame-video">
+                    <iframe [src]="videoUrl | SafeYouTubeUrl"
+                            [title]="title"
+                            allow="autoplay; encrypted-media"
+                            allowfullscreen
+                            class="media-video">
+                    </iframe>
+                </div>
+            } @else if (photos.length === 1) {
+                <img [alt]="title"
+                     [src]="photos[0]"
+                     class="media-photo-single"
+                     decoding="async">
+            } @else if (photos.length) {
+                <div (contextmenu)="$event.preventDefault()"
+                     class="media-frame media-frame-photos">
+                    <div #carousel
+                         [id]="carouselId"
+                         aria-roledescription="carrossel"
+                         class="carousel slide">
+                        <div class="carousel-inner">
+                            @for (photo of photos; track photo) {
+                                <div [attr.aria-label]="($index + 1) + ' de ' + photos.length"
+                                     [class.active]="$index === 0"
+                                     aria-roledescription="diapositivo"
+                                     class="carousel-item">
+                                    <!-- Eager and sync: the photos are in-memory blobs, and a lazy image
+                                         in a hidden slide only loads when the slide starts moving. -->
+                                    <!-- A blurred, zoomed copy of the photo fills the frame behind a
+                                         photo whose shape does not match it. -->
+                                    <img [src]="photo"
+                                         draggable="false"
+                                         alt=""
+                                         aria-hidden="true"
+                                         class="media-photo-backdrop"
+                                         decoding="sync">
+                                    <img [alt]="'Fotografia ' + ($index + 1) + ' de ' + photos.length + ' – ' + title"
+                                         draggable="false"
+                                         [src]="photo"
+                                         class="media-photo"
+                                         decoding="sync">
+                                </div>
+                            }
+                        </div>
+                        <div class="carousel-indicators">
+                            @for (photo of photos; track photo) {
+                                <button [attr.aria-current]="$index === 0 ? 'true' : null"
+                                        [attr.aria-label]="'Fotografia ' + ($index + 1)"
+                                        [attr.data-bs-slide-to]="$index"
+                                        [attr.data-bs-target]="'#' + carouselId"
+                                        [class.active]="$index === 0"
+                                        type="button"></button>
+                            }
+                        </div>
+                        <button [attr.data-bs-target]="'#' + carouselId"
+                                class="carousel-control-prev"
+                                data-bs-slide="prev"
+                                type="button">
+                            <span aria-hidden="true" class="carousel-control-prev-icon"></span>
+                            <span class="visually-hidden">Anterior</span>
+                        </button>
+                        <button [attr.data-bs-target]="'#' + carouselId"
+                                class="carousel-control-next"
+                                data-bs-slide="next"
+                                type="button">
+                            <span aria-hidden="true" class="carousel-control-next-icon"></span>
+                            <span class="visually-hidden">Seguinte</span>
+                        </button>
+                    </div>
+                </div>
+            }
+        </div>
+    } @else {
+        <div aria-busy="true"
+             class="article has-media">
+            <span class="visually-hidden">A carregar</span>
+            <div class="article-body">
+                <ctl-skeleton class="section-title" height="1.1em" width="70%"></ctl-skeleton>
+                <div class="skeleton-lines">
+                    <ctl-skeleton></ctl-skeleton>
+                    <ctl-skeleton></ctl-skeleton>
+                    <ctl-skeleton></ctl-skeleton>
+                    <ctl-skeleton width="60%"></ctl-skeleton>
+                </div>
+            </div>
+            <ctl-skeleton class="media-skeleton" height="" width=""></ctl-skeleton>
+        </div>
+    }
+</article>

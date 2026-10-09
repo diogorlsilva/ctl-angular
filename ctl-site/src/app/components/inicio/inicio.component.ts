@@ -11,9 +11,8 @@ import {
     PersonItem,
     telephoneNumber
 } from "@models/data.model";
-import { ModalComponent } from "../modal/modal.component";
 import { CtlSkeletonComponent } from "@shared/ctl-skeleton/ctl-skeleton.component";
-import { CtlDialogMediaComponent } from "@shared/ctl-dialog-media/ctl-dialog-media.component";
+import { slugify } from "../../utils/utils.model";
 
 // One hero tile per service. Colours come from the club's logo and tile artwork;
 // the tilt makes the tiles sit like stickers and straightens on hover.
@@ -31,9 +30,7 @@ type ServiceTile = {
     selector: 'ctl-inicio',
     imports: [
         RouterLink,
-        ModalComponent,
-        CtlSkeletonComponent,
-        CtlDialogMediaComponent
+        CtlSkeletonComponent
     ],
     templateUrl: './inicio.component.html',
     styleUrl: './inicio.component.scss'
@@ -53,7 +50,6 @@ export class InicioComponent implements OnInit {
     }));
     readonly numbersCounted = signal(false);
     private readonly numbersSection = viewChild<ElementRef<HTMLElement>>('numbersSection');
-    currentItem?: NewsItem;
     readonly newsLoading = signal(true);
     readonly newsSkeletons = Array(3);
     readonly peopleLoading = signal(true);
@@ -138,6 +134,7 @@ export class InicioComponent implements OnInit {
     readonly institutionMessage = institutionMessage;
     readonly telephoneNumber = telephoneNumber;
     readonly ctlEmail = ctlEmail;
+    readonly slugify = slugify;
 
     private readonly fetchDataService = inject(FetchDataService);
     private readonly destroyRef = inject(DestroyRef);

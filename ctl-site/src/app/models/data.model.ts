@@ -21,7 +21,6 @@ export type PartnerItem = {
 }
 
 export type ProjectItem = {
-    modalId: string;
     title: string;
     description: string;
     iconSRC: string;

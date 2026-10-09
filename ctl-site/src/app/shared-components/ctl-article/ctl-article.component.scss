@@ -1,28 +1,54 @@
-// Text beside the media on wide screens, below it on narrow ones. The photo
-// frame is portrait (4:5) because the club's photos are; a photo of another
-// shape sits on a blurred copy of itself, with lilac behind while it loads.
+// Text on the left, media on the right; stacked with the media on top on
+// narrow screens. A carousel frame is portrait (4:5) because the club's photos
+// are; a photo of another shape sits on a blurred copy of itself, with lilac
+// behind while it loads. A single photo keeps its own shape.
 
-.media-dialog {
-  display: grid;
-  gap: 1.75rem;
+.back-link {
+  margin-bottom: 2.5rem;
 }
 
-.media-text {
-  max-width: 62ch;
+.article {
+  display: grid;
+  gap: 2rem clamp(2rem, 5vw, 4rem);
+  align-items: start;
+
+  &.has-media {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+}
+
+.media-photo-single {
+  display: block;
+  width: 100%;
+  border-radius: var(--border-radius);
+  box-shadow: var(--soft-shadow);
+}
+
+.media-skeleton {
+  aspect-ratio: 4 / 3;
+}
+
+.skeleton-lines {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75em;
 }
 
 .media-frame {
   position: relative;
+  width: 100%;
   border-radius: var(--border-radius);
   overflow: hidden;
+  box-shadow: var(--soft-shadow);
   // The slides are transformed; without a stacking context Chrome on Android
   // can ignore the rounded clip.
   isolation: isolate;
 }
 
 .media-frame-photos {
-  width: 100%;
   aspect-ratio: 4 / 5;
+  max-height: 80vh;
+  max-height: 80dvh;
   background: var(--lilac);
 
   .carousel,
@@ -59,7 +85,6 @@
 }
 
 .media-frame-video {
-  width: 100%;
   aspect-ratio: 16 / 9;
   background: black;
 }
@@ -98,54 +123,24 @@
   }
 }
 
-// WIDE: media on the left, text on the right scrolling on its own. 13rem
-// covers the dialog margins, header and body padding, so the modal body
-// itself never needs to scroll. A photo dialog is always that tall, so the
-// portrait frame gets the full height; a video dialog only grows with its text.
-
-@media screen and (min-width: 992px) {
-  .media-dialog.has-media {
-    display: flex;
-    gap: 2.5rem;
-    max-height: min(640px, calc(100vh - 13rem));
-
-    .media-text {
-      flex: 1 1 0;
-      min-width: 0;
-      min-height: 0;
-      max-width: none;
-      overflow-y: auto;
-      padding-right: 0.75rem;
-    }
-  }
-
-  .media-dialog.has-photos {
-    height: min(640px, calc(100vh - 13rem));
-  }
-
-  .media-frame-photos {
-    flex: 0 0 auto;
-    width: auto;
-    height: 100%;
-    max-width: 50%;
-  }
-
-  .media-frame-video {
-    flex: 0 0 calc(50% - 1.25rem);
-    width: auto;
-    align-self: flex-start;
-  }
-
-  // Text alone in a wide dialog reads better as a centred column.
-  .media-dialog:not(.has-media) .media-text {
-    margin-inline: auto;
+// Side by side, the media stays in view while a long text scrolls past it.
+@media screen and (min-width: 768.02px) {
+  .article.has-media > :last-child {
+    position: sticky;
+    top: calc(var(--nav-height) + var(--nav-gap) + 1.5rem);
   }
 }
 
-// NARROW: media on top; the frame is capped so the start of the text is
-// still in view on a phone.
+@media screen and (max-width: 768px) {
+  .article.has-media {
+    grid-template-columns: 1fr;
+  }
 
-@media screen and (max-width: 991.98px) {
+  // Media first; capped so the start of the text is still in view on a phone.
+  .article-body {
+    order: 1;
+  }
+
   .media-frame-photos {
     max-height: 60vh;
     max-height: 60dvh;
