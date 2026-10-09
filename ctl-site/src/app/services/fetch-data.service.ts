@@ -34,6 +34,19 @@ export class FetchDataService {
 
     private readonly httpClient = inject(HttpClient);
 
+    // Sheets requested before the service worker controlled the page, so it never cached them.
+    private readonly missedBySw = new Set<string>();
+
+    constructor() {
+        // On a first visit the sheets load before the service worker takes control.
+        // Once it does, request them again through it so the next visit shows
+        // them straight from its cache.
+        navigator.serviceWorker?.addEventListener('controllerchange', () => {
+            this.missedBySw.forEach(url => fetch(url).catch(() => {}));
+            this.missedBySw.clear();
+        });
+    }
+
 
     getNewsData(): Observable<NewsItem[]> {
         // News must be current on every visit, so it skips the service worker
@@ -199,6 +212,10 @@ export class FetchDataService {
         // service worker (see the google-sheets data group in ngsw-config.json).
         // `ngsw-bypass` in the URL makes the service worker ignore the request.
         const requestUrl = alwaysFresh ? `${url}${url.includes('?') ? '&' : '?'}ngsw-bypass` : url;
+
+        if (!alwaysFresh && !navigator.serviceWorker?.controller) {
+            this.missedBySw.add(url);
+        }
 
         return this.httpClient.get(requestUrl, {
             responseType: 'arraybuffer'
