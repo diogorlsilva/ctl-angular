@@ -10,7 +10,7 @@
   align-items: flex-start;
   gap: 0.5rem;
   padding: 1.75rem;
-  border-radius: 24px;
+  border-radius: var(--border-radius);
   background: var(--lilac);
   color: var(--ink);
   text-decoration: none;
@@ -68,9 +68,11 @@
   }
 }
 
+// Smaller than the card's radius so the corners sit inside it rather than
+// mirroring it across the padding.
 .contact-photos {
   min-height: 260px;
-  border-radius: var(--border-radius);
+  border-radius: 16px;
   overflow: hidden;
   background: var(--ctl-blue-25);
   // The slides are transformed; without a stacking context Chrome on Android
