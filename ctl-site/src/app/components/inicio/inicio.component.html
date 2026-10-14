@@ -55,7 +55,7 @@
 
 @if (newsItems().length || newsLoading()) {
     <section class="news wrap">
-        <h2 class="section-title">Notícias</h2>
+        <h2 class="section-title">As nossas notícias</h2>
         <div [attr.aria-busy]="newsLoading()"
              class="news-row">
             @for (item of newsItems(); track $index) {
@@ -116,7 +116,7 @@
 
 @if (peopleItems().length || peopleLoading()) {
     <section class="team wrap">
-        <h2 class="section-title">Coordenação</h2>
+        <h2 class="section-title">A nossa liderança</h2>
         <div [attr.aria-busy]="peopleLoading()"
              class="team-row">
             @for (person of peopleItems(); track $index) {
@@ -134,7 +134,7 @@
                           class="person-role"></span>
                 </div>
             } @empty {
-                <span class="visually-hidden">A carregar coordenação</span>
+                <span class="visually-hidden">A carregar liderança</span>
                 @for (_ of peopleSkeletons; track $index) {
                     <div class="person">
                         <ctl-skeleton class="person-photo" height="" width=""></ctl-skeleton>
@@ -178,7 +178,7 @@
 
 @if (partners().length || partnersLoading()) {
     <section class="partners wrap">
-        <h2 class="section-title">Parcerias</h2>
+        <h2 class="section-title">As nossas parcerias</h2>
         <div [attr.aria-busy]="partnersLoading()"
              class="partners-row">
             @for (partner of partners(); track $index) {

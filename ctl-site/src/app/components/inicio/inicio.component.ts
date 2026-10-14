@@ -49,14 +49,12 @@ export class InicioComponent implements OnInit {
         return { ...item, prefix, count: count ? +count : null, suffix };
     }));
     readonly numbersCounted = signal(false);
-    private readonly numbersSection = viewChild<ElementRef<HTMLElement>>('numbersSection');
     readonly newsLoading = signal(true);
     readonly newsSkeletons = Array(3);
     readonly peopleLoading = signal(true);
-    readonly peopleSkeletons = Array(5);
+    readonly peopleSkeletons = Array(4);
     readonly partnersLoading = signal(true);
     readonly partnersSkeletons = Array(5);
-
     // Three columns, the middle one shorter so it sits half a tile lower.
     readonly serviceColumns: ServiceTile[][] = [
         [
@@ -130,12 +128,11 @@ export class InicioComponent implements OnInit {
             },
         ],
     ];
-
     readonly institutionMessage = institutionMessage;
     readonly telephoneNumber = telephoneNumber;
     readonly ctlEmail = ctlEmail;
     readonly slugify = slugify;
-
+    private readonly numbersSection = viewChild<ElementRef<HTMLElement>>('numbersSection');
     private readonly fetchDataService = inject(FetchDataService);
     private readonly destroyRef = inject(DestroyRef);
 

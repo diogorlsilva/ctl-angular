@@ -219,15 +219,38 @@
 .team-row {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-  gap: 2.5rem 1rem;
+  gap: 2.5rem 3rem;
 }
 
+// Each person stands on a soft panel that starts behind the photo, lilac and
+// peach in turn; the role takes the panel's accent colour, a shade darker
+// than the brand blue / orange so the small text stays readable (4.5:1).
 .person {
+  --photo-size: 140px;
+  --panel: var(--lilac);
+  --accent: #4f53b8;
+  position: relative;
+  isolation: isolate;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
   gap: 0.25rem;
+  padding: 0 0.3rem 1.1rem;
+
+  &:nth-of-type(even) {
+    --panel: var(--ctl-orange-15);
+    --accent: #b84300;
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    inset: calc(var(--photo-size) * 0.37) 0 0;
+    border-radius: var(--border-radius);
+    background: var(--panel);
+  }
 
   ctl-skeleton {
     margin-bottom: 0.25rem;
@@ -235,12 +258,12 @@
 }
 
 .person-photo {
-  width: 140px;
-  height: 140px;
+  width: var(--photo-size);
+  height: var(--photo-size);
   border-radius: var(--border-radius);
   object-fit: cover;
   margin-bottom: 0.75rem;
-  box-shadow: 0 0 0 4px white, 0 0 0 6px var(--ctl-blue-25), 0 12px 24px -12px rgba(35, 36, 90, 0.5);
+  box-shadow: 0 12px 24px -12px rgba(35, 36, 90, 0.5);
 }
 
 .person-name {
@@ -251,8 +274,11 @@
 }
 
 .person-role {
-  color: var(--ink-soft);
-  font-size: 0.95rem;
+  color: var(--accent);
+  font-size: 0.64rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
 }
 
 // NUMBERS
@@ -362,9 +388,15 @@
     grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
   }
 
-  .person-photo {
-    width: 110px;
-    height: 110px;
+  // Columns of at least 150px and a narrower gap keep the longest role on
+  // one line: two cards per row on phones.
+  .team-row {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    column-gap: 1.25rem;
+  }
+
+  .person {
+    --photo-size: 110px;
   }
 
   .partner-logo {
