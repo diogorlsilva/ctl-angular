@@ -1,5 +1,6 @@
 <article class="plain-page wrap">
-    <a [routerLink]="backLink"
+    <a (click)="goBack($event)"
+       [href]="backLink"
        class="btn-pill btn-pill-secondary back-link">
         <svg aria-hidden="true" class="icon"><use href="#i-arrow-left"/></svg>
         {{ backLabel }}

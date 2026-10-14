@@ -1,5 +1,6 @@
-import { Component, effect, ElementRef, HostListener, Input, OnDestroy, viewChild } from '@angular/core';
-import { RouterLink } from "@angular/router";
+import { Component, effect, ElementRef, HostListener, inject, Input, OnDestroy, viewChild } from '@angular/core';
+import { Location } from "@angular/common";
+import { Router, UrlTree } from "@angular/router";
 import { SanitizeYouTubeUrlPipe } from "../../pipes/url-sanitizer.pipe";
 import { BootstrapCarousel } from "../../utils/bootstrap.model";
 import { CtlSkeletonComponent } from "@shared/ctl-skeleton/ctl-skeleton.component";
@@ -11,7 +12,7 @@ let nextId = 0;
 // Stacked, media first, on narrow screens. Without a title it shows a skeleton.
 @Component({
     selector: 'ctl-article',
-    imports: [RouterLink, SanitizeYouTubeUrlPipe, CtlSkeletonComponent],
+    imports: [SanitizeYouTubeUrlPipe, CtlSkeletonComponent],
     templateUrl: './ctl-article.component.html',
     styleUrl: './ctl-article.component.scss'
 })
@@ -22,6 +23,13 @@ export class CtlArticleComponent implements OnDestroy {
     @Input() videoUrl = '';
     @Input({ required: true }) backLabel: string;
     @Input({ required: true }) backLink: string;
+
+    private readonly router = inject(Router);
+    private readonly location = inject(Location);
+
+    // The page the visitor came from, read while the navigation here is still
+    // running. Later URL changes on this page (an open dialog) do not count.
+    private readonly previousPath = this.pathOf(this.router.currentNavigation()?.previousNavigation?.finalUrl);
 
     private readonly carousel = viewChild<ElementRef<HTMLElement>>('carousel');
 
@@ -58,6 +66,27 @@ export class CtlArticleComponent implements OnDestroy {
 
     get hasMedia(): boolean {
         return !!this.videoUrl || this.photos.length > 0;
+    }
+
+    // When the visitor came from the back link's page, step back in history so
+    // the router returns them to where they were; a new navigation would open
+    // that page at the top. Modified clicks keep the browser's own behaviour.
+    goBack(event: MouseEvent): void {
+        if (event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) {
+            return;
+        }
+
+        event.preventDefault();
+
+        if (this.previousPath === this.backLink) {
+            this.location.back();
+        } else {
+            this.router.navigateByUrl(this.backLink);
+        }
+    }
+
+    private pathOf(url?: UrlTree): string | undefined {
+        return url && this.router.serializeUrl(url).split(/[?#]/)[0];
     }
 
     // Keyboard counterpart of pause-on-hover: a focused control holds the slide.

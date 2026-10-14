@@ -28,8 +28,7 @@ const WHITE_PAGES = [/^$/, /^contactos$/, /^noticias\/[^/]+$/, /^projetos\/[^/]+
     selector: 'ctl-navbar',
     imports: [RouterLink, RouterLinkActive],
     templateUrl: './navbar.component.html',
-    styleUrl: './navbar.component.scss',
-    host: { '[style.--scrollbar-comp]': 'scrollbarComp()' }
+    styleUrl: './navbar.component.scss'
 })
 export class NavbarComponent {
     readonly isToggled = signal(false);
@@ -38,10 +37,6 @@ export class NavbarComponent {
     readonly isGoingDown = signal(false);
     // The white pages get the gradient bar; the photo pages a translucent one.
     readonly isWhitePage = signal(true);
-
-    // Width of the page scrollbar while a Bootstrap modal hides it. Bootstrap
-    // pads the body by the same amount; the fixed bar needs its own offset.
-    readonly scrollbarComp = signal('0px');
 
     @ViewChildren('groupToggle') private groupToggles!: QueryList<ElementRef<HTMLElement>>;
 
@@ -104,15 +99,19 @@ export class NavbarComponent {
             )
             .subscribe(() => this.closeMenu());
 
-        // show.bs.modal fires before Bootstrap hides the scrollbar, so its
-        // width can still be measured; hidden.bs.modal fires after it is back.
+        // While a Bootstrap modal hides the page scrollbar, Bootstrap pads the
+        // body by its width; the fixed bar needs the same offset. show.bs.modal
+        // fires before the scrollbar goes, so its width can still be measured;
+        // hidden.bs.modal fires right as it is back. The variable is set on the
+        // element directly, not through a binding, so it changes in the same
+        // frame as the scrollbar and the bar does not jump sideways.
         fromEvent(document, 'show.bs.modal')
             .pipe(takeUntilDestroyed())
-            .subscribe(() => this.scrollbarComp.set(`${window.innerWidth - document.documentElement.clientWidth}px`));
+            .subscribe(() => this.setScrollbarComp(`${window.innerWidth - document.documentElement.clientWidth}px`));
 
         fromEvent(document, 'hidden.bs.modal')
             .pipe(takeUntilDestroyed())
-            .subscribe(() => this.scrollbarComp.set('0px'));
+            .subscribe(() => this.setScrollbarComp('0px'));
 
         // The bar slides away while scrolling down and returns on the way up.
         // Scrolling also dismisses every open menu, desktop dropdowns included.
@@ -135,6 +134,10 @@ export class NavbarComponent {
 
                 this.scrollY = window.scrollY;
             });
+    }
+
+    private setScrollbarComp(width: string): void {
+        this.host.nativeElement.style.setProperty('--scrollbar-comp', width);
     }
 
     // Opens the hamburger panel with the current page's group already

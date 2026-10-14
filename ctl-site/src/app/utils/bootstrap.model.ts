@@ -21,6 +21,7 @@ export type BootstrapCarousel = {
 declare global {
     interface Window {
         bootstrap?: {
+            Modal: { getOrCreateInstance(element: Element): { show(): void; hide(): void } };
             Dropdown: { getOrCreateInstance(element: Element): { show(): void; hide(): void } };
             Carousel: { getOrCreateInstance(element: Element, config?: BootstrapCarouselConfig): BootstrapCarousel };
         };
