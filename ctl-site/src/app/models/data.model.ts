@@ -78,7 +78,7 @@ export const mission: {
         message: 'Uma criança é uma oportunidade, valorizamos o seu percurso potenciando-a num agente de mudança.'
     }, {
         title: 'Valores',
-        values: ['Respeito', 'Colaboração', 'Equidade', 'Empatia', 'Integridade']
+        values: ['Respeito', 'Equidade', 'Empatia', 'Colaboração', 'Integridade']
     }]
 }
 
