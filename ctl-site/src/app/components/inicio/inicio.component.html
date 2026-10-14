@@ -116,7 +116,7 @@
 
 @if (peopleItems().length || peopleLoading()) {
     <section class="team wrap">
-        <h2 class="section-title">Equipa</h2>
+        <h2 class="section-title">Coordenação</h2>
         <div [attr.aria-busy]="peopleLoading()"
              class="team-row">
             @for (person of peopleItems(); track $index) {
@@ -134,10 +134,10 @@
                           class="person-role"></span>
                 </div>
             } @empty {
-                <span class="visually-hidden">A carregar equipa</span>
+                <span class="visually-hidden">A carregar coordenação</span>
                 @for (_ of peopleSkeletons; track $index) {
                     <div class="person">
-                        <ctl-skeleton [circle]="true" class="person-photo" height="" width=""></ctl-skeleton>
+                        <ctl-skeleton class="person-photo" height="" width=""></ctl-skeleton>
                         <ctl-skeleton height="1.3em" width="120px"></ctl-skeleton>
                         <ctl-skeleton width="90px"></ctl-skeleton>
                     </div>

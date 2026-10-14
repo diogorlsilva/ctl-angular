@@ -237,7 +237,7 @@
 .person-photo {
   width: 140px;
   height: 140px;
-  border-radius: 50%;
+  border-radius: var(--border-radius);
   object-fit: cover;
   margin-bottom: 0.75rem;
   box-shadow: 0 0 0 4px white, 0 0 0 6px var(--ctl-blue-25), 0 12px 24px -12px rgba(35, 36, 90, 0.5);
