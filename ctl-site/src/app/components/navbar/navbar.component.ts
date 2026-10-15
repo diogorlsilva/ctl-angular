@@ -44,6 +44,10 @@ export class NavbarComponent {
     private closingTimer?: ReturnType<typeof setTimeout>;
     // First URL segment of the current page ('' on home).
     private currentPath = '';
+    // Whole path of the current page, to tell a page change from a query-param change.
+    private fullPath?: string;
+    // Set on a page change so the router's own scroll does not count as a direction.
+    private skipNextScroll = false;
 
     private readonly router = inject(Router);
     private readonly host = inject<ElementRef<HTMLElement>>(ElementRef);
@@ -77,6 +81,16 @@ export class NavbarComponent {
             )
             .subscribe(event => {
                 const path = event.urlAfterRedirects.split(/[?#]/)[0].replace(/^\//, '');
+
+                // Every new page opens with the bar showing. The router then
+                // scrolls to the top or, on back/forward, to the saved position;
+                // that jump is not the user scrolling, so it must not hide the bar.
+                if (path !== this.fullPath) {
+                    this.fullPath = path;
+                    this.isGoingDown.set(false);
+                    this.skipNextScroll = true;
+                }
+
                 this.currentPath = path.split('/')[0];
                 this.isWhitePage.set(WHITE_PAGES.some(page => page.test(path)));
             });
@@ -122,6 +136,12 @@ export class NavbarComponent {
 
                 // While a modal locks the page, the scroll position does not change.
                 if (document.body.style.overflow === 'hidden') {
+                    return;
+                }
+
+                if (this.skipNextScroll) {
+                    this.skipNextScroll = false;
+                    this.scrollY = window.scrollY;
                     return;
                 }
 
